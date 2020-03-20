@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HaderMenuAside from './Menu/Aside';
+import HaderMenuAside from './Menu/Aside/Aside';
 
 const Header = (props) => (
     <header>

@@ -8,6 +8,7 @@ import ComponentsUIHeader from "../components/UI/Header/Header";
 import ScreenHome from "./Home/Home";
 
 
+
 const HeaderImport = () => (
     <React.Fragment>
         <div className="container">
@@ -25,8 +26,8 @@ const HeaderImport = () => (
 const Routes = (props) => (
     <BrowserRouter>
         <Switch>
+            <Route exact path="/login" component={() => <h3>Você ta no Login</h3>} />
             <HeaderImport />
-            {/* <Route exact path="/" component={ScreenHome} /> */}
         </Switch>
     </BrowserRouter>
 );
