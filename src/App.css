@@ -380,9 +380,8 @@ div.dropdown div.dropdown-menu a {
     color: var(--text-primary-white);
     position: relative;
 }
-.icon-user {
-    font-size: xx-large;
-}
+
+
 .header-user .header-user-name {
     font-size: 1.5em;
     text-transform: capitalize;
@@ -1357,4 +1356,8 @@ div.row {
 }
 .alig-content-center{
     align-content: center;
+}
+
+svg path, svg polyline, svg line {
+    stroke: currentColor !important;
 }

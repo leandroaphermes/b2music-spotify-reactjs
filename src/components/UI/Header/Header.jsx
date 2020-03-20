@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Aside from './Menu/Aside';
+import HaderMenuAside from './Menu/Aside';
 
 const Header = (props) => (
     <header>
-        <Aside />
+        <HaderMenuAside username="Hamaro" />
     </header>
 );
 
