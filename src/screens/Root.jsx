@@ -4,12 +4,13 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 
 import ComponentsUIHeader from "../components/UI/Header/Header";
+import ComponentsPlayer from "../components/Player/Player";
 
 import ScreenHome from "./Home/Home";
 
 
 
-const HeaderImport = () => (
+const HeaderBase = () => (
     <React.Fragment>
         <div className="container">
             <ComponentsUIHeader />
@@ -18,7 +19,7 @@ const HeaderImport = () => (
                 <Route exact path="/search" component={() => <h3>Você ta buscando</h3>} />
             </div>
         </div>
-        <div className="player-container"></div>
+        <ComponentsPlayer />
     </React.Fragment>
 );
 
@@ -27,7 +28,7 @@ const Routes = (props) => (
     <BrowserRouter>
         <Switch>
             <Route exact path="/login" component={() => <h3>Você ta no Login</h3>} />
-            <HeaderImport />
+            <HeaderBase />
         </Switch>
     </BrowserRouter>
 );

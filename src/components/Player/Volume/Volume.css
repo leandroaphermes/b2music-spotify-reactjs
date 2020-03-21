@@ -1,0 +1,25 @@
+.song-volume {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+.song-volume svg {
+    width: 18px;
+    height: 18px;
+}
+.song-volume-slide {
+    display: flex;
+}
+.song-volume-slide .progress {
+    display: block;
+    width: 100px;
+}
+.song-volume:hover .progress-cicle{
+    visibility: visible;
+    opacity: 1;
+}
+.song-volume:hover .progress-bar{
+    background-color: var(--btn-primary);
+}

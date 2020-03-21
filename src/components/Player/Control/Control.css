@@ -1,0 +1,37 @@
+.song-control {
+    grid-column: 2/5;
+    grid-row: 1;
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+.song-control-controls {
+    display: flex;
+    justify-content: center;
+}
+.song-control-controls button svg {
+    width: 18px;
+    height: 18px;
+}
+.song-control-controls button#pause svg, .song-control-controls button#play svg {
+    width: 35px;
+    height: 35px;
+}
+.song-control-controls-progress-bar{
+    display: flex;
+    justify-content: center;
+}
+.song-control-controls-progress-bar .progress{
+    align-self: center;
+    margin-left: 2%;
+    margin-right: 2%;
+    max-width: 500px;
+}
+.song-control-controls-progress-bar:hover .progress-cicle{
+    visibility: visible;
+    opacity: 1;
+}
+.song-control-controls-progress-bar:hover .progress-bar{
+    background-color: var(--btn-primary);
+}

@@ -1,0 +1,8 @@
+.player-container {
+    height: 90px;
+    background-color: var(--box-secundary-dark);
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+}

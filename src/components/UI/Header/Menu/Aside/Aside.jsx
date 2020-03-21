@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './Aside.css';
@@ -51,7 +51,7 @@ export default function Aside(props) {
                 <ul>
                     {
                     menuList.map( (item) =>(
-                        <li>
+                        <li key={item.url} >
                             <NavLink exact to={item.url} className="menu-item" >
                                 {item.icon}
                                 <span className="menu-item-title ml-1">{item.nameTitle}</span>
