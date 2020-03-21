@@ -106,35 +106,7 @@ p, h1, h2, h3, h4, h5, h6 {
 
 
 
-.progress {
-    width: 100%;
-    height: 5px;
-    background-color: var(--progress-bar-full);
-    border-radius: 10px;
-    position: relative;
-}
-.progress-bar {
-    width: 0%;
-    height: 100%;
-    background-color: var(--progress-bar-active);
-    border-radius: 10px;
-    position: relative;
-}
-.progress .progress-cicle {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    display: block;
-    background-color: var(--text-primary-white);
-    position: absolute;
-    z-index: 100;
-    top: -100%;
-    transform: translateX(-50%);
-    left: 0;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
+
 
 .btn {
     display: inline-block;
@@ -350,8 +322,6 @@ div.dropdown:hover div.dropdown-menu {
     font-weight: normal;
     letter-spacing: normal;
 }
-
-
 div.dropdown div.dropdown-menu a {
     display: block;
     padding: 7px 0px;
@@ -368,15 +338,6 @@ div.dropdown div.dropdown-menu a {
     height: calc(100vh - 90px);
 }
 
-
-
-
-
-
-
-
-
-
 .body-content {
     width: 100vw;
     height: auto;
@@ -389,71 +350,10 @@ div.dropdown div.dropdown-menu a {
 }
 
 
-.card {
-    display: grid;
-    grid-auto-rows: 0;
-    grid-template-columns: repeat( auto-fill, minmax(180px, 1fr));
-    grid-template-rows: auto 1fr;
-    grid-gap: 16px;
-    margin-bottom: 25px;
-    overflow: hidden;
-}
-.card-header{
-    grid-column: 1/-1;
-}
-.card-header div.card-title {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: var(--text-primary-white);
-    letter-spacing: 0.1em;
-    display: flex;
-    justify-content: space-between;
-}
-.card-header div.card-title div.card-options a {
-    letter-spacing: normal;
-    text-transform: uppercase;
-    font-size: 0.7em;
-}
-.card-content {
-    background-color: var(--box-secundary-dark);
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    padding: 15px;
-    box-sizing: border-box;
-    position: relative;
-    cursor: pointer;
-}
-.card-page {
-    grid-column: 1/-1;
-    background-color: transparent;
-    cursor: initial;
-}
-.card-auto-rows {
-    grid-auto-rows: auto;
-    overflow: auto;
-}
 
 
 
-.song-describe .song-describe-title {
-    color: var(--text-primary-white);
-    font-size: 0.8em;
-    font-weight: bold;
-    letter-spacing: 0.15em;
-}
-.song-describe .song-describe-body {
-    font-size: 0.7em;
-    margin-top: 5px;
-}
-.song-player{
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-    right: 15px;
-    bottom: 15px;
-    transition: opacity 0.5s;
-}
+
 .card-content:hover .song-player {
     opacity: 1;
     visibility: visible;
@@ -1169,6 +1069,9 @@ div.row {
 .d-inline-block {
     display: inline-block !important;
 }
+.d-flex {
+    display: flex !important;
+}
 
 .vw-100 {
     width: 100vw !important;
@@ -1184,6 +1087,6 @@ div.row {
     align-content: center;
 }
 
-svg path, svg polyline, svg line, svg circle {
+svg path, svg polyline, svg line, svg circle, svg rect {
     stroke: currentColor !important;
 }

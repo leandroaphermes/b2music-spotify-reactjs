@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ComponentProgressBar from '../../ProgressBar/ProgessBar';
+import ComponentProgressBar from '../../UI/ProgressBar/ProgressBar';
 
 import { ReactComponent as IconShuflle } from "../../../assets/img/icons/shuffle-outline.svg";
 import { ReactComponent as IconPlaySkipBack } from "../../../assets/img/icons/play-skip-back-outline.svg";
@@ -15,6 +15,26 @@ import "./Control.css";
 
 
 export default function Control() {
+
+    function clickTimeCurrent(event){
+        // event.target.offsetWidth   Tamanho da DIV progressBar
+        // ATENÇÃO: event.target.offsetWidth deve fazer o path até a div do progress
+        // event.target.parentElement
+        /* 
+            let path = event.path || (event.composedPath && event.composedPath());
+            let target = path.find( function(el) { return (el.dataset.row);   } );
+        */
+
+        // minutos total: 3:00
+        // minutos total: 3 * 60 = 160 segundos
+        // 500 /100 = 5px para 1% de div
+        // 180 /100  = 1,8 a cada 1%
+        // 5 * 1,8 = 9px a cada 1%
+
+        console.dir(event.target);
+    }
+
+
     return (
         <div className="song-control">
             <div className="song-control-controls">
@@ -33,7 +53,7 @@ export default function Control() {
             </div>
             <div className="song-control-controls-progress-bar">
                 <span id="song-time-current">0:50</span>
-                <ComponentProgressBar cicle={true} now={40} />
+                    <ComponentProgressBar cicle={true} now={40}  onClick={clickTimeCurrent} />
                 <span id="song-time-total">3:00</span>
             </div>
         </div>

@@ -1,7 +1,10 @@
 import React from "react";
 
+import ComponentHome from '../../components/Home/Home';
+
+
 const Home = (props) => (
-    <h1>Estamos no conteudo Home</h1>
+    <ComponentHome />
 );
 
 

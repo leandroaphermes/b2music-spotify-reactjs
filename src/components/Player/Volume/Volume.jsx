@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-import ComponentProgessBar from '../../ProgressBar/ProgessBar';
+import ComponentProgressBar from '../../UI/ProgressBar/ProgressBar';
 
 
 import { ReactComponent as IconList } from '../../../assets/img/icons/list-outline.svg';
@@ -33,7 +33,7 @@ export default function Volume() {
                         */}
                     </button>
                 </div>
-                <ComponentProgessBar cicle={true} now={50} />
+                <ComponentProgressBar cicle={true} now={50} />
             </div>
             <div className="song-volume-volume-expand">
                 <button type="button" className="btn btn-clean" title="Tela Cheia"><IconExpand /></button>

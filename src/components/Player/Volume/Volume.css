@@ -8,9 +8,11 @@
 .song-volume svg {
     width: 18px;
     height: 18px;
+    vertical-align: inherit;
 }
 .song-volume-slide {
     display: flex;
+    align-items: center;
 }
 .song-volume-slide .progress {
     display: block;
