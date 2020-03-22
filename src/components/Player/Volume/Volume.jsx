@@ -33,7 +33,7 @@ export default function Volume() {
                         */}
                     </button>
                 </div>
-                <ComponentProgressBar cicle={true} now={50} />
+                <ComponentProgressBar cicle={true} now={50} id="song-volume-progress" />
             </div>
             <div className="song-volume-volume-expand">
                 <button type="button" className="btn btn-clean" title="Tela Cheia"><IconExpand /></button>

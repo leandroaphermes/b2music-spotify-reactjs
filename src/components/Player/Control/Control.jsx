@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import ComponentProgressBar from '../../UI/ProgressBar/ProgressBar';
 
@@ -15,6 +15,42 @@ import "./Control.css";
 
 
 export default function Control() {
+
+    const [timeTotal, setTimeTotal] = useState(null);
+    const [volume, setVolume] = useState(70);
+    const [status, setStatus] = useState(false);
+    const [source, setSource] = useState("https://b2host.net/bensound-happyrock.mp3");
+    const [audio, setAudio] = useState(new Audio(source));
+
+    let pxPorcent = 0;
+    
+
+    useEffect(() => {
+        audio.addEventListener("loadeddata", (meta) => {
+            console.log(audio.duration);
+            setTimeTotal(parseInt(audio.duration));
+            
+           
+
+            pxPorcent = durationCalcule();
+            /* audio.play(); */
+        });
+
+    });
+
+    function durationCalcule(){
+        const progressEl = document.getElementById("song-time-progress");
+        return (progressEl.offsetWidth / 100) * (timeTotal / 100);
+    }
+
+    function playMusic(){
+        audio.play();
+    }
+
+    function tooglePlayPause(){
+        setStatus(!status);
+    }
+    
 
     function clickTimeCurrent(event){
         // event.target.offsetWidth   Tamanho da DIV progressBar
@@ -44,7 +80,7 @@ export default function Control() {
                 <button type="button" className="btn btn-clean mr-1" title="Anterior"><IconPlaySkipBack /></button>
 
                 <button type="button" id="pause" className="btn btn-clean mr-1 hide" title="Pause"><IconPause /></button>
-                <button type="button" id="play" className="btn btn-clean mr-1" title="Play"><IconPlay /></button>
+                <button type="button" id="play" className="btn btn-clean mr-1" title="Play" onClick={playMusic}><IconPlay /></button>
 
                 <button type="button" className="btn btn-clean mr-1" title="Próxima"><IconPlaySkipForward /></button>
 
@@ -53,7 +89,7 @@ export default function Control() {
             </div>
             <div className="song-control-controls-progress-bar">
                 <span id="song-time-current">0:50</span>
-                    <ComponentProgressBar cicle={true} now={40}  onClick={clickTimeCurrent} />
+                    <ComponentProgressBar cicle={true} now={0}  onClick={clickTimeCurrent} id="song-time-progress" />
                 <span id="song-time-total">3:00</span>
             </div>
         </div>

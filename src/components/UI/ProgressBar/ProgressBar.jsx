@@ -11,7 +11,7 @@ const FillerBar = (props) => {
 
 const ProgessBar = (props) => {
     return (
-        <div className="progress" onClick={props.onClick} >
+        <div className="progress" onClick={props.onClick} id={props.id} >
             { props.cicle &&
                 <FillerCicle now={props.now} />
             }
