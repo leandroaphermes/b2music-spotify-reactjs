@@ -177,7 +177,9 @@ p, h1, h2, h3, h4, h5, h6 {
     padding: .6rem .8rem;
     font-size: 1.4rem;
 }
-
+.btn:focus {
+    outline: none;
+}
 
 img.shadow {
     box-shadow: 0px 0px 10px var(--box-content);

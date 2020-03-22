@@ -13,7 +13,7 @@ const ProgessBar = (props) => {
     return (
         <div className="progress" onClick={props.onClick} id={props.id} >
             { props.cicle &&
-                <FillerCicle now={props.now} />
+                <FillerCicle now={props.now} draggable onDrag={(eve) => { console.log("rodou", eve) }} />
             }
             <FillerBar now={props.now} />
         </div>

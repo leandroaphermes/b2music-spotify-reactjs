@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import ComponentProgressBar from '../../UI/ProgressBar/ProgressBar';
 
@@ -17,57 +17,54 @@ import "./Control.css";
 export default function Control() {
 
     const [timeTotal, setTimeTotal] = useState(null);
-    const [volume, setVolume] = useState(70);
+    const [volume, setVolume] = useState(1);
     const [status, setStatus] = useState(false);
     const [source, setSource] = useState("https://b2host.net/bensound-happyrock.mp3");
     const [audio, setAudio] = useState(new Audio(source));
+   
+    const [currentProgress, setCurrentProgress] = useState(0);
+    const [currentNow, setCurrentNow] = useState(0);
 
-    let pxPorcent = 0;
-    
-
-    useEffect(() => {
-        audio.addEventListener("loadeddata", (meta) => {
-            console.log(audio.duration);
-            setTimeTotal(parseInt(audio.duration));
-            
-           
-
-            pxPorcent = durationCalcule();
-            /* audio.play(); */
-        });
-
+    audio.addEventListener("loadeddata", () => {
+        setTimeTotal(parseInt(audio.duration));
+        setNewVolume(volume);
+    });
+    audio.ontimeupdate = (() => {
+        if(parseInt(audio.currentTime) !== parseInt(currentNow)){
+            setCurrentProgress( (parseInt(audio.currentTime) / timeTotal) * 100 );
+            setCurrentNow(audio.currentTime);
+        }
+    });
+    audio.onended = (() => {
+        setStatus(false);
+        audio.currentTime = 0;
     });
 
-    function durationCalcule(){
-        const progressEl = document.getElementById("song-time-progress");
-        return (progressEl.offsetWidth / 100) * (timeTotal / 100);
-    }
 
     function playMusic(){
         audio.play();
+        setStatus(true);
+    }
+    function pauseMusic(){
+        audio.pause();
+        setStatus(false);
+    }
+    function setNewVolume(newVolume){
+        audio.volume = newVolume / 100;
     }
 
-    function tooglePlayPause(){
-        setStatus(!status);
+    function clickProgressBar(e){
+        let element = e.target;
+        if(element.id !== 'song-time-progress'){
+           element = e.target.parentElement;
+        }
+        audio.currentTime = audio.duration * (window.event.offsetX / element.offsetWidth);
     }
-    
 
-    function clickTimeCurrent(event){
-        // event.target.offsetWidth   Tamanho da DIV progressBar
-        // ATENÇÃO: event.target.offsetWidth deve fazer o path até a div do progress
-        // event.target.parentElement
-        /* 
-            let path = event.path || (event.composedPath && event.composedPath());
-            let target = path.find( function(el) { return (el.dataset.row);   } );
-        */
-
-        // minutos total: 3:00
-        // minutos total: 3 * 60 = 160 segundos
-        // 500 /100 = 5px para 1% de div
-        // 180 /100  = 1,8 a cada 1%
-        // 5 * 1,8 = 9px a cada 1%
-
-        console.dir(event.target);
+    function secondsToMinutos(time){
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${("0" + minutes).slice(-2)}:${("0" + seconds).slice(-2)}`;
     }
 
 
@@ -79,8 +76,14 @@ export default function Control() {
 
                 <button type="button" className="btn btn-clean mr-1" title="Anterior"><IconPlaySkipBack /></button>
 
-                <button type="button" id="pause" className="btn btn-clean mr-1 hide" title="Pause"><IconPause /></button>
-                <button type="button" id="play" className="btn btn-clean mr-1" title="Play" onClick={playMusic}><IconPlay /></button>
+                { status ? (
+                    <button type="button" id="pause" className="btn btn-clean mr-1" title="Pause" onClick={pauseMusic}><IconPause /></button>
+                ) : (
+                    <button type="button" id="play" className="btn btn-clean mr-1" title="Play" onClick={playMusic}><IconPlay /></button>
+                )
+                }
+                
+                
 
                 <button type="button" className="btn btn-clean mr-1" title="Próxima"><IconPlaySkipForward /></button>
 
@@ -88,9 +91,9 @@ export default function Control() {
 
             </div>
             <div className="song-control-controls-progress-bar">
-                <span id="song-time-current">0:50</span>
-                    <ComponentProgressBar cicle={true} now={0}  onClick={clickTimeCurrent} id="song-time-progress" />
-                <span id="song-time-total">3:00</span>
+                <span id="song-time-current">{secondsToMinutos(currentNow)}</span>
+                    <ComponentProgressBar cicle={true} now={currentProgress}  onClick={clickProgressBar} id="song-time-progress" />
+                <span id="song-time-total">{secondsToMinutos(timeTotal)}</span>
             </div>
         </div>
     )
