@@ -47,7 +47,6 @@ export default function Player() {
         }
     }
     function onClickButtonMute(){
-        console.log(volume);
         if(volume.last !== null){
             setVolume({ now: volume.last, last: null });
         }else{

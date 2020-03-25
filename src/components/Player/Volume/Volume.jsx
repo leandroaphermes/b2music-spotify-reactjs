@@ -22,9 +22,9 @@ export default function Volume(props) {
     function getIconeVol(value) {
         if(value === 0){
             return <IconVolumeMute />;
-        }else if(value > 0 && value <= 30){
+        }else if(value > 0 && value <= 20){
             return <IconVolumeOff />;
-        }else if(value > 30 && value <= 50){
+        }else if(value > 20 && value <= 50){
             return <IconVolumeLow />;
         }else if(value > 50 && value <= 70){
             return <IconVolumeMedium />;
