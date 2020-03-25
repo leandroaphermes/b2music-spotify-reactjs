@@ -2,21 +2,31 @@ import React from 'react'
 
 import "./ProgressBar.css";
 
-const FillerCicle = (props) => {
-    return <div className="progress-cicle" style={ { left: `${props.now}%` } }></div>
-}
-const FillerBar = (props) => {
-    return <div className="progress-bar" style={ { width: `${props.now}%` } }></div>
-}
-
 const ProgessBar = (props) => {
+
+    const propssx = {
+        className : "progress" ,
+        id : props.id,
+        min : (props.min > 0) ? props.min : 0 ,
+        max : props.max,
+        step :  (props.step) ? props.step : 1 ,
+        value : props.now,
+    }
+
+    if(props.onChange){
+        propssx.onChange= props.onChange;
+    }
+    if(props.onMouseUp){
+        propssx.onMouseUp= props.onMouseUp;
+    }
+    if(props.onMouseDown){
+        propssx.onMouseDown= props.onMouseDown;
+    }
+
     return (
-        <div className="progress" onClick={props.onClick} id={props.id} >
-            { props.cicle &&
-                <FillerCicle now={props.now} draggable onDrag={(eve) => { console.log("rodou", eve) }} />
-            }
-            <FillerBar now={props.now} />
-        </div>
+        <input type="range"
+            {...propssx}
+        />
     )
 }
 
