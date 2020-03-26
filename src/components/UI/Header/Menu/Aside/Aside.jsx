@@ -9,8 +9,6 @@ import { ReactComponent as IconHome } from '../../../../../assets/img/icons/home
 import { ReactComponent as IconSearch } from '../../../../../assets/img/icons/search-outline.svg';
 import { ReactComponent as IconMusicalNotes } from '../../../../../assets/img/icons/musical-notes-outline.svg';
 import { ReactComponent as IconStar } from '../../../../../assets/img/icons/star-outline.svg';
-import photoMusic from '../../../../../assets/img/music/Five-Hours-by-Deorro.jpg';
-
 
 
 export default function Aside(props) {
@@ -46,8 +44,8 @@ export default function Aside(props) {
 
 
     return (
-        <div className="menu-aside">
-            <div className="menu-list">
+        <aside className="menu-aside">
+            <nav className="menu-list">
                 <ul>
                     {
                     menuList.map( (item) =>(
@@ -61,10 +59,7 @@ export default function Aside(props) {
                     )
                     }
                 </ul>
-            </div>
-            <div className="photo-song">
-                <img src={photoMusic} alt="Five Hours by Deorro" />
-            </div>
-        </div>
+            </nav>
+        </aside>
     );
 }

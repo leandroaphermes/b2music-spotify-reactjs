@@ -24,14 +24,14 @@ export default function Control(props) {
         <div className="song-control">
             <div className="song-control-controls">
                 <button type="button" className="btn btn-clean mr-1" title="Ordem Aleatoria"><IconShuflle /></button>
-                <button type="button" className="btn btn-clean mr-1" title="Anterior"><IconPlaySkipBack /></button>
+                <button type="button" className="btn btn-clean mr-1" title="Anterior" onClick={props.backSong}><IconPlaySkipBack /></button>
                 { props.status ? (
                         <button type="button" id="pause" className="btn btn-clean mr-1" title="Pause" onClick={props.btnPauseOnClick}><IconPause /></button>
                     ) : (
                         <button type="button" id="play" className="btn btn-clean mr-1" title="Play" onClick={props.btnPlayOnClick}><IconPlay /></button>
                     )
                 }
-                <button type="button" className="btn btn-clean mr-1" title="Próxima"><IconPlaySkipForward /></button>
+                <button type="button" className="btn btn-clean mr-1" title="Próxima" onClick={props.nextSong} ><IconPlaySkipForward /></button>
                 <button type="button" className="btn btn-clean" title="Repetir"><IconRepeat /></button>
             </div>
             <div className="song-control-controls-progress-bar">

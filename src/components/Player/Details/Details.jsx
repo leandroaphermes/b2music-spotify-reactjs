@@ -1,22 +1,28 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 
-import photoMusic from '../../../assets/img/music/Five-Hours-by-Deorro.jpg';
+import photoMusic from '../../../assets/img/music/default.jpg';
 
 import "./Details.css";
 
-export default function Details() {
+export default function Details(props) {
     return (
         <div className="song-details">
             <div className="photo-mini-song">
-                <img src={photoMusic} alt="Five Hours by Deorro" />
+                <a href={`/album/${props.album.id}`}><img src={(props.photo) ? props.photo : photoMusic} alt={props.title} /></a>
             </div>
             <div className="song-details-info">
                 <div className="song-details-title">
-                    <a href="#song-name">Five Hours</a>
+                    <a href={`/album/${props.album.id}`}>{props.title}</a>
                 </div>
                 <div className="song-details-author">
-                    <a href="#song-name">Deorro</a>
+                    { props.authors.map( (author, index) => 
+                            <Fragment key={index}>
+                                {index > 0 && ', '}
+                                <a href={`/artist/${author.id}`}>{author.name}</a>
+                            </Fragment>
+                        )
+                    }
                 </div>
             </div>
         </div>

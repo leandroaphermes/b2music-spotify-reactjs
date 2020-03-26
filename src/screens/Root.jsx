@@ -14,10 +14,10 @@ const HeaderBase = () => (
     <React.Fragment>
         <div className="container">
             <ComponentsUIHeader />
-            <div className="body-content">
+            <main className="body-content">
                 <Route exact path="/" component={ScreenHome} />
                 <Route exact path="/search" component={() => <h3>Você ta buscando</h3>} />
-            </div>
+            </main>
         </div>
         <ComponentsPlayer />
     </React.Fragment>

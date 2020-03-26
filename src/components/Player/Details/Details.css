@@ -4,14 +4,17 @@
     align-self: center;
     padding-left: 20px;
     box-sizing: border-box;
+    position: relative;
 }
 .song-details {
     display: flex;
 }
 .photo-mini-song {
-    display: none;
-    height: 60px;
-    width: 60px;
+    position: absolute;
+    display: block;
+    max-width: 240px;
+    bottom: 64px;
+    left: 0px;
 }
 .song-details-info{
     padding-left: 20px;
@@ -24,10 +27,8 @@
 }
 
 @media screen and (max-width: 1000px), (max-height: 600px){
-    .photo-song{
-        display: none;
-    }
     .photo-mini-song {
-        display: block;
+        position: unset;
+        width: 60px;
     }
 }

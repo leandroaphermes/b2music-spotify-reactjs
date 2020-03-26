@@ -34,10 +34,10 @@ export default function Volume(props) {
     }
     return (
         <div className="song-volume">
-            <div className="song-volume-playlist">
+            <div className="song-volume-playlist mr-2">
                 <button type="button" className="btn btn-clean" title="Fila de Reprodução"><IconList /></button>
             </div>
-            <div className="song-volume-slide">
+            <div className="song-volume-slide mr-2">
                 <div className="song-volume-volume-icon mr-1">
                     <button 
                         type="button" 
@@ -50,7 +50,7 @@ export default function Volume(props) {
                 </div>
                 <ComponentProgressBar now={props.volume} max={100} onChange={props.onChange} id="song-volume-progress" />
             </div>
-            <div className="song-volume-volume-expand">
+            <div className="song-volume-volume-expand mr-5">
                 <button type="button" className="btn btn-clean" title="Tela Cheia"><IconExpand /></button>
             </div>
         </div>

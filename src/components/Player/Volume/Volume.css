@@ -1,6 +1,6 @@
 .song-volume {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-end;
     align-items: center;
     height: 100%;
     width: 100%;
