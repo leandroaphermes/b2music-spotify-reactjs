@@ -47,10 +47,6 @@ a {
 .active, a:active, a:hover, a:focus {
     color: var(--text-primary-hover);
 }
-.active {
-    background-color: var(--box-content);
-    border-radius: 5px;
-}
 a.active-line {
     text-decoration: none;
     color: var(--text-primary-hover);
@@ -107,7 +103,12 @@ p, h1, h2, h3, h4, h5, h6 {
 
 
 
-
+button {
+    opacity: 1;
+}
+button:disabled{
+    opacity: 0.5;
+}
 .btn {
     display: inline-block;
     font-weight: 400;
@@ -130,6 +131,9 @@ p, h1, h2, h3, h4, h5, h6 {
 .btn-clean {
     background-color: transparent;
     padding: 0px 0px;
+}
+.btn-active {
+    color: var(--text-primary-hover);
 }
 .btn-clean:hover {
     background-color: transparent;

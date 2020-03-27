@@ -8,99 +8,22 @@ import "./Player.css";
 
 export default function Player() {
 
-    const [timeTotal, setTimeTotal] = useState(null);
-    const [volume, setVolume] = useState({ now: (localStorage.getItem("volume")) ? localStorage.getItem("volume") : 50, last: null });
     const [status, setStatus] = useState(false);
+    const [timeTotal, setTimeTotal] = useState(null);
     const [currentNow, setCurrentNow] = useState(0);
     const [mouseDown, setMouseDown] = useState(false);
-    /* localStorage.getItem("player", JSON.(player)) */
-    const [player, setPlayer] = useState({
-        listeningIndex: null,
-        listening: { },
+    const [random, setRandom] = useState(false);
+    const [repeat, setRepeat] = useState(false);
+    const [volume, setVolume] = useState({ now: (localStorage.getItem("volume")) ? localStorage.getItem("volume") : 50, last: null });
+    const [player, setPlayer] = useState(JSON.parse(localStorage.getItem("player")));
 
-        playlist: [
-            {
-                id: 1,
-                title: "Happy Rock",
-                authors: [
-                    {
-                        id: 1,
-                        name: "Desconhecido"
-                    }
-                ],
-                album: {
-                    id: 1,
-                    title: "Free Sounds"
-                },
-                photo_src: "",
-                src: "https://b2host.net/music/bensound-happyrock.mp3",
-                duration: 105
-            },
-            {
-                id: 2,
-                title: "Andless Motion",
-                authors: [
-                    {
-                        id: 1,
-                        name: "Desconhecido Motion"
-                    },
-                    {
-                        id: 2,
-                        name: "Motion Sounds"
-                    }
-                ],
-                album: {
-                    id: 1,
-                    title: "Free Sounds"
-                },
-                photo_src: "",
-                src: "https://b2host.net/music/bensound-endlessmotion.mp3",
-                duration: 180
-            },
-            {
-                id: 3,
-                title: "Dreams",
-                authors: [
-                    {
-                        id: 1,
-                        name: "Desconhecido Motion"
-                    }
-                ],
-                album: {
-                    id: 1,
-                    title: "Free Sounds"
-                },
-                photo_src: "",
-                src: "https://b2host.net/music/bensound-dreams.mp3",
-                duration: 210
-            },
-            {
-                id: 4,
-                title: "Dance",
-                authors: [
-                    {
-                        id: 1,
-                        name: "Desconhecido Dence"
-                    }
-                ],
-                album: {
-                    id: 1,
-                    title: "Free Sounds"
-                },
-                photo_src: "",
-                src: "https://b2host.net/music/bensound-dance.mp3",
-                duration: 177
-            }
-        ]
-    })
-
-    if(Object.keys(player.listening).length < 2){
-        setPlayer(Object.assign(player, { listeningIndex: 0, listening: player.playlist[0] }));
+    if(Object.keys(player.playing).length < 2){
+        setPlayer(Object.assign(player, { playingIndex: 0, playing: player.playlist[0] }));
     }
 
-    const [audio, setAudio] = useState(new Audio(player.listening.src));
+    const [audio, setAudio] = useState(new Audio(player.playing.src));
 
-    audio.addEventListener("loadeddata", () => {
+    audio.oncanplaythrough = (() => {
         setTimeTotal(parseInt(audio.duration));
         setVolume({ now: volume.now, last: volume.last });
     });
@@ -112,15 +35,27 @@ export default function Player() {
     audio.onended = (() => {
         setStatus(false);
         audio.currentTime = 0;
-        next();
+        if(repeat === false) {
+            next();
+        }else{
+            play();
+        }
     });
-    function playMusic(){
+
+    function play(){
         audio.play();
         setStatus(true);
     }
-    function pauseMusic(){
+    function pause(){
         audio.pause();
         setStatus(false);
+    }
+    function tooglePlayPause(){
+        if(status){
+            pause();
+        }else{
+            play();
+        }
     }
     function updateCurrentNow(event) {
         setCurrentNow(event.target.value);
@@ -140,32 +75,43 @@ export default function Player() {
     }
     function next() {
         let nextSong = {
-            listeningIndex: 0,
-            listening: player.playlist[0]
+            playingIndex: 0,
+            playing: player.playlist[0]
         };
-        if(player.playlist[player.listeningIndex+1]){
-            nextSong.listeningIndex = player.listeningIndex+1;
-            nextSong.listening = player.playlist[player.listeningIndex+1];
+        if(random){
+            let rand = parseInt(Math.random() * ((Object.keys(player.playlist).length - 1) - 0) + 0);
+
+            if(rand === player.playingIndex) rand++;
+
+            if(player.playlist[rand]){
+                nextSong.playingIndex = rand;
+                nextSong.playing = player.playlist[rand];
+            }
+        }else{
+            if(player.playlist[(player.playingIndex + 1)]){
+                nextSong.playingIndex = (player.playingIndex + 1);
+                nextSong.playing = player.playlist[(player.playingIndex + 1)];
+            }
         }
         setPlayer(Object.assign(player, nextSong));
-        audio.src = player.listening.src;
-        audio.oncanplay = () => {
-            playMusic();
-        }
+        audio.src = player.playing.src;
+        audio.addEventListener("canplaythrough", () => {
+            play();
+        })
     }
     function back() {
         let nextSong = {
-            listeningIndex: 0,
-            listening: player.playlist[0]
+            playingIndex: 0,
+            playing: player.playlist[0]
         };
-        if(player.playlist[player.listeningIndex-1]){
-            nextSong.listeningIndex = player.listeningIndex-1;
-            nextSong.listening = player.playlist[player.listeningIndex-1];
+        if(player.playlist[(player.playingIndex-1)]){
+            nextSong.playingIndex = (player.playingIndex-1);
+            nextSong.playing = player.playlist[(player.playingIndex-1)];
         }
         setPlayer(Object.assign(player, nextSong));
-        audio.src = player.listening.src;
-        audio.oncanplay = () => {
-            playMusic();
+        audio.src = player.playing.src;
+        audio.oncanplaythrough = () => {
+            play();
         }
     }
 
@@ -175,30 +121,55 @@ export default function Player() {
             localStorage.setItem("volume", volume.now);
         }
     }, [ volume, audio ]);
-
-/*     useEffect(()=> {
-        localStorage.setItem("player", JSON.stringify(player)); 
-    }, [ player ]); */
-
+    useEffect(()=> {
+        localStorage.setItem("player", JSON.stringify(player).toString());
+    }, [ player ]);
 
 
 
+    document.querySelector("body").onkeydown = ((e) => {
+        e.preventDefault();
+        switch (e.keyCode) {
+            case 32:
+            case 80:
+            case 179:
+                tooglePlayPause();
+                break;
+            case 176: 
+                next();
+                break;
+            case 177: 
+                back();
+                break;
+            case 38: 
+                setVolume({
+                    now: ((volume.now + 10) > 100) ? 100 : volume.now + 10,
+                    last: null
+                });
+                break;
+            case 40: 
+                setVolume({
+                    now: ((volume.now -10) > 0) ? volume.now -10 : 0,
+                    last: ((volume.now -10) <= 0) ? volume.now -10 : null
+                });
+                break;
 
 
-
-
-
+            default:
+                break;
+        }
+    });
     return (
-        <section className="player-container">
+        <section className="player-container" id="player-container" aria-label="Tocador de Musica">
             <ComponentPlayerDetails
-                title={player.listening.title}
-                authors={player.listening.authors}
-                album={player.listening.album}
+                title={player.playing.title}
+                authors={player.playing.authors}
+                album={player.playing.album}
             />
             <ComponentPlayerControl
                 status={status} 
-                btnPauseOnClick={pauseMusic}
-                btnPlayOnClick={playMusic}
+                btnPauseOnClick={pause}
+                btnPlayOnClick={play}
                 currentNow={currentNow}
                 timeTotal={timeTotal}
                 onMouseProgress={onMouseProgress}
@@ -206,6 +177,13 @@ export default function Player() {
 
                 nextSong={next}
                 backSong={back}
+
+                random={random}
+                randomOnClick={() => setRandom(!random) }
+                repeat={repeat}
+                repeatOnClick={() => setRepeat(!repeat) }
+
+
             />
             <ComponentPlayerVolume
                 volume={volume.now}

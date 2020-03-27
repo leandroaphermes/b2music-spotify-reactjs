@@ -7,7 +7,7 @@ import "./Details.css";
 
 export default function Details(props) {
     return (
-        <div className="song-details">
+        <div className="song-details" aria-label="Informação da musica atual">
             <div className="photo-mini-song">
                 <a href={`/album/${props.album.id}`}><img src={(props.photo) ? props.photo : photoMusic} alt={props.title} /></a>
             </div>

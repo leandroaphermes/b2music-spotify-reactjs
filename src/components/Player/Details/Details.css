@@ -25,6 +25,9 @@
 .song-details-title a {
     color: var(--text-primary-white);
 }
+.song-details-author {
+    font-size: 0.8em;
+}
 
 @media screen and (max-width: 1000px), (max-height: 600px){
     .photo-mini-song {
