@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 
 import ComponentProgressBar from '../../UI/ProgressBar/ProgressBar';
@@ -16,7 +16,7 @@ import "./Volume.css";
 
 
 
-export default function Volume(props) {
+const Volume = function(props) {
 
     function getIconeVol(value) {
         if(value === 0){
@@ -52,3 +52,5 @@ export default function Volume(props) {
         </div>
     )
 }
+
+export default memo(Volume);

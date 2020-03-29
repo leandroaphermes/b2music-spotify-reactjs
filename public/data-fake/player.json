@@ -1,0 +1,78 @@
+{
+    "playingIndex": 0,
+    "playing": { },
+    "playlist": [
+        {
+            "id": 1,
+            "title": "Happy Rock",
+            "authors": [
+                {
+                    "id": 1,
+                    "name": "Desconhecido"
+                }
+            ],
+            "album": {
+                "id": 1,
+                "title": "Free Sounds"
+            },
+            "photo_src": "",
+            "src": "/music/bensound-happyrock.mp3",
+            "duration": 105
+        },
+        {
+            "id": 2,
+            "title": "Andless Motion",
+            "authors": [
+                {
+                    "id": 1,
+                    "name": "Desconhecido Motion"
+                },
+                {
+                    "id": 2,
+                    "name": "Motion Sounds"
+                }
+            ],
+            "album": {
+                "id": 1,
+                "title": "Free Sounds"
+            },
+            "photo_src": "",
+            "src": "/music/bensound-endlessmotion.mp3",
+            "duration": 180
+        },
+        {
+            "id": 3,
+            "title": "Dreams",
+            "authors": [
+                {
+                    "id": 1,
+                    "name": "Desconhecido Motion"
+                }
+            ],
+            "album": {
+                "id": 1,
+                "title": "Free Sounds"
+            },
+            "photo_src": "",
+            "src": "/music/bensound-dreams.mp3",
+            "duration": 210
+        },
+        {
+            "id": 4,
+            "title": "Dance",
+            "authors": [
+                {
+                    "id": 1,
+                    "name": "Desconhecido Dence"
+                }
+            ],
+            "album": {
+                "id": 1,
+                "title": "Free Sounds"
+            },
+            "photo_src": "",
+            "src": "/music/bensound-dance.mp3",
+            "duration": 177
+        }
+    ]
+}
