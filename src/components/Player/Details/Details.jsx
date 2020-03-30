@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, memo } from 'react'
 
 
 import photoMusic from '../../../assets/img/music/default.jpg';
 
 import "./Details.css";
 
-export default function Details(props) {
+const Details = function(props) {
     return (
         <div className="song-details" aria-label="Informação da musica atual">
             <div className="photo-mini-song">
@@ -28,3 +28,4 @@ export default function Details(props) {
         </div>
     )
 }
+export default memo(Details);

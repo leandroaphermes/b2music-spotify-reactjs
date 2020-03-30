@@ -12,90 +12,17 @@ export default function Player() {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [status, setStatus] = useState(false);
-    const [timeTotal, setTimeTotal] = useState(null);
     const [currentNow, setCurrentNow] = useState(0);
     const [mouseDown, setMouseDown] = useState(false);
     const [random, setRandom] = useState(false);
     const [repeat, setRepeat] = useState(false);
-    const [volume, setVolume] = useState({ now: (localStorage.getItem("volume")) ? localStorage.getItem("volume") : 50, last: null });
+    const [volume, setVolume] = useState({ now: (localStorage.getItem("volume")) ? parseInt(localStorage.getItem("volume")) : 50, last: null });
     const [player, setPlayer] = useState({
         playingIndex: 0,
         playing: {},
         playlist: []
-    });    
+    });
 
-    useEffect(() => {
-
-        async function getDate(){
-            await fetch("/data-fake/player.json")
-            .then( function(response) { 
-                if(response.status === 200){
-                    response.json()
-                    .then( (result)=> {
-                        setPlayer({...result , playingIndex: 0, playing: result.playlist[0] });
-                        audio.src = result.playlist[0].src;
-                        
-                    })
-                    .catch( function(error) { console.error(error) });
-                }
-            })
-            .catch( function(error) { console.error(error) });
-        }
-
-        getDate();
-        audio.oncanplaythrough = (() => {
-            setIsLoaded(true);
-            setTimeTotal(parseInt(audio.duration));
-            setVolume({ now: volume.now, last: volume.last });
-        });
-        audio.ontimeupdate = (() => {
-            if(audio.currentTime !== parseInt(currentNow) && !mouseDown){
-                setCurrentNow(parseInt(audio.currentTime));
-            }
-        });
-        audio.onended = (() => {
-            setStatus(false);
-            audio.currentTime = 0;
-            if(repeat === false) {
-                next();
-            }else{
-                play();
-            }
-        });
-        document.querySelector("body").onkeydown = ((e) => {
-            e.preventDefault();
-            switch (e.keyCode) {
-                case 32:
-                case 80:
-                case 179:
-                    tooglePlayPause();
-                    break;
-                case 176: 
-                    next();
-                    break;
-                case 177: 
-                    back();
-                    break;
-                case 38: 
-                    setVolume({
-                        now: ((volume.now + 10) > 100) ? 100 : volume.now + 10,
-                        last: null
-                    });
-                    break;
-                case 40: 
-                    setVolume({
-                        now: ((volume.now -10) > 0) ? volume.now -10 : 0,
-                        last: ((volume.now -10) <= 0) ? volume.now -10 : null
-                    });
-                    break;
-    
-    
-                default:
-                    break;
-            }
-        });
-
-    }, []);
 
     function play(){
         audio.play();
@@ -129,6 +56,7 @@ export default function Player() {
         }
     }
     function next() {
+        setStatus(false);
         let nextSong = {
             playingIndex: 0,
             playing: player.playlist[0]
@@ -149,9 +77,14 @@ export default function Player() {
             }
         }
         setPlayer(Object.assign(player, nextSong));
+        
+        console.log("Next -> SetPlayer -> assing", player);
         audio.src = player.playing.src;
-        audio.addEventListener("canplaythrough", () => {
-            play();
+
+        audio.oncanplaythrough = (() => {
+            if(status){
+                play();
+            }
         })
     }
     function back() {
@@ -165,9 +98,11 @@ export default function Player() {
         }
         setPlayer(Object.assign(player, nextSong));
         audio.src = player.playing.src;
-        audio.oncanplaythrough = () => {
-            play();
-        }
+        audio.oncanplaythrough = (() => {
+            if(status){
+                play();
+            }
+        })
     }
 
     useEffect(() => {
@@ -176,11 +111,86 @@ export default function Player() {
             localStorage.setItem("volume", volume.now);
         }
     }, [ volume ]);
+
     useEffect(()=> {
-        localStorage.setItem("player", JSON.stringify(player).toString());
+        localStorage.setItem("player", JSON.stringify(player));
     }, [ player ]);
 
 
+    useEffect(() => {
+        async function getDate(){
+            await fetch("/data-fake/player.json")
+            .then( function(response) { 
+                if(response.status === 200){
+                    response.json()
+                    .then( (result)=> {
+                        setPlayer({...result , playingIndex: 0, playing: result.playlist[0] });
+                        audio.src = result.playlist[0].src;
+                    })
+                    .catch( function(error) { console.error(error) });
+                }
+            })
+            .catch( function(error) { console.error(error) });
+        }
+        getDate();
+
+        audio.addEventListener("canplaythrough", (e) => {
+            setIsLoaded(true);
+        });
+        audio.ontimeupdate = (() => {
+            if(audio.currentTime !== parseInt(currentNow) && !mouseDown){
+                setCurrentNow(parseInt(audio.currentTime));
+            }
+        });
+        document.querySelector("body").onkeydown = ((e) => {
+            e.preventDefault();
+            switch (e.keyCode) {
+                case 32:
+                case 80:
+                case 179:
+                    tooglePlayPause();
+                    break;
+                case 176: 
+                    next();
+                    break;
+                case 177: 
+                    back();
+                    break;
+                case 38: 
+                    setVolume({
+                        now: ((volume.now + 10) > 100) ? 100 : volume.now + 10,
+                        last: null
+                    });
+                    break;
+                case 40: 
+                    setVolume({
+                        now: ((volume.now -10) > 0) ? volume.now -10 : 0,
+                        last: ((volume.now -10) <= 0) ? volume.now -10 : null
+                    });
+                    break;
+                default:
+                    break;
+            }
+        });
+        return function(){
+            audio.removeEventListener("canplaythrough", (e) => {
+            setIsLoaded(true);
+        });
+        }
+
+    }, [ ]);
+
+    
+    audio.onended = (() => {
+        setIsLoaded(false);
+        setStatus(false);
+        audio.currentTime = 0;
+        if(repeat === false) {
+            next();
+        }else{
+            play();
+        }
+    });
 
     return (
         <section className="player-container" id="player-container" aria-label="Tocador de Musica">
@@ -196,7 +206,7 @@ export default function Player() {
                         btnPauseOnClick={pause}
                         btnPlayOnClick={play}
                         currentNow={currentNow}
-                        timeTotal={timeTotal}
+                        timeTotal={player.playing.duration}
                         onMouseProgress={onMouseProgress}
                         updateCurrentNow={updateCurrentNow}
 
@@ -207,8 +217,6 @@ export default function Player() {
                         randomOnClick={() => setRandom(!random) }
                         repeat={repeat}
                         repeatOnClick={() => setRepeat(!repeat) }
-
-
                     />
                     <ComponentPlayerVolume
                         volume={volume.now}

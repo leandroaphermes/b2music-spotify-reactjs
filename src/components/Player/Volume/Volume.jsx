@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 
 
 import ComponentProgressBar from '../../UI/ProgressBar/ProgressBar';
@@ -53,4 +53,4 @@ const Volume = function(props) {
     )
 }
 
-export default memo(Volume);
+export default Volume;
