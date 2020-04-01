@@ -16,7 +16,7 @@
                 "title": "Free Sounds"
             },
             "photo_src": "",
-            "src": "/music/bensound-happyrock.mp3",
+            "src": "http://localhost:3000/music/bensound-happyrock.mp3",
             "duration": 105
         },
         {
@@ -37,7 +37,7 @@
                 "title": "Free Sounds"
             },
             "photo_src": "",
-            "src": "/music/bensound-endlessmotion.mp3",
+            "src": "http://localhost:3000/music/bensound-endlessmotion.mp3",
             "duration": 180
         },
         {
@@ -54,7 +54,7 @@
                 "title": "Free Sounds"
             },
             "photo_src": "",
-            "src": "/music/bensound-dreams.mp3",
+            "src": "http://localhost:3000/music/bensound-dreams.mp3",
             "duration": 210
         },
         {
@@ -71,7 +71,7 @@
                 "title": "Free Sounds"
             },
             "photo_src": "",
-            "src": "/music/bensound-dance.mp3",
+            "src": "http://localhost:3000/music/bensound-dance.mp3",
             "duration": 177
         }
     ]

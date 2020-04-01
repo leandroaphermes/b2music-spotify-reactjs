@@ -41,8 +41,8 @@ const Volume = function(props) {
                     <button 
                         type="button" 
                         className="btn btn-clean btn-block" 
-                        title={ (props.muted !== 0) ? `Mutar` : `Com Som` }
-                        onClick={props.onClickButtonMute}
+                        title={ (props.volume !== 0) ? `Mutar` : `Com Som` }
+                        onClick={props.onClickMute}
                     >
                         {getIconeVol(parseInt(props.volume))}
                     </button>
