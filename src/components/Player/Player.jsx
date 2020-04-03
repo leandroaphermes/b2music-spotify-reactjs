@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import ComponentUILoading from '../UI/Loading/Loading';
+
 import ComponentPlayerDetails from "./Details/Details";
 import ComponentPlayerControl from "./Control/Control";
 import ComponentPlayerVolume from "./Volume/Volume";
@@ -195,7 +197,7 @@ export default function Player() {
                     />
                 </>
             ) : (
-                <span className="loading">Loading...</span>
+                <ComponentUILoading />
             )}
         </section>
     )
