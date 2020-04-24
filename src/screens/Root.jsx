@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ComponentsUIHeader from "../components/UI/Header/Header";
 import ComponentsPlayer from "../components/Player/Player";
 
+import ScreenLogin from "./Login/Login";
 import ScreenHome from "./Home/Home";
 
 
@@ -27,7 +28,7 @@ const HeaderBase = () => (
 const Routes = (props) => (
     <BrowserRouter>
         <Switch>
-            <Route exact path="/login" component={() => <h3>Você ta no Login</h3>} />
+            <Route exact path="/login" component={ScreenLogin} />
             <HeaderBase />
         </Switch>
     </BrowserRouter>
