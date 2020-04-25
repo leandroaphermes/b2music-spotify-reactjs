@@ -215,31 +215,6 @@ img.shadow {
     text-align: right;
 }
 
-.alert{
-    position: sticky;
-    display: inline-block;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 15px 30px;
-    background-color: var(--progress-bar-full);
-    box-sizing: border-box;
-    border-radius: 50px;
-    z-index: 1000;
-    color: var(--text-primary-white);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    opacity: 1;
-}
-.alert.alert-success {
-    background-color: var(--alert-success);
-}
-.alert.alert-danger {
-    background-color: var(--alert-danger);
-}
-.alert.alert-info {
-    background-color: var(--alert-info);
-}
-
 /* Input Error */
 .input-error{
     font-size: 0.9em;
