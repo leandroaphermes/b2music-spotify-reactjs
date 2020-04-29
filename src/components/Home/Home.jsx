@@ -17,26 +17,26 @@ export default function Home() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState({})
 
-    function play(e, playlistId, index){
+    function play(e, playlistId){
         e.preventDefault();
-        let playing = data.cards[index].playlists.find( playlist => { return playlist.id === playlistId } );
-        alert("Você ta ouvindo " + playing.name);
+
+        console.log(e, playlistId);
+        
+
+/*         let playing = data[index].playlists.find( playlist => { return playlist.id === playlistId } );
+        alert("Você ta ouvindo " + playing.name); */
     }
     
 
     useEffect(() => {
-        
         api.get("/cards/home-page")
         .then( response => {
             if(response.status === 200){
-               
                 setData(response.data);
                 setIsLoaded(true);
-                    
             }
         })
         .catch();
-        
     }, [])
 
 
@@ -59,7 +59,7 @@ export default function Home() {
                                     </div>
                                     <small className="card-small">{cardItem.describe}</small>
                                 </header>
-                                    {cardItem.playlists.map( (playlist, index) => (
+                                    {cardItem.playlists.map( (playlist) => (
                                         <article key={playlist.id} className="card-container">
                                             <a href={`/playlist/${playlist.id}`} className="d-block card-content">
                                                 <div className="image-album">
@@ -72,7 +72,7 @@ export default function Home() {
                                                     <div className="song-describe-body hide-text-two-lines">{playlist.description}</div>
                                                 </div>
                                                 <div className="song-player">
-                                                    <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, playlist.id, index)}>
+                                                    <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, playlist.id)}>
                                                         {(status) ? <IconPause /> : <IconPlay />}
                                                     </button>
                                                 </div>

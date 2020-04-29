@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
-
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom"; 
+import { Provider } from 'react-redux'
+
+import store from '../store/store'
 import { getUser } from '../utils/utils'
 
 import ComponentsUIHeader from "../components/UI/Header/Header";
 import ComponentsPlayer from "../components/Player/Player";
 
+/* Pages */
 import ScreenLogin from "./Login/Login";
 import ScreenHome from "./Home/Home";
 
@@ -36,7 +39,9 @@ const Routes = () => (
     <BrowserRouter>
         <Switch>
             <Route exact path="/login" component={ScreenLogin} />
-            <HeaderBase />
+            <Provider store={store}>
+                <HeaderBase />
+            </Provider>
         </Switch>
     </BrowserRouter>
 );

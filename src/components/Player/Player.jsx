@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
 
 import api from '../../services/Api'
+import setPlayerData from '../../store/actions/player'
 
 import ComponentUILoading from '../UI/Loading/Loading';
 
@@ -13,7 +15,7 @@ import "./Player.css";
 const audio = new Audio();
 
 
-export default function Player() {
+ const Player = function({ player, dispatch }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [status, setStatus] = useState(false);
@@ -25,12 +27,6 @@ export default function Player() {
     const [currentTime, setCurrentTime] = useState(0);
 
     const [volume, setVolume] = useState(localStorage.getItem("volume") !== "" ? JSON.parse(localStorage.getItem("volume")) : { now: 30, last: null } );
-
-    const [player, setPlayer] = useState({
-        playingIndex: 0,
-        playing: {},
-        playlist: [ ]
-    })
 
     function updateCurrentTime(newValue){
         setCurrentTime(newValue);
@@ -72,7 +68,7 @@ export default function Player() {
             }
         }
 
-        setPlayer({...player, playing: play.playing,  playingIndex: play.playingIndex });
+        dispatch(setPlayerData({...player, playing: play.playing,  playingIndex: play.playingIndex }));
     }
     function back(){
         let play = {
@@ -83,7 +79,7 @@ export default function Player() {
             play.playingIndex = player.playingIndex-1;
             play.playing = player.playlist[player.playingIndex-1];
         }
-        setPlayer({...player, playing: play.playing,  playingIndex: play.playingIndex });
+        dispatch(setPlayerData({...player, playing: play.playing,  playingIndex: play.playingIndex }));
     }
 
     function eventPlay() {
@@ -115,7 +111,7 @@ export default function Player() {
                                 data.playing = data.playlist[0];
                             }
                             
-                            setPlayer(data);
+                            dispatch(setPlayerData(data));
                             setIsLoaded(true);
                             
                         }
@@ -124,7 +120,7 @@ export default function Player() {
             }
         }
         getLastPlaylist()
-    }, [ ]);
+    }, [dispatch]);
 
     /* Alteração de State volume afeta o som */
     useEffect(() => {
@@ -213,3 +209,7 @@ export default function Player() {
         </section>
     )
 }
+
+export default connect( state => ({
+    player: state.player.player
+}))(Player)
