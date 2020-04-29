@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import api from '../../services/Api'
+
 import ComponentUILoading from '../UI/Loading/Loading';
 
 import ComponentPlayerDetails from "./Details/Details";
@@ -63,7 +65,7 @@ export default function Player() {
                 play.playing = player.playlist[rand];
             }
         }else{
-            
+
             if(Object.keys(player.playlist).length > 1 && player.playlist[player.playingIndex+1]){
                 play.playingIndex = player.playingIndex+1;
                 play.playing = player.playlist[player.playingIndex+1];
@@ -95,24 +97,33 @@ export default function Player() {
 
     /* Executa query na API pegando a playlist */
     useEffect(() => {
-       
-        fetch("/data-fake/player.json")
-        .then( response => {
-            if(response.status === 200){
-                response.json()
-                .then( data => {
-                    
-                    if(data.playlist[0] && Object.keys(data.playing).length === 0){
-                        data.playing = data.playlist[0];
-                    }
-                    setPlayer(data);
-                    setIsLoaded(true);
 
-                })
-                .catch( (err) => console.error(err) );
+        function getLastPlaylist(){
+            const lastID = parseInt(localStorage.getItem('lastPlaylist')) || 0
+            if(lastID > 0){
+                api.get(`/playlists/${lastID}`)
+                    .then( (response) => {
+                        if(response.status === 200){
+                            
+                            const data = {
+                                playingIndex: 0,
+                                playing: { },
+                                playlist: response.data.tracks
+                            }
+
+                            if(data.playlist[0] && Object.keys(data.playing).length === 0){
+                                data.playing = data.playlist[0];
+                            }
+                            
+                            setPlayer(data);
+                            setIsLoaded(true);
+                            
+                        }
+                    })
+                    .catch( (err) => console.error(err) )
             }
-        } )
-        .catch( (err) => console.error(err) );
+        }
+        getLastPlaylist()
     }, [ ]);
 
     /* Alteração de State volume afeta o som */
@@ -152,7 +163,7 @@ export default function Player() {
         return () => clearInterval(timeInterval);
     }, [status, mouseUpProgress]);
 
-    
+
     audio.onended = (() => {
         if(!repeat){
             next();

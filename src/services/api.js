@@ -1,5 +1,4 @@
 import axios from "axios"
-
 import { getUser, deleteUser } from '../utils/utils'
 
 const api = axios.create({
@@ -11,10 +10,10 @@ const api = axios.create({
 })
 
 // Add a request interceptor
-axios.interceptors.request.use(function (config) {
-
+api.interceptors.request.use(function (config) {
+    
     const user = getUser()
-    if(user.token){
+    if(user.token !== ""){
         config.headers.Authorization = `Bearer ${user.token} `
     }
 
@@ -26,12 +25,11 @@ axios.interceptors.request.use(function (config) {
 );
 
 // Add a response interceptor
-axios.interceptors.response.use(function (response) {
+api.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response;
     }, function (error) {
-        
         if(error.response.status === 401){
             deleteUser()
         }

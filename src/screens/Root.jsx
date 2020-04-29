@@ -14,7 +14,7 @@ const HeaderBase = () => {
 
     useEffect(() => {
         const user = getUser()
-        if(!user) history.push("/login")
+        if(!user.token) history.push("/login")
     })
 
     return (

@@ -12,8 +12,8 @@ export default function Form() {
 
     const [errorApi, setErrorApi] = useState("")
     const [disable, setDisable] = useState(true)
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("leandro@localhost.com")
+    const [password, setPassword] = useState("123123")
 
     const history = useHistory()
 
@@ -32,6 +32,8 @@ export default function Form() {
             history.push('/')
         })
         .catch( dataError => {
+            console.dir(dataError);
+            
             setErrorApi(dataError.response.data.message)
         })
 
