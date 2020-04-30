@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 
 import api from '../../services/Api'
-import setPlayerData from '../../store/actions/player'
+import * as actionsPlayer from '../../store/actions/player'
 
 import ComponentUILoading from '../UI/Loading/Loading';
 
@@ -15,10 +15,9 @@ import "./Player.css";
 const audio = new Audio();
 
 
- const Player = function({ player, dispatch }) {
+ const Player = function({ player, setPlayer, status, setStatus }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
-    const [status, setStatus] = useState(false);
 
     const [random, setRandom] = useState(false);
     const [repeat, setRepeat] = useState(false);
@@ -68,7 +67,7 @@ const audio = new Audio();
             }
         }
 
-        dispatch(setPlayerData({...player, playing: play.playing,  playingIndex: play.playingIndex }));
+        setPlayer({...player, playing: play.playing,  playingIndex: play.playingIndex });
     }
     function back(){
         let play = {
@@ -79,17 +78,9 @@ const audio = new Audio();
             play.playingIndex = player.playingIndex-1;
             play.playing = player.playlist[player.playingIndex-1];
         }
-        dispatch(setPlayerData({...player, playing: play.playing,  playingIndex: play.playingIndex }));
+        setPlayer({...player, playing: play.playing,  playingIndex: play.playingIndex });
     }
 
-    function eventPlay() {
-        setStatus(oldStatus => {
-            if(oldStatus){
-                audio.play();
-            }
-            return (oldStatus === false) ? false : true;
-        } );
-    }
 
     /* Executa query na API pegando a playlist */
     useEffect(() => {
@@ -111,7 +102,7 @@ const audio = new Audio();
                                 data.playing = data.playlist[0];
                             }
                             
-                            dispatch(setPlayerData(data));
+                            setPlayer(data);
                             setIsLoaded(true);
                             
                         }
@@ -120,7 +111,7 @@ const audio = new Audio();
             }
         }
         getLastPlaylist()
-    }, [dispatch]);
+    }, [setPlayer]);
 
     /* Alteração de State volume afeta o som */
     useEffect(() => {
@@ -131,6 +122,11 @@ const audio = new Audio();
 
     /* Alteração no State player afeta o source do Audio */
     useEffect(() => {
+        function eventPlay() {
+            if(status){
+                audio.play()
+            }
+        }
         console.log("---- Player Atualizou ----");
         if(player.playing.src && audio.src !== player.playing.src){
             console.log("---- AUDIO.src Atualizou ----");
@@ -141,7 +137,7 @@ const audio = new Audio();
                 audio.removeEventListener("canplaythrough", eventPlay);
             };
         }
-    }, [player]);
+    }, [player, status]);
 
     /* Alteração no State status & mouseUpProgress afeta o play e pause do Audio */
     useEffect( () => {
@@ -210,6 +206,14 @@ const audio = new Audio();
     )
 }
 
-export default connect( state => ({
-    player: state.player.player
-}))(Player)
+const mapStateToProps = state => ({
+    player: state.player.player,
+    status: state.player.status
+})
+
+const mapDispatchToProps = dispatch => ({
+    setPlayer: (data)=> dispatch(actionsPlayer.set(data)),
+    setStatus: (status)=> dispatch(actionsPlayer.status(status))
+})
+
+export default connect( mapStateToProps, mapDispatchToProps)(Player)

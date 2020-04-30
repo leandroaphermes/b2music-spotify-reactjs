@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 
 import api from '../../services/Api'
+import * as actionsPlayer from '../../store/actions/player'
 
 import ComponentUILoading from '../UI/Loading/Loading';
 
@@ -10,9 +12,7 @@ import { ReactComponent as IconPlay } from "../../assets/img/icons/play-outline.
 
 import "./Home.css";
 
-const status = false;
-
-export default function Home() {
+const Home = function ({ status, setStatus }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState({})
@@ -22,9 +22,6 @@ export default function Home() {
 
         console.log(e, playlistId);
         
-
-/*         let playing = data[index].playlists.find( playlist => { return playlist.id === playlistId } );
-        alert("Você ta ouvindo " + playing.name); */
     }
     
 
@@ -90,3 +87,12 @@ export default function Home() {
         </React.Fragment>
     )
 }
+
+const mapStateToProps = state => ({
+    status: state.player.status
+})
+const mapDispatchToProps = dispatch => ({
+    setStatus: (status) => dispatch(actionsPlayer.status(status))
+})
+
+export default connect( mapStateToProps, mapDispatchToProps)(Home)
