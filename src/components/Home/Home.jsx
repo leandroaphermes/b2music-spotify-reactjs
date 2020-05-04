@@ -12,7 +12,7 @@ import { ReactComponent as IconPlay } from "../../assets/img/icons/play-outline.
 
 import "./Home.css";
 
-const Home = function ({ status, setStatus }) {
+const Home = function ({ status, setStatus, player, setPlayer }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState({})
@@ -20,8 +20,32 @@ const Home = function ({ status, setStatus }) {
     function play(e, playlistId){
         e.preventDefault();
 
-        console.log(e, playlistId);
-        
+        if(status && playlistId === player.id) return setStatus(false)
+
+        api.get(`/playlists/${playlistId}`)
+        .then( response => {
+            if(response.status === 200){
+                
+                const data = {
+                    id: response.data.id,
+                    playingIndex: 0,
+                    playing: { },
+                    playlist: response.data.tracks
+                }
+
+                if(data.playlist[0] && Object.keys(data.playing).length === 0){
+                    data.playing = data.playlist[0];
+                }
+
+                localStorage.setItem('last_playlist', response.data.id)
+                setPlayer(data);
+                setStatus(true);
+            }
+        })
+        .catch( dataError => {
+            alert(`Erro de processo. Code: ${dataError.status}`)
+        })
+      
     }
     
 
@@ -42,7 +66,7 @@ const Home = function ({ status, setStatus }) {
             <div>
                 { isLoaded ? (
                     data.map( (cardItem) => (
-                        cardItem.playlists.length > 0 ? (
+                        cardItem.playlists.length > 0 && (
                             <section key={cardItem.id} className="card">
                                 <header className="card-header">
                                     <div className="card-flex">
@@ -54,7 +78,7 @@ const Home = function ({ status, setStatus }) {
                                         )}
                                         
                                     </div>
-                                    <small className="card-small">{cardItem.describe}</small>
+                                    <small className="card-small">{cardItem.description}</small>
                                 </header>
                                     {cardItem.playlists.map( (playlist) => (
                                         <article key={playlist.id} className="card-container">
@@ -62,15 +86,15 @@ const Home = function ({ status, setStatus }) {
                                                 <div className="image-album">
                                                     <img src={playlist.photo_url ? playlist.photo_url : imageDefault } alt={playlist.name} />
                                                 </div>
-                                                <div className="song-describe mt-2">
-                                                    <div className="song-describe-title">
+                                                <div className="song-description mt-2">
+                                                    <div className="song-description-title">
                                                         {playlist.name}
                                                     </div>
-                                                    <div className="song-describe-body hide-text-two-lines">{playlist.description}</div>
+                                                    <div className="song-description-body hide-text-two-lines">{playlist.description}</div>
                                                 </div>
                                                 <div className="song-player">
                                                     <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, playlist.id)}>
-                                                        {(status) ? <IconPause /> : <IconPlay />}
+                                                        {(status && playlist.id === player.id) ? <IconPause /> : <IconPlay />}
                                                     </button>
                                                 </div>
                                             </a>
@@ -78,7 +102,7 @@ const Home = function ({ status, setStatus }) {
                                     )
                                     )}
                             </section>
-                        ) : ""
+                        )
                     ))
                 ): (
                     <ComponentUILoading />
@@ -89,10 +113,12 @@ const Home = function ({ status, setStatus }) {
 }
 
 const mapStateToProps = state => ({
-    status: state.player.status
+    status: state.player.status,
+    player: state.player.player,
 })
 const mapDispatchToProps = dispatch => ({
-    setStatus: (status) => dispatch(actionsPlayer.status(status))
+    setStatus: (status) => dispatch(actionsPlayer.status(status)),
+    setPlayer: (data) => dispatch(actionsPlayer.set(data))
 })
 
 export default connect( mapStateToProps, mapDispatchToProps)(Home)

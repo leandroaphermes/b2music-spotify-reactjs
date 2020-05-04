@@ -1,49 +1,29 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom"; 
+import React from "react";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom"; 
 import { Provider } from 'react-redux'
 
-import store from '../store/store'
-import { getUser } from '../utils/utils'
+import { getSessionToken } from '../utils/utils';
 
-import ComponentsUIHeader from "../components/UI/Header/Header";
-import ComponentsPlayer from "../components/Player/Player";
+import store from '../store/store'
 
 /* Pages */
+import RootRoutesAuth from './RootRoutesAuth'
 import ScreenLogin from "./Login/Login";
-import ScreenHome from "./Home/Home";
 
-const HeaderBase = () => {
-    const history = useHistory()
 
-    useEffect(() => {
-        const user = getUser()
-        if(!user.token) history.push("/login")
-    })
+const Routes = function() {
 
+    const token = getSessionToken()
     return (
-        <React.Fragment>
-            <div className="container">
-                <ComponentsUIHeader />
-                <main className="body-content">
-                    <Route exact path="/" component={ScreenHome} />
-                    <Route exact path="/search" component={() => <h3>Você ta buscando</h3>} />
-                </main>
-            </div>
-            <ComponentsPlayer />
-        </React.Fragment>
-    )
-} 
-
-
-const Routes = () => (
-    <BrowserRouter>
-        <Switch>
-            <Route exact path="/login" component={ScreenLogin} />
+        <BrowserRouter>
             <Provider store={store}>
-                <HeaderBase />
+                <Switch>
+                    <Route exact path="/login" component={ScreenLogin} />
+                    {(!token) ? <Redirect to="/login" />  : <RootRoutesAuth /> }
+                </Switch>
             </Provider>
-        </Switch>
-    </BrowserRouter>
-);
+        </BrowserRouter>
+    )
+}
 
 export default Routes;

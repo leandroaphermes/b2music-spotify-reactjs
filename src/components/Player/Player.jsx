@@ -86,13 +86,14 @@ const audio = new Audio();
     useEffect(() => {
 
         function getLastPlaylist(){
-            const lastID = parseInt(localStorage.getItem('lastPlaylist')) || 0
+            const lastID = parseInt(localStorage.getItem('last_playlist')) || 0
             if(lastID > 0){
                 api.get(`/playlists/${lastID}`)
                     .then( (response) => {
                         if(response.status === 200){
                             
                             const data = {
+                                id: response.data.id,
                                 playingIndex: 0,
                                 playing: { },
                                 playlist: response.data.tracks
@@ -101,6 +102,8 @@ const audio = new Audio();
                             if(data.playlist[0] && Object.keys(data.playing).length === 0){
                                 data.playing = data.playlist[0];
                             }
+
+                            localStorage.setItem('last_playlist', response.data.id)
                             
                             setPlayer(data);
                             setIsLoaded(true);

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+import api from '../../../services/Api'
+import * as actionsSession from '../../../store/actions/session'
+import { setSessionToken } from '../../../utils/utils'
 
 import ComponentAlert from "../../UI/Alert/Alert"
 
-import api from '../../../services/Api'
-import { setUser } from '../../../utils/utils'
-
 const errors = {}
 
-export default function Form() {
+const Form = function ({ setSession }) {
 
     const [errorApi, setErrorApi] = useState("")
     const [disable, setDisable] = useState(true)
@@ -28,12 +30,13 @@ export default function Form() {
             password
         })
         .then( response => {
-            setUser(response.data)
+            setSessionToken(response.data.token)
+            setSession(response.data)
+            
             history.push('/')
         })
         .catch( dataError => {
             console.dir(dataError);
-            
             setErrorApi(dataError.response.data.message)
         })
 
@@ -113,3 +116,12 @@ export default function Form() {
         </form>
     )
 }
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = dispatch => ({
+    setSession: (sessionData) => dispatch(actionsSession.set(sessionData))
+})
+
+
+export default connect( mapStateToProps, mapDispatchToProps)(Form)

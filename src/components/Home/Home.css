@@ -46,13 +46,13 @@
     grid-auto-rows: auto;
     overflow: auto;
 }
-.song-describe .song-describe-title {
+.song-description .song-description-title {
     color: var(--text-primary-white);
     font-size: 0.8em;
     font-weight: bold;
     letter-spacing: 0.15em;
 }
-.song-describe .song-describe-body {
+.song-description .song-description-body {
     font-size: 0.7em;
     margin-top: 5px;
 }
