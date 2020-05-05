@@ -123,7 +123,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setSession: (sessionData) => dispatch(actionsSession.set(sessionData))
+    setSession: (sessionData) => {
+        
+        dispatch(actionsSession.set(sessionData))
+    }
 })
 
 

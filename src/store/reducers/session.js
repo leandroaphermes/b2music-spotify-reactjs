@@ -4,9 +4,8 @@ const INITIAL_STATE = {
 
 
 export default function session(state = INITIAL_STATE, action){
-    switch (action) {
+    switch (action.type) {
         case "SET_SESSION":
-            console.log(action)
             return {...state, user: action.sessionDate }
 
         default:

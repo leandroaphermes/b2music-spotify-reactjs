@@ -9,6 +9,7 @@ import { ReactComponent as IconHome } from '../../../../../assets/img/icons/home
 import { ReactComponent as IconSearch } from '../../../../../assets/img/icons/search-outline.svg';
 import { ReactComponent as IconMusicalNotes } from '../../../../../assets/img/icons/musical-notes-outline.svg';
 import { ReactComponent as IconStar } from '../../../../../assets/img/icons/star-outline.svg';
+import { ReactComponent as IconLogOut } from '../../../../../assets/img/icons/log-out-outline.svg';
 
 
 export default function Aside(props) {
@@ -38,6 +39,11 @@ export default function Aside(props) {
             nameTitle : "Favoritos",
             icon : <IconStar width="20px" height="20px" />,
             url : "/favorite",
+        },
+        {
+            nameTitle : "Sair",
+            icon : <IconLogOut width="20px" height="20px" />,
+            url : "/logout",
         },
     ];
 

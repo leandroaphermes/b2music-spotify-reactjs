@@ -21,6 +21,7 @@
 }
 .menu-list .menu-item span {
     align-self: center;
+    text-transform: capitalize;
 }
 .menu-item:hover {
     color: var(--text-primary-hover);
