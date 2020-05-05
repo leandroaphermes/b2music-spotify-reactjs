@@ -1,8 +1,6 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom"; 
+import { BrowserRouter, Route, Switch } from "react-router-dom"; 
 import { Provider } from 'react-redux'
-
-import { getSessionToken } from '../utils/utils';
 
 import store from '../store/store'
 
@@ -12,14 +10,13 @@ import ScreenLogin from "./Login/Login";
 
 
 const Routes = function() {
-
-    const token = getSessionToken()
+    console.log("Renderizou o routes: ");
     return (
         <BrowserRouter>
             <Provider store={store}>
                 <Switch>
                     <Route exact path="/login" component={ScreenLogin} />
-                    {(!token) ? <Redirect to="/login" />  : <RootRoutesAuth /> }
+                    <RootRoutesAuth />
                 </Switch>
             </Provider>
         </BrowserRouter>

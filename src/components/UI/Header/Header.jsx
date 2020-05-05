@@ -4,7 +4,7 @@ import HaderMenuAside from './Menu/Aside/Aside';
 
 const Header = (props) => (
     <header>
-        <HaderMenuAside username="Hamaro" />
+        <HaderMenuAside username={props.username} />
     </header>
 );
 

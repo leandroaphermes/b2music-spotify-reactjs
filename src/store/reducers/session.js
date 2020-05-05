@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 export default function session(state = INITIAL_STATE, action){
     switch (action) {
         case "SET_SESSION":
-            console.log({...state, user: action.sessionDate })
+            console.log(action)
             return {...state, user: action.sessionDate }
 
         default:

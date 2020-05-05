@@ -31,6 +31,7 @@ const Form = function ({ setSession }) {
         })
         .then( response => {
             setSessionToken(response.data.token)
+
             setSession(response.data)
             
             history.push('/')
@@ -117,7 +118,9 @@ const Form = function ({ setSession }) {
     )
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    session: state.session.user
+});
 
 const mapDispatchToProps = dispatch => ({
     setSession: (sessionData) => dispatch(actionsSession.set(sessionData))
