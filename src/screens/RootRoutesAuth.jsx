@@ -9,6 +9,7 @@ import ComponentsUIHeader from "../components/UI/Header/Header";
 import ComponentsPlayer from "../components/Player/Player";
 
 import ScreenHome from "./Home/Home";
+import ScreenProfile from "./Profile/Profile";
 
 const RootRoutesAuth = function ({ session, setSession }) {
 
@@ -25,6 +26,9 @@ const RootRoutesAuth = function ({ session, setSession }) {
                 <main className="body-content">
                     <Route exact path="/" component={ScreenHome} />
                     <Route exact path="/search" component={() => <h3>Você ta buscando</h3>} />
+                    <Route exact path="/my-library" component={() => <h3>Você ta na blibioteca</h3>} />
+                    <Route exact path="/favorite" component={() => <h3>Você ta nos favoritos</h3>} />
+                    <Route exact path="/profile" component={ScreenProfile} />
                 </main>
             </div>
             <ComponentsPlayer />

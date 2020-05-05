@@ -31,7 +31,6 @@ const Form = function ({ setSession }) {
         })
         .then( response => {
             setSessionToken(response.data.token)
-
             setSession(response.data)
             
             history.push('/')

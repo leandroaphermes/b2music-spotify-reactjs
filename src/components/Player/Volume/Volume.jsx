@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-
+import { useHistory } from 'react-router-dom'
 
 import ComponentProgressBar from '../../UI/ProgressBar/ProgressBar';
 
@@ -13,10 +13,8 @@ import { ReactComponent as IconVolumeHigh } from '../../../assets/img/icons/volu
 
 import "./Volume.css";
 
-
-
-
 const Volume = function(props) {
+    const history = useHistory()
 
     function getIconeVol(value) {
         if(value === 0){
@@ -31,10 +29,15 @@ const Volume = function(props) {
             return <IconVolumeHigh />;
         }
     }
+    function handleClickQueue(){
+        alert("Você clicou no Queue")
+        history.push('/queue')
+    }
+
     return (
         <div className="song-volume" aria-label="Controles de Volume">
             <div className="song-volume-playlist mr-2">
-                <button type="button" className="btn btn-clean" title="Fila de Reprodução"><IconList /></button>
+                <button type="button" className="btn btn-clean" title="Fila de Reprodução" onClick={handleClickQueue}><IconList /></button>
             </div>
             <div className="song-volume-slide mr-5">
                 <div className="song-volume-volume-icon mr-1">
