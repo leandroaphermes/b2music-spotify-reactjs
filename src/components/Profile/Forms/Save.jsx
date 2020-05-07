@@ -24,29 +24,33 @@ export default function Save() {
         alert("Formulario enviado com sucesso")
     }
 
-    function handleCountry(country){
-        setCountry(country)
-        setCodeDDI( contentCountrys.find( countryItem => countryItem.iso2 === country ).phone_code )
-        getPronvice(country)
-        
+    async function handleCountry(countryData){
+        setCountry(countryData)
+        await getPronvice(countryData)
     }
-    function getPronvice(country){
-        api.get(`/utils/global/countrys/${country}`).then( (response) => {
-            setContentProvinces(response.data)
-        })
-        .catch( dataError => console.error(dataError))
+    async function getPronvice(countryData){
+        const response = await api.get(`/utils/global/countrys/${countryData}`)
+        setContentProvinces(response.data)
     }
 
     useEffect(() => {
 
-        api.get("/utils/global/countrys")
-        .then( (response) => {
+        async function setDataForm(){
+                
+            const response = await api.get("/utils/global/countrys")
             setContentCountrys(response.data)
-            setCodeDDI(response.data[0].phone_code)
-            getPronvice(response.data[0].iso2)
-        })
-        .catch( dataError => console.error(dataError) )
 
+            const responseUser = await api.get("/users/current-auth")
+            setUsername(responseUser.data.username)
+            setTruename(responseUser.data.truename)
+            setEmail(responseUser.data.email)
+            setPhone(responseUser.data.phone)
+            setDtbirth(responseUser.data.birth)
+            handleCountry(responseUser.data.country)
+            setProvince(responseUser.data.province)
+        }
+
+        setDataForm()
     }, [])
 
     useEffect(() => {
@@ -88,6 +92,13 @@ export default function Save() {
             setBtnDisable(false)
         }
     }, [ username, email, truename, phone ])
+
+    useEffect(() => {
+
+        const state = contentCountrys.find( countryItem => countryItem.iso2 === country )
+        if(state) setCodeDDI( state.phone_code )
+
+    }, [ country, contentCountrys ])
 
     return (
         <form onSubmit={handleSubmit} method="post">
@@ -188,7 +199,11 @@ export default function Save() {
                             id="dtbirth" 
                             name="dtbirth" 
                             value={dtbirth}
-                            onChange={(e) => setDtbirth(e.target.value)}
+                            onChange={(e) => {
+                                console.log("setValue: ", e.target.value)
+                                setDtbirth(e.target.value)
+                                
+                            }}
                             placeholder="Data de nascimento" 
                         />
                     </div>
@@ -224,8 +239,8 @@ export default function Save() {
                             onChange={(e) => setProvince(e.target.value)}
                             placeholder="Estado que vive"
                         >
-                            { contentProvinces.map( province => (
-                                <option key={province.state_code} value={province.state_code}>{province.name}</option>
+                            { contentProvinces.map( provinceItem => (
+                                <option key={provinceItem.id} value={provinceItem.state_code}>{provinceItem.name}</option>
                             ) ) }
                         </select>
                     </div>
