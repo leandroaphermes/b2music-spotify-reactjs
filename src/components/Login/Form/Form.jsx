@@ -13,7 +13,7 @@ const errors = {}
 const Form = function ({ setSession }) {
 
     const [errorApi, setErrorApi] = useState("")
-    const [disable, setDisable] = useState(true)
+    const [btnDisable, setBtnDisable] = useState(true)
     const [email, setEmail] = useState("leandro@localhost.com")
     const [password, setPassword] = useState("123123")
 
@@ -21,7 +21,7 @@ const Form = function ({ setSession }) {
 
     function handleSubmit(e){
         e.preventDefault()
-        if(disable || Object.keys(errors).length !== 0){
+        if(btnDisable || Object.keys(errors).length !== 0){
             return false
         }
 
@@ -43,7 +43,7 @@ const Form = function ({ setSession }) {
     }
 
     useEffect(() => {
-        setDisable(true)
+        setBtnDisable(true)
         if(email.length < 6 || email.length > 64){
             errors.email = "Campo Email deve conter 6 a 64 caracteres"
         }else if(!new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(email)) {
@@ -56,11 +56,11 @@ const Form = function ({ setSession }) {
         if(password.length < 6 || password.length > 32){
             errors.password = "Campo Senha deve conter 6 a 32 caracteres"
         }else{
-        delete errors.password
+            delete errors.password
         }
 
         if(Object.keys(errors).length === 0 ){
-            setDisable(false)
+            setBtnDisable(false)
         }
 
     }, [email, password])
@@ -107,7 +107,7 @@ const Form = function ({ setSession }) {
                     </div>
                 )}
             </div>
-            <button className="btn btn-primary btn-block" disabled={disable}>
+            <button type="submit" className="btn btn-primary btn-block" disabled={btnDisable}>
                 Entrar
             </button>
             { errorApi && (

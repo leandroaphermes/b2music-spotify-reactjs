@@ -204,6 +204,22 @@ img.shadow {
     border-radius: 15px;
     background-color: var(--text-primary-white);
 }
+.form-group .form-group-input{
+    display: flex;
+}
+.form-group .form-group-text {
+    display: inline-block;
+    border-right: 1px solid rgba(0, 0, 0, 0.219);
+    padding: 10px 15px;
+    border-radius: 15px 0px 0px 15px;
+    background-color: var(--text-primary-white);
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+.form-group .form-group-input input {
+    border-radius: 0px 15px 15px 0px;
+}
+
 
 .text-center{
     text-align: center;
