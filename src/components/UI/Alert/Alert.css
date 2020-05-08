@@ -9,9 +9,9 @@
     opacity: 1;
 }
 .alert-floating {
-    position: sticky;
-    display: inline-block;
-    bottom: 0px;
+    position: absolute;
+    display: block;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
 }

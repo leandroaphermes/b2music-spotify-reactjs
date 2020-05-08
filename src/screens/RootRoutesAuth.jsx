@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Redirect } from "react-router-dom"; 
 import { connect } from 'react-redux';
 
-import * as actionsSession from '../store/actions/session'
+import * as actionsSession from '../store/actions/session';
 import { getSessionToken } from '../utils/utils';
 
 import ComponentsUIHeader from "../components/UI/Header/Header";
@@ -18,7 +18,7 @@ const RootRoutesAuth = function ({ session, setSession }) {
         setSession({})
         return <Redirect to="/login" />
     }
-
+    
     return (
         <>
             <div className="container">

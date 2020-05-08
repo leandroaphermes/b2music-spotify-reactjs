@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 
 import api from '../../../services/Api'
+import * as actionsAlert from '../../../store/actions/alert'
+import * as actionsSession from '../../../store/actions/session'
 
 const errors = {}
 
-export default function Save() {
+const Save = function ({ setAlert, session, setSession }) {
+
     const [btnDisable, setBtnDisable] = useState(true)
+
     const [username, setUsername] = useState("")
     const [truename, setTruename] = useState("")
     const [email, setEmail] = useState("")
@@ -21,12 +26,39 @@ export default function Save() {
     function handleSubmit(e){
         e.preventDefault()
 
-        alert("Formulario enviado com sucesso")
+        api.put(`/users/${session.id}`, {
+            username,
+            truename,
+            email,
+            phone,
+            birth: dtbirth,
+            country,
+            province
+        })
+        .then( response => {
+
+            setSession({
+                id: session.id,
+                username,
+                truename,
+                email,
+            })
+
+            setAlert({
+                status: true,
+                type: "success",
+                message: "Seus dados foram salvo com sucesso",
+                float: true
+            })
+        })
+        .catch( dataError => {
+            console.log(dataError)
+        })
+
     }
 
     async function handleCountry(countryData){
         setCountry(countryData)
-        await getPronvice(countryData)
     }
     async function getPronvice(countryData){
         const response = await api.get(`/utils/global/countrys/${countryData}`)
@@ -94,14 +126,16 @@ export default function Save() {
     }, [ username, email, truename, phone ])
 
     useEffect(() => {
-
-        const state = contentCountrys.find( countryItem => countryItem.iso2 === country )
-        if(state) setCodeDDI( state.phone_code )
-
+        async function changeProvinves(){
+            await getPronvice(country)
+            const state = contentCountrys.find( countryItem => countryItem.iso2 === country )
+            if(state) setCodeDDI( state.phone_code )
+        }
+        changeProvinves()
     }, [ country, contentCountrys ])
 
     return (
-        <form onSubmit={handleSubmit} method="post">
+        <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label htmlFor="username">Nome de Usuario</label>
                 <input 
@@ -256,3 +290,14 @@ export default function Save() {
         </form>
     )
 }
+
+const mapStateToProps = state => ({
+    session: state.session.user
+})
+
+const mapDispachtToProps = dispatch => ({
+    setSession: (sessionData) => dispatch(actionsSession.set(sessionData)),
+    setAlert: (alertData) => dispatch(actionsAlert.set(alertData))
+})
+
+export default connect( mapStateToProps, mapDispachtToProps)(Save)
