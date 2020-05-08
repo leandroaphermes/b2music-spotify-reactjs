@@ -52,7 +52,20 @@ const Save = function ({ setAlert, session, setSession }) {
             })
         })
         .catch( dataError => {
-            console.log(dataError)
+            if(dataError.response.data[0]){
+
+                dataError.response.data.forEach( field => {
+                    errors[field.field] = field.message
+                })
+
+            }else{
+                setAlert({
+                    status: true,
+                    type: "danger",
+                    message: dataError.response.data.message,
+                    float: true
+                })
+            }
         })
 
     }

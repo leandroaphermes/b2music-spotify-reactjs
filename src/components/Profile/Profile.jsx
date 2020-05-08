@@ -1,13 +1,11 @@
 import React from 'react'
 
-import ComponentsAlert from '../UI/Alert/Alert'
 import FormSave from './Forms/Save'
 import FormNewPassword from './Forms/NewPassword'
 
 export default function Profile() {
     return (
         <>
-            <ComponentsAlert />
             <div className="row">
                 <div className="col-lg-7 col-md-12 col-sm-12">
                     <section className="card">

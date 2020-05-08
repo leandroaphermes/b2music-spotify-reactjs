@@ -5,22 +5,26 @@ import * as actionsAlert from '../../../store/actions/alert'
 
 import "./Alert.css"
 
-const Alert = function ({ alert }) {
+const Alert = function ({ type, status, float, message }) {
+    
     return (
-        alert.status ? (
-            <div className={`alert ${ alert.float && `alert-floating` } ${ alert.type && `alert-${alert.type}` }`}>
-                {alert.message}
+        status ? (
+            <div className={`alert ${ float && `alert-floating` } ${ type && `alert-${type}` }`}>
+                {message}
             </div>
-        ) : ""
+        ) : null
     )
 }
 
-const mapStateToProps = state => ({
-    alert: state.alert
+const mapStateToProps = ({ alert }) => ({
+    type: alert.type,
+    float: alert.float,
+    message: alert.message,
+    status: alert.status,
 })
 
 const mapDispathToProps = dispatch => ({
-    setAlert: (alertData) => dispatch(actionsAlert.set(alertData))
+    setAlert: (alert) => dispatch(actionsAlert.set(alert))
 })
 
 export default connect( mapStateToProps, mapDispathToProps)(Alert)

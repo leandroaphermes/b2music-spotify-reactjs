@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actionsSession from '../store/actions/session';
 import { getSessionToken } from '../utils/utils';
 
+import ComponentsAlert from '../components/UI/Alert/Alert';
 import ComponentsUIHeader from "../components/UI/Header/Header";
 import ComponentsPlayer from "../components/Player/Player";
 
@@ -12,16 +13,16 @@ import ScreenHome from "./Home/Home";
 import ScreenProfile from "./Profile/Profile";
 
 const RootRoutesAuth = function ({ session, setSession }) {
-
     const token = getSessionToken()
     if(!token) {
         setSession({})
         return <Redirect to="/login" />
     }
-    
+
     return (
         <>
             <div className="container">
+                <ComponentsAlert />
                 <ComponentsUIHeader username={session.truename} />
                 <main className="body-content">
                     <Route exact path="/" component={ScreenHome} />

@@ -8,8 +8,8 @@ const INITIAL_STATE = {
 export default function alert(state = INITIAL_STATE, action){
     switch (action.type) {
         case "SET_ALERT":
-            return Object.assign(state, action.data)
-            
+            return {...state, ...action.data}
+
         default:
             return state
     }
