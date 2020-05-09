@@ -25,7 +25,7 @@ const audio = new Audio();
     const [mouseUpProgress, setMouseUpProgress] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
 
-    const [volume, setVolume] = useState(localStorage.getItem("volume") !== "" ? JSON.parse(localStorage.getItem("volume")) : { now: 30, last: null } );
+    const [volume, setVolume] = useState(localStorage.getItem("volume") !== null ? JSON.parse(localStorage.getItem("volume")) : { now: 30, last: null } );
 
     function updateCurrentTime(newValue){
         setCurrentTime(newValue);
@@ -87,6 +87,8 @@ const audio = new Audio();
 
         function getLastPlaylist(){
             const lastID = parseInt(localStorage.getItem('last_playlist')) || 0
+            console.log(lastID);
+            
             if(lastID > 0){
                 api.get(`/playlists/${lastID}`)
                     .then( (response) => {
@@ -147,6 +149,7 @@ const audio = new Audio();
         console.log("---- Status Atualizou ----");
         let timeInterval = null;
         if(status){
+            setIsLoaded(true)
             audio.play();
             timeInterval = setInterval( () =>{
                 console.log("Atualizando setInterval");

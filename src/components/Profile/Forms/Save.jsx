@@ -5,11 +5,10 @@ import api from '../../../services/Api'
 import * as actionsAlert from '../../../store/actions/alert'
 import * as actionsSession from '../../../store/actions/session'
 
-const errors = {}
-
 const Save = function ({ setAlert, session, setSession }) {
 
     const [btnDisable, setBtnDisable] = useState(true)
+    const [errors, setErrors] = useState({})
 
     const [username, setUsername] = useState("")
     const [truename, setTruename] = useState("")
@@ -69,6 +68,72 @@ const Save = function ({ setAlert, session, setSession }) {
         })
 
     }
+    
+    function addError( field, message){
+        setErrors({...errors, [field]: message})
+    }
+    function delError( field ){
+        let tmp = errors
+        delete tmp[field]
+        setErrors(tmp)
+    }
+
+    /* validações de input */
+    function handleUsername(username){
+        if(username.length < 4 || username.length > 32){
+            addError( "username", "Nome de Usuario deve conter 4 a 32 caracteres")
+        }else if(!new RegExp(/^[a-z]{1}[a-z0-9]+$/).test(username)){
+            addError( "username", "Nome de Usuario pode conter letras ou numeros, Sendo que primeira letra não pode ser numero")
+        }else{
+            delError( "username" )
+        }
+        setUsername(username)
+    }
+    function handleTruename(truename){
+        if(truename.length < 4 || truename.length > 100){
+            addError( "truename", "Nome Completo deve conter 4 a 100 caracteres")
+        }else{
+            delError( "truename" )
+        }
+        setTruename(truename)
+    }
+
+    function handleEmail(email){
+        if(email.length < 6 || email.length > 64){
+            addError( "email", "Email deve conter 6 a 64 caracteres")
+        }else if(!new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(email)) {
+            addError( "email", "Email deve ser valido")
+        }else{
+            delError( "email" )
+        }
+        setEmail(email)
+    }
+
+    function handlePhone(phone){
+        phone = phone.replace(/^([1-9]{2})(\d{5})(\d{4})/, "($1) $2-$3")
+        if(phone.length < 8 || phone.length > 15){
+            addError( "phone", "Telefone deve ser valido.")
+        }else if(!new RegExp(/^\([1-9]{2}\) \d{5}-\d{4}$/).test(phone)){
+            addError( "phone", "Telefone deve ser valido")
+        }else{
+            delError( "phone" )
+        }
+        setPhone(phone)
+    }
+
+    function handleDtbirth(dtbirth) {
+        let rer = dtbirth.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+        if(dtbirth.length !== 10){
+            addError( "dtbirth", "Data de Nascimento Invalida")
+        }else if(!rer || rer[1] < 1700 || rer[2] > 12 || rer[2] < 1 || rer[3] > 31 || rer[2] < 1){
+            addError( "dtbirth", "Data de Nascimento formato invalido")
+        }else{
+            delError( "dtbirth" )
+        }
+        setDtbirth(dtbirth)
+    }
+    /* Fim de validações de inputs */
+
 
     async function handleCountry(countryData){
         setCountry(countryData)
@@ -100,43 +165,11 @@ const Save = function ({ setAlert, session, setSession }) {
 
     useEffect(() => {
         setBtnDisable(true)
-
-        if(username.length < 4 || username.length > 32){
-            errors.username = "Nome de Usuario deve conter 4 a 32 caracteres"
-        }else if(!new RegExp(/^[a-z]{1}[a-z0-9]+/).test(username)){
-            errors.username = "Nome de Usuario pode conter letras ou numeros, Sendo que primeira letra não pode ser numero" 
-        }else{
-            delete errors.username
-        }
-
-        if(truename.length < 4 || truename.length > 100){
-            errors.truename = "Nome Completo deve conter 4 a 100 caracteres"
-        }else{
-            delete errors.truename
-        }
-
-        if(email.length < 6 || email.length > 64){
-            errors.email = "Email deve conter 6 a 64 caracteres"
-        }else if(!new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(email)) {
-            errors.email = "Email deve ser valido"
-        }else{
-            delete errors.email
-        }
-
-
-        if(phone.length < 8 || phone.length > 15){
-            errors.phone = "Telefone deve ser valido"
-        }else if(!new RegExp(/^\([1-9]{2}\)\s\d{5}-\d{4}/).test(phone)){
-            errors.phone = "Telefone deve ser valido"
-        }else{
-            delete errors.phone
-        }
-        
-        
+        console.log("UseEffect Errors: ", Object.keys(errors).length);
         if(Object.keys(errors).length === 0 ){
             setBtnDisable(false)
         }
-    }, [ username, email, truename, phone ])
+    }, [ errors ])
 
     useEffect(() => {
         async function changeProvinves(){
@@ -157,7 +190,7 @@ const Save = function ({ setAlert, session, setSession }) {
                     id="username"
                     name="username" 
                     value={username} 
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => handleUsername(e.target.value)}
                     placeholder="Nome de usuario"
                     minLength="4"
                     maxLength="32"
@@ -177,7 +210,7 @@ const Save = function ({ setAlert, session, setSession }) {
                     id="truename" 
                     name="truename" 
                     value={truename} 
-                    onChange={(e) => setTruename(e.target.value)}
+                    onChange={(e) => handleTruename(e.target.value)}
                     placeholder="Nome Completo" 
                     minLength="4"
                     maxLength="100"
@@ -197,7 +230,7 @@ const Save = function ({ setAlert, session, setSession }) {
                     id="email" 
                     name="email"
                     value={email} 
-                    onChange={(e) => setEmail(e.target.value)} 
+                    onChange={(e) => handleEmail(e.target.value)} 
                     placeholder="Email"
                     minLength="6"
                     maxLength="64"
@@ -223,7 +256,7 @@ const Save = function ({ setAlert, session, setSession }) {
                                 id="phone" 
                                 name="phone" 
                                 value={phone}
-                                onChange={(e) => setPhone(e.target.value.replace(/[^0-9\s]/,"").replace(/^([1-9]{2})(\d{5})(\d{4})/, "($1) $2-$3") )}
+                                onChange={(e) => handlePhone(e.target.value)}
                                 placeholder="Telefone celular com DDD" 
                                 minLength="8"
                                 maxLength="15"
@@ -246,13 +279,14 @@ const Save = function ({ setAlert, session, setSession }) {
                             id="dtbirth" 
                             name="dtbirth" 
                             value={dtbirth}
-                            onChange={(e) => {
-                                console.log("setValue: ", e.target.value)
-                                setDtbirth(e.target.value)
-                                
-                            }}
+                            onChange={(e) => handleDtbirth(e.target.value)}
                             placeholder="Data de nascimento" 
                         />
+                        {errors.dtbirth && (
+                            <div className="input-error" id="input-error-dtbirth">
+                                {errors.dtbirth}
+                            </div>
+                        )}
                     </div>
                 </div>
 
