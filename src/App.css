@@ -204,6 +204,9 @@ img.shadow {
     border-radius: 15px;
     background-color: var(--text-primary-white);
 }
+input[type="date"].form-control {
+    padding: 8px 15px;
+}
 .form-group .form-group-input{
     display: flex;
 }
@@ -335,6 +338,7 @@ div.dropdown div.dropdown-menu a {
 
 
 .container {
+    overflow: hidden;
     display: flex;
     box-sizing: border-box;
     padding: 0;

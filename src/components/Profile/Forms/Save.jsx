@@ -13,8 +13,9 @@ const Save = function ({ setAlert, session, setSession }) {
     const [username, setUsername] = useState("")
     const [truename, setTruename] = useState("")
     const [email, setEmail] = useState("")
+    const [birth, setBirth] = useState("")
+    const [gender, setGender] = useState("")
     const [phone, setPhone] = useState("")
-    const [dtbirth, setDtbirth] = useState("")
     const [country, setCountry] = useState("")
     const [province, setProvince] = useState("")
 
@@ -29,8 +30,9 @@ const Save = function ({ setAlert, session, setSession }) {
             username,
             truename,
             email,
+            birth,
+            gender,
             phone,
-            birth: dtbirth,
             country,
             province
         })
@@ -52,11 +54,12 @@ const Save = function ({ setAlert, session, setSession }) {
         })
         .catch( dataError => {
             if(dataError.response.data[0]){
-
-                dataError.response.data.forEach( field => {
-                    errors[field.field] = field.message
+                let errorsApi = {};
+                dataError.response.data.map( field => {
+                    errorsApi[field.field] = field.message
                 })
-
+                setErrors(errorsApi)
+            
             }else{
                 setAlert({
                     status: true,
@@ -75,7 +78,7 @@ const Save = function ({ setAlert, session, setSession }) {
     function delError( field ){
         let tmp = errors
         delete tmp[field]
-        setErrors(tmp)
+        setErrors({...tmp})
     }
 
     /* validações de input */
@@ -109,6 +112,27 @@ const Save = function ({ setAlert, session, setSession }) {
         setEmail(email)
     }
 
+    function handleBirth(birth) {
+        let rer = birth.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+        if(birth.length !== 10){
+            addError( "birth", "Data de Nascimento Invalida")
+        }else if(!rer || rer[1] < 1700 || rer[2] > 12 || rer[2] < 1 || rer[3] > 31 || rer[2] < 1){
+            addError( "birth", "Data de Nascimento formato invalido")
+        }else{
+            delError( "birth" )
+        }
+        setBirth(birth)
+    }
+
+    function handleGender(gender) {
+        if(gender.length !== 1){
+            addError( "gender", "Genero Invalido")
+        }else{
+            delError( "gender" )
+        }
+        setGender(gender)
+    }
+
     function handlePhone(phone){
         phone = phone.replace(/^([1-9]{2})(\d{5})(\d{4})/, "($1) $2-$3")
         if(phone.length < 8 || phone.length > 15){
@@ -121,23 +145,25 @@ const Save = function ({ setAlert, session, setSession }) {
         setPhone(phone)
     }
 
-    function handleDtbirth(dtbirth) {
-        let rer = dtbirth.match(/^(\d{4})-(\d{2})-(\d{2})$/)
-        if(dtbirth.length !== 10){
-            addError( "dtbirth", "Data de Nascimento Invalida")
-        }else if(!rer || rer[1] < 1700 || rer[2] > 12 || rer[2] < 1 || rer[3] > 31 || rer[2] < 1){
-            addError( "dtbirth", "Data de Nascimento formato invalido")
+    function handleCountry(country){
+        if(country.length < 2){
+            addError( "country", "Campo País deve ser preenchido")
         }else{
-            delError( "dtbirth" )
+            delError( "country" )
         }
-        setDtbirth(dtbirth)
+        
+        setCountry(country)
+    }
+    function handleProvince(province){
+        if(province.length < 2){
+            addError( "province", "Campo Estado deve ser preenchido")
+        }else{
+            delError( "province" )
+        }
+        setProvince(province)
     }
     /* Fim de validações de inputs */
 
-
-    async function handleCountry(countryData){
-        setCountry(countryData)
-    }
     async function getPronvice(countryData){
         const response = await api.get(`/utils/global/countrys/${countryData}`)
         setContentProvinces(response.data)
@@ -154,8 +180,9 @@ const Save = function ({ setAlert, session, setSession }) {
             setUsername(responseUser.data.username)
             setTruename(responseUser.data.truename)
             setEmail(responseUser.data.email)
+            setBirth(responseUser.data.birth)
+            setGender(responseUser.data.gender)
             setPhone(responseUser.data.phone)
-            setDtbirth(responseUser.data.birth)
             handleCountry(responseUser.data.country)
             setProvince(responseUser.data.province)
         }
@@ -165,7 +192,6 @@ const Save = function ({ setAlert, session, setSession }) {
 
     useEffect(() => {
         setBtnDisable(true)
-        console.log("UseEffect Errors: ", Object.keys(errors).length);
         if(Object.keys(errors).length === 0 ){
             setBtnDisable(false)
         }
@@ -243,6 +269,48 @@ const Save = function ({ setAlert, session, setSession }) {
             </div>
 
             <div className="row">
+                <div className="col-md-3 col-sm-12">
+                    <div className="form-group">
+                        <label htmlFor="birth">Data de Nascimento</label>
+                        <input 
+                            type="date" 
+                            className="form-control" 
+                            id="birth" 
+                            name="birth" 
+                            value={birth}
+                            onChange={(e) => handleBirth(e.target.value)}
+                            placeholder="Data de nascimento" 
+                        />
+                        {errors.birth && (
+                            <div className="input-error" id="input-error-birth">
+                                {errors.birth}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                <div className="col-md-3 col-sm-12">
+                    <div className="form-group">
+                        <label htmlFor="gender">Genero</label>
+                        <select 
+                            className="form-control" 
+                            id="gender" 
+                            name="gender" 
+                            value={gender}
+                            onChange={(e) => handleGender(e.target.value)}
+                        >
+                            <option value="F">Feminino</option>
+                            <option value="M">Masculino</option>
+                            <option value="O">Outros</option>
+                        </select>
+                        {errors.gender && (
+                            <div className="input-error" id="input-error-gender">
+                                {errors.gender}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
                 <div className="col-md-6 col-sm-12">
                     <div className="form-group">
                         <label htmlFor="phone">Telefone</label>
@@ -272,26 +340,6 @@ const Save = function ({ setAlert, session, setSession }) {
 
                 <div className="col-md-6 col-sm-12">
                     <div className="form-group">
-                        <label htmlFor="dtbirth">Data de Nascimento</label>
-                        <input 
-                            type="date" 
-                            className="form-control" 
-                            id="dtbirth" 
-                            name="dtbirth" 
-                            value={dtbirth}
-                            onChange={(e) => handleDtbirth(e.target.value)}
-                            placeholder="Data de nascimento" 
-                        />
-                        {errors.dtbirth && (
-                            <div className="input-error" id="input-error-dtbirth">
-                                {errors.dtbirth}
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                <div className="col-md-6 col-sm-12">
-                    <div className="form-group">
                         <label htmlFor="country">País</label>
                         <select 
                             className="form-control" 
@@ -306,6 +354,11 @@ const Save = function ({ setAlert, session, setSession }) {
                               ) )
                             }
                         </select>
+                        {errors.country && (
+                            <div className="input-error" id="input-error-country">
+                                {errors.country}
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -317,13 +370,18 @@ const Save = function ({ setAlert, session, setSession }) {
                             id="province" 
                             name="province" 
                             value={province}
-                            onChange={(e) => setProvince(e.target.value)}
+                            onChange={(e) => handleProvince(e.target.value)}
                             placeholder="Estado que vive"
                         >
                             { contentProvinces.map( provinceItem => (
                                 <option key={provinceItem.id} value={provinceItem.state_code}>{provinceItem.name}</option>
                             ) ) }
                         </select>
+                        {errors.province && (
+                            <div className="input-error" id="input-error-province">
+                                {errors.province}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

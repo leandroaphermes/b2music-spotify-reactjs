@@ -1,5 +1,5 @@
 .alert {
-    padding: 15px 30px;
+    padding: 15px 20px;
     background-color: var(--progress-bar-full);
     box-sizing: border-box;
     border-radius: 50px;
@@ -13,10 +13,9 @@
     display: block;
     bottom: 10px;
     left: 50%;
-    transform: translateX(-50%);
     opacity: 0;
     visibility: visible;
-    transition: opacity 1s;
+    animation: 5s linear fadeInOut;
 }
 .alert.alert-success {
     background-color: var(--alert-success);
@@ -27,6 +26,13 @@
 .alert.alert-info {
     background-color: var(--alert-info);
 }
-.alert.alert-active {
-    opacity: 1;
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0;
+        transform: translate(-50%, 100%);
+    }
+    5%, 95% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
 }

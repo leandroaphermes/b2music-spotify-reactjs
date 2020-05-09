@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import * as actionsAlert from '../../../store/actions/alert'
@@ -6,32 +6,21 @@ import * as actionsAlert from '../../../store/actions/alert'
 import "./Alert.css"
 
 const Alert = function ({ type, status, float, message, setAlert }) {
-    const [fade, setFade ] = useState(false)
-
     useEffect(() => {
-        console.log("Entrou no useEffect");
         if(status){
 
-            
-            setTimeout(() => {
-                setFade(true)
-            }, 100)
             setTimeout(() => {
                 setAlert({
                     status: false
                 })
-            }, 5000)
-            setTimeout(() => {
-                setFade(false)
-            }, 4000)
-
+            }, 5500)
         }
 
     }, [ status, setAlert ])
     
     return (
         status && (
-            <div className={`alert ${ float && `alert-floating`} ${ (fade) ? `alert-active` : ``} ${ type && `alert-${type}` }`}>
+            <div className={`alert ${ float && `alert-floating`} ${ type && `alert-${type}` }`}>
                 {message}
             </div>
         )
