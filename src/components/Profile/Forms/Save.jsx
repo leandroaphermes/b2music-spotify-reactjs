@@ -5,6 +5,15 @@ import api from '../../../services/Api'
 import * as actionsAlert from '../../../store/actions/alert'
 import * as actionsSession from '../../../store/actions/session'
 
+import { 
+    USERNAME_VALIDATION, 
+    ALFA_NUMBER_SPACE_CS, 
+    EMAIL_VALIDATION, 
+    DATE_VALIDATION, 
+    MASK_PHONE, 
+    PHONE_VALIDATION
+} from '../../../utils/const-regex'
+
 const Save = function ({ setAlert, session, setSession }) {
 
     const [btnDisable, setBtnDisable] = useState(true)
@@ -55,7 +64,7 @@ const Save = function ({ setAlert, session, setSession }) {
         .catch( dataError => {
             if(dataError.response.data[0]){
                 let errorsApi = {};
-                dataError.response.data.map( field => {
+                dataError.response.data.forEach( field => {
                     errorsApi[field.field] = field.message
                 })
                 setErrors(errorsApi)
@@ -85,7 +94,7 @@ const Save = function ({ setAlert, session, setSession }) {
     function handleUsername(username){
         if(username.length < 4 || username.length > 32){
             addError( "username", "Nome de Usuario deve conter 4 a 32 caracteres")
-        }else if(!new RegExp(/^[a-z]{1}[a-z0-9]+$/).test(username)){
+        }else if(!new RegExp(USERNAME_VALIDATION).test(username)){
             addError( "username", "Nome de Usuario pode conter letras ou numeros, Sendo que primeira letra não pode ser numero")
         }else{
             delError( "username" )
@@ -95,6 +104,8 @@ const Save = function ({ setAlert, session, setSession }) {
     function handleTruename(truename){
         if(truename.length < 4 || truename.length > 100){
             addError( "truename", "Nome Completo deve conter 4 a 100 caracteres")
+        }else if(!new RegExp(ALFA_NUMBER_SPACE_CS).test(truename)){
+            addError( "truename", "Nome Completo deve aceita apenas letras e numero")
         }else{
             delError( "truename" )
         }
@@ -104,7 +115,7 @@ const Save = function ({ setAlert, session, setSession }) {
     function handleEmail(email){
         if(email.length < 6 || email.length > 64){
             addError( "email", "Email deve conter 6 a 64 caracteres")
-        }else if(!new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(email)) {
+        }else if(!new RegExp(EMAIL_VALIDATION).test(email)) {
             addError( "email", "Email deve ser valido")
         }else{
             delError( "email" )
@@ -113,7 +124,7 @@ const Save = function ({ setAlert, session, setSession }) {
     }
 
     function handleBirth(birth) {
-        let rer = birth.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+        let rer = birth.match(DATE_VALIDATION)
         if(birth.length !== 10){
             addError( "birth", "Data de Nascimento Invalida")
         }else if(!rer || rer[1] < 1700 || rer[2] > 12 || rer[2] < 1 || rer[3] > 31 || rer[2] < 1){
@@ -134,10 +145,10 @@ const Save = function ({ setAlert, session, setSession }) {
     }
 
     function handlePhone(phone){
-        phone = phone.replace(/^([1-9]{2})(\d{5})(\d{4})/, "($1) $2-$3")
+        phone = phone.replace(MASK_PHONE.br, "($1) $2-$3")
         if(phone.length < 8 || phone.length > 15){
             addError( "phone", "Telefone deve ser valido.")
-        }else if(!new RegExp(/^\([1-9]{2}\) \d{5}-\d{4}$/).test(phone)){
+        }else if(!new RegExp(PHONE_VALIDATION.br).test(phone)){
             addError( "phone", "Telefone deve ser valido")
         }else{
             delError( "phone" )
@@ -183,7 +194,7 @@ const Save = function ({ setAlert, session, setSession }) {
             setBirth(responseUser.data.birth)
             setGender(responseUser.data.gender)
             setPhone(responseUser.data.phone)
-            handleCountry(responseUser.data.country)
+            setCountry(responseUser.data.country)
             setProvince(responseUser.data.province)
         }
 
@@ -391,7 +402,6 @@ const Save = function ({ setAlert, session, setSession }) {
                     Salvar
                 </button>
             </div>
-
         </form>
     )
 }

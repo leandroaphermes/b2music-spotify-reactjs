@@ -9,6 +9,14 @@ const api = axios.create({
     },
 })
 
+
+
+
+
+
+
+
+
 // Add a request interceptor
 api.interceptors.request.use(function (config) {
     
@@ -30,7 +38,7 @@ api.interceptors.response.use(function (response) {
     // Do something with response data
     return response;
     }, function (error) {
-        if(error.response.status === 401){
+        if(!error.response || error.response.status === 401){
             deleteSessionToken()
         }
 

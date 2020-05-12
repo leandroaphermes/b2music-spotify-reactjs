@@ -87,7 +87,6 @@ const audio = new Audio();
 
         function getLastPlaylist(){
             const lastID = parseInt(localStorage.getItem('last_playlist')) || 0
-            console.log(lastID);
             
             if(lastID > 0){
                 api.get(`/playlists/${lastID}`)

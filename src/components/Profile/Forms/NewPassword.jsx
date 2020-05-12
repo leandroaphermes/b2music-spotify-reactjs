@@ -1,30 +1,164 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 
-export default function NewPassword() {
+import * as actionsAlert from '../../../store/actions/alert'
+
+import { PASSWORD_VALIDATION } from '../../../utils/const-regex'
+
+const NewPassword = function({ setAlert }) {
+
+    const [errors, setErrors] = useState({})
+    const [btnDisable, setBtnDisable] = useState(true)
+
+    const [passwordOld, setPasswordOld] = useState("")
+    const [passwordNew, setPasswordNew] = useState("")
+    const [passwordConfirm, setPasswordConfirm] = useState("")
+
+    function handleSubmit(e) {
+        e.preventDefault()
+
+        setAlert({
+            status: true,
+            type: "success",
+            message: "Sua senha alterada com sucesso"
+        })
+
+    }
+
+    function addError( field, message){
+        setErrors({...errors, [field]: message})
+    }
+    function delError( field ){
+        let tmp = errors
+        delete tmp[field]
+        setErrors({...tmp})
+    }
+
+    function handlePasswordOld(passwordOld){
+
+        if(passwordOld.length < 6 || passwordOld.length > 32){
+            addError( "passwordOld", "Senha Antiga deve conter 6 a 32 caracteres")
+
+        }else if (! new RegExp(PASSWORD_VALIDATION).test(passwordOld)){
+            addError( "passwordOld", "Senha Antiga deve conter pelo menos 1 caracter especial !@#$%&-_.  letras e numeros")
+
+        }else{
+            delError( "passwordOld" )
+        }
+
+        setPasswordOld(passwordOld)
+    }
+    function handlePasswordNew(passwordNew){
+        
+        if(passwordNew.length < 6 || passwordNew.length > 32){
+            addError( "passwordNew", "Nova Senha deve conter 6 a 32 caracteres")
+
+        }else if (! new RegExp(PASSWORD_VALIDATION).test(passwordNew)){
+            addError( "passwordNew", "Nova Senha deve conter pelo menos 1 caracter especial !@#$%&-_.  letras e numeros")
+            
+        }else{
+            delError( "passwordNew" )
+        }
+        setPasswordNew(passwordNew)
+    }
+    function handlePasswordConfirm(passwordConfirm, passwordNew){
+        if(passwordConfirm.length < 6 || passwordConfirm.length > 32){
+            addError( "passwordConfirm", "Confirmação nova Senha deve conter 6 a 32 caracteres")
+
+        }else if (passwordConfirm !== passwordNew){
+            addError( "passwordConfirm", "Confirmação nova Senha deve ser igual a Nova senha")
+            
+        }else{
+            delError( "passwordConfirm" )
+        }
+        setPasswordConfirm(passwordConfirm)
+    }
+
+
+    useEffect(  () => {
+        setBtnDisable(true)
+        if(  Object.keys(errors).length === 0 ){
+            setBtnDisable(false)
+        }
+    }, [ errors ] )
+
+
     return (
-        <form action="/my-profile.html" method="post">
+        <form onSubmit={handleSubmit} >
 
             <div className="form-group">
                 <label htmlFor="password-old">Senha atual</label>
-                <input type="password" className="form-control" id="password-old" name="password-old" autoComplete="current-password" placeholder="Senha atual de uso" />
+                <input 
+                    type="password" 
+                    className="form-control" 
+                    id="password-old" 
+                    name="password-old" 
+                    autoComplete="current-password" 
+                    placeholder="Senha atual de uso"
+                    value={passwordOld}
+                    onChange={(e) => handlePasswordOld(e.target.value)}
+                />
+                {errors.passwordOld && (
+                    <div className="input-error" id="input-error-password-old">
+                        {errors.passwordOld}
+                    </div>
+                )}
             </div>
 
             <div className="form-group">
                 <label htmlFor="password-new">Nova senha</label>
-                <input type="password" className="form-control" id="password-new" name="password-new" autoComplete="new-password" placeholder="Nova senha" />
+                <input 
+                    type="password" 
+                    className="form-control" 
+                    id="password-new" 
+                    name="password-new" 
+                    autoComplete="new-password" 
+                    placeholder="Nova senha"
+                    value={passwordNew}
+                    onChange={(e) => handlePasswordNew(e.target.value)}
+                />
+                {errors.passwordNew && (
+                    <div className="input-error" id="input-error-password-new">
+                        {errors.passwordNew}
+                    </div>
+                )}
             </div>
 
             <div className="form-group">
-                <label htmlFor="password-new2">Confirmar nova senha</label>
-                <input type="text" className="form-control" id="password-new2" name="password-new2" autoComplete="new-password" placeholder="Confirmar nova senha" />
+                <label htmlFor="password-confirm">Confirmar nova senha</label>
+                <input 
+                    type="password" 
+                    className="form-control" 
+                    id="password-confirm" 
+                    name="password-confirm" 
+                    autoComplete="new-password" 
+                    placeholder="Confirmar nova senha"
+                    value={passwordConfirm}
+                    onChange={(e) => handlePasswordConfirm(e.target.value, passwordNew)}
+                />
+                {errors.passwordConfirm && (
+                    <div className="input-error" id="input-error-password-confirm">
+                        {errors.passwordConfirm}
+                    </div>
+                )}
             </div>
 
             <div className="form-group text-center">
-                <button className="btn btn-primary">
-                    Salvar
+                <button type="submit" className="btn btn-primary" disabled={btnDisable}>
+                    Alterar Senha
                 </button>
             </div>
 
         </form>
     )
 }
+
+const mapStateToProps = state => ({
+
+})
+
+const mapDispatchToProps = dispatch => ({
+    setAlert: (alertDate) => dispatch(actionsAlert.set(alertDate))
+})
+
+export default connect( mapStateToProps, mapDispatchToProps)(NewPassword)

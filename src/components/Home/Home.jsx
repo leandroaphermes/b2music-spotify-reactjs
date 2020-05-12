@@ -15,7 +15,7 @@ import "./Home.css";
 const Home = function ({ status, setStatus, player, setPlayer }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
-    const [data, setData] = useState({})
+    const [data, setData] = useState([])
 
     function play(e, playlistId){
         e.preventDefault();
@@ -62,53 +62,51 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
 
 
     return (
-        <React.Fragment>
-            <div>
-                { isLoaded ? (
-                    data.map( (cardItem) => (
-                        cardItem.playlists.length > 0 && (
-                            <section key={cardItem.id} className="card">
-                                <header className="card-header">
-                                    <div className="card-flex">
-                                        <a href={cardItem.url} className="card-title">{cardItem.title}</a>
-                                        { cardItem.url && (
-                                            <div className="card-options">
-                                                <a href={cardItem.url}>{cardItem.textMore}</a>
-                                            </div>
-                                        )}
-                                        
-                                    </div>
-                                    <small className="card-small">{cardItem.description}</small>
-                                </header>
-                                    {cardItem.playlists.map( (playlist) => (
-                                        <article key={playlist.id} className="card-container">
-                                            <a href={`/playlist/${playlist.id}`} className="d-block card-content">
-                                                <div className="image-album">
-                                                    <img src={playlist.photo_url ? playlist.photo_url : imageDefault } alt={playlist.name} />
-                                                </div>
-                                                <div className="song-description mt-2">
-                                                    <div className="song-description-title">
-                                                        {playlist.name}
-                                                    </div>
-                                                    <div className="song-description-body hide-text-two-lines">{playlist.description}</div>
-                                                </div>
-                                                <div className="song-player">
-                                                    <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, playlist.id)}>
-                                                        {(status && playlist.id === player.id) ? <IconPause /> : <IconPlay />}
-                                                    </button>
-                                                </div>
-                                            </a>
-                                        </article>
-                                    )
+        <div>
+            { isLoaded ? (
+                data.map( (cardItem) => (
+                    cardItem.playlists.length > 0 && (
+                        <section key={cardItem.id} className="card">
+                            <header className="card-header">
+                                <div className="card-flex">
+                                    <a href={cardItem.url} className="card-title">{cardItem.title}</a>
+                                    { cardItem.url && (
+                                        <div className="card-options">
+                                            <a href={cardItem.url}>{cardItem.textMore}</a>
+                                        </div>
                                     )}
-                            </section>
-                        )
-                    ))
-                ): (
-                    <ComponentUILoading />
-                )}
-            </div>
-        </React.Fragment>
+                                    
+                                </div>
+                                <small className="card-small">{cardItem.description}</small>
+                            </header>
+                                {cardItem.playlists.map( (playlist) => (
+                                    <article key={playlist.id} className="card-container">
+                                        <a href={`/playlist/${playlist.id}`} className="d-block card-content">
+                                            <div className="image-album">
+                                                <img src={playlist.photo_url ? playlist.photo_url : imageDefault } alt={playlist.name} />
+                                            </div>
+                                            <div className="song-description mt-2">
+                                                <div className="song-description-title">
+                                                    {playlist.name}
+                                                </div>
+                                                <div className="song-description-body hide-text-two-lines">{playlist.description}</div>
+                                            </div>
+                                            <div className="song-player">
+                                                <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, playlist.id)}>
+                                                    {(status && playlist.id === player.id) ? <IconPause /> : <IconPlay />}
+                                                </button>
+                                            </div>
+                                        </a>
+                                    </article>
+                                )
+                                )}
+                        </section>
+                    )
+                ))
+            ): (
+                <ComponentUILoading />
+            )}
+        </div>
     )
 }
 
