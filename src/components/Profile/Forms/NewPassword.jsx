@@ -2,26 +2,78 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import * as actionsAlert from '../../../store/actions/alert'
+import api from '../../../services/Api'
 
 import { PASSWORD_VALIDATION } from '../../../utils/const-regex'
 
-const NewPassword = function({ setAlert }) {
 
-    const [errors, setErrors] = useState({})
+const NewPassword = function({ session, setAlert }) {
+
+    const [errors, setErrors] = useState({
+        passwordOld: "",
+        passwordNew: "",
+        passwordConfirm: ""
+    })
     const [btnDisable, setBtnDisable] = useState(true)
 
     const [passwordOld, setPasswordOld] = useState("")
     const [passwordNew, setPasswordNew] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
-
+   
     function handleSubmit(e) {
         e.preventDefault()
+        
+        setBtnDisable(true)
 
-        setAlert({
-            status: true,
-            type: "success",
-            message: "Sua senha alterada com sucesso"
+        api.put(`/users/${session.id}/password`, {
+            password_old: passwordOld,
+            password_new: passwordNew,
+            password_new_confirmation: passwordConfirm
         })
+        .then( response => {
+            if(response.status === 204){
+                setAlert({
+                    status: true,
+                    type: "success",
+                    message: "Sua senha alterada com sucesso"
+                })
+                setBtnDisable(false)
+            }
+        })
+        .catch( dataError => {
+            
+            if(dataError.response.data[0]){
+                let errorsApi = {}
+                dataError.response.data.forEach( field => {
+                    switch (field.field) {
+                        case "password_old":
+                            errorsApi.passwordOld = field.message
+                            break;
+                        case "password_new":
+                            errorsApi.passwordNew = field.message
+                            break;
+                        case "password_new_confirmation":
+                            errorsApi.passwordConfirm = field.message
+                            break;
+                    
+                        default:
+                            break;
+                    }
+                })
+                setErrors(errorsApi)
+            
+            }else{
+                setAlert({
+                    status: true,
+                    type: "danger",
+                    message: dataError.response.data.message,
+                    float: true
+                })
+            }
+            setBtnDisable(false)
+
+        })
+        
 
     }
 
@@ -40,7 +92,7 @@ const NewPassword = function({ setAlert }) {
             addError( "passwordOld", "Senha Antiga deve conter 6 a 32 caracteres")
 
         }else if (! new RegExp(PASSWORD_VALIDATION).test(passwordOld)){
-            addError( "passwordOld", "Senha Antiga deve conter pelo menos 1 caracter especial !@#$%&-_.  letras e numeros")
+            addError( "passwordOld", "Senha Antiga deve conter pelo menos 1 caracter especial !@#$%&-_. letras e numeros")
 
         }else{
             delError( "passwordOld" )
@@ -77,7 +129,7 @@ const NewPassword = function({ setAlert }) {
 
     useEffect(  () => {
         setBtnDisable(true)
-        if(  Object.keys(errors).length === 0 ){
+        if( Object.keys(errors).length === 0 ){
             setBtnDisable(false)
         }
     }, [ errors ] )
@@ -154,7 +206,7 @@ const NewPassword = function({ setAlert }) {
 }
 
 const mapStateToProps = state => ({
-
+    session: state.session.user
 })
 
 const mapDispatchToProps = dispatch => ({

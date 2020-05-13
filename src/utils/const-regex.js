@@ -14,7 +14,7 @@ export const ESPECIAL_CHARACTER_ACCEPT = /[!@#$%&\-_.]/
 
 /* regex specific */
 export const PASSWORD_VALIDATION = /^(?=.*[!@#$%&\-_.])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%&\-_.]+$/
-export const EMAIL_VALIDATION = /^((?!.*__+)(?!.*..+)[a-zA-Z]{1}[a-zA-Z0-9._]{2,})@[a-zA-Z0-9._]{2,}\.[a-zA-Z]{2,}$/
+export const EMAIL_VALIDATION = /^((?!.*__+)(?!.*\.\.+)[a-zA-Z]{1}[a-zA-Z0-9._]{2,})@[a-zA-Z0-9._]{2,}\.[a-zA-Z]{2,}$/
 export const USERNAME_VALIDATION = /^[a-z]{1}[a-z0-9]+$/
 
 /* Dates */

@@ -10,7 +10,7 @@
 .menu-list {
     display: block;
 }
-.menu-list .menu-item {
+.menu-item {
     padding: 10px 20px;
     cursor: pointer;
     display: flex;
@@ -19,7 +19,7 @@
     position: relative;
     justify-content: flex-start;
 }
-.menu-list .menu-item span {
+.menu-item span {
     align-self: center;
     text-transform: capitalize;
 }
@@ -35,10 +35,10 @@
     .header-user-name{
         display: none;
     }
-    .menu-item .menu-item-title {
+    .menu-item-title {
         display: none;
     }
-    .menu-list .menu-item:hover .menu-item-title, .header-user:hover .header-user-name {
+    .menu-item:hover .menu-item-title, .header-user:hover .header-user-name {
         display: block;
         position: absolute;
         padding: 11px 15px;

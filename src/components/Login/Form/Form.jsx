@@ -4,66 +4,98 @@ import { connect } from 'react-redux'
 
 import api from '../../../services/Api'
 import * as actionsSession from '../../../store/actions/session'
+import * as actionsAlert from '../../../store/actions/alert'
 import { setSessionToken } from '../../../utils/utils'
+import { EMAIL_VALIDATION } from '../../../utils/const-regex'
 
 import ComponentAlert from "../../UI/Alert/Alert"
 
-const errors = {}
-
-const Form = function ({ setSession }) {
-
-    const [errorApi, setErrorApi] = useState("")
+const Form = function ({ setAlert, setSession }) {
+    const [errors, setErrors] = useState({
+        email: "",
+        password: ""
+    })
     const [btnDisable, setBtnDisable] = useState(true)
-    const [email, setEmail] = useState("leandro@localhost.com")
-    const [password, setPassword] = useState("123123")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const history = useHistory()
 
     function handleSubmit(e){
         e.preventDefault()
-        if(btnDisable || Object.keys(errors).length !== 0){
-            return false
-        }
+        setBtnDisable(true)
 
         api.post('/auth', {
             email,
             password
         })
         .then( response => {
+
             setSessionToken(response.data.token)
             setSession(response.data)
             
             history.push('/')
         })
         .catch( dataError => {
-            console.dir(dataError);
-            setErrorApi(dataError.response.data.message)
+            if(dataError.response.data[0]){
+                let errorsApi = {};
+                dataError.response.data.forEach( field => {
+                    errorsApi[field.field] = field.message
+                })
+                setErrors(errorsApi)
+            
+            }else{
+                setAlert({
+                    status: true,
+                    type: "danger",
+                    message: dataError.response.data.message,
+                    float: false
+                })
+            }
+            setBtnDisable(false)
         })
 
     }
 
+    function addError( field, message){
+        setErrors({...errors, [field]: message})
+    }
+    function delError( field ){
+        let tmp = errors
+        delete tmp[field]
+        setErrors({...tmp})
+    }
+
+    function handleEmail(email){
+
+        if(email.length < 6 || email.length > 64){
+            addError( "email", "Email deve conter 6 a 64 caracteres")
+        }else if(!new RegExp(EMAIL_VALIDATION).test(email)){
+            addError( "email", "Email não é valido")
+        }else{
+            delError( "email" )
+        }
+
+        setEmail(email)
+    }
+
+    function handlePassword(password){
+
+        if(password.length < 6 || password.length > 32){
+            addError( "password", "Senha deve conter 6 a 32 caracteres")
+        }else{
+            delError( "password" )
+        }
+
+        setPassword(password)
+    }
+
     useEffect(() => {
         setBtnDisable(true)
-        if(email.length < 6 || email.length > 64){
-            errors.email = "Campo Email deve conter 6 a 64 caracteres"
-        }else if(!new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(email)) {
-            errors.email = "Campo Email deve ser valido"
-        }else{
-            delete errors.email
-        }
-        
-        
-        if(password.length < 6 || password.length > 32){
-            errors.password = "Campo Senha deve conter 6 a 32 caracteres"
-        }else{
-            delete errors.password
-        }
-
-        if(Object.keys(errors).length === 0 ){
+        if(Object.keys(errors).length === 0) {
             setBtnDisable(false)
         }
-
-    }, [email, password])
+    }, [ errors ])
 
     return (
         <form className="py-2" onSubmit={handleSubmit} >
@@ -78,7 +110,7 @@ const Form = function ({ setSession }) {
                     maxLength="64"
                     placeholder="Digite o email"
                     autoComplete="email"
-                    onChange={ e => setEmail(e.target.value)}
+                    onChange={ e => handleEmail(e.target.value)}
                     value={email}
                 />
                 {errors.email && (
@@ -98,7 +130,7 @@ const Form = function ({ setSession }) {
                     maxLength="32"
                     placeholder="Digite a senha"
                     autoComplete="password"
-                    onChange={ e => setPassword(e.target.value)}
+                    onChange={ e => handlePassword(e.target.value)}
                     value={password}
                 />
                 {errors.password && (
@@ -110,9 +142,10 @@ const Form = function ({ setSession }) {
             <button type="submit" className="btn btn-primary btn-block" disabled={btnDisable}>
                 Entrar
             </button>
-            { errorApi && (
-                <ComponentAlert type="danger" text="Erro de login ou senha" />
-            )}
+            
+            <div className="mt-4">
+                <ComponentAlert />
+            </div>
         </form>
     )
 }
@@ -122,10 +155,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setSession: (sessionData) => {
-        
-        dispatch(actionsSession.set(sessionData))
-    }
+    setSession: (sessionData) => dispatch(actionsSession.set(sessionData)),
+    setAlert: (alertData) => dispatch(actionsAlert.set(alertData))
 })
 
 

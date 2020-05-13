@@ -45,13 +45,13 @@ a {
     color: var(--text-primary);
 }
 .active, a:active, a:hover, a:focus {
-    color: var(--text-primary-hover);
+    color: var(--text-primary-hover) !important;
 }
 a.active-line {
     text-decoration: none;
     color: var(--text-primary-hover);
-    border-bottom: 3px solid var(--btn-secundary);
-    padding-bottom: 0.2em;
+    border-bottom: 3px solid var(--btn-secundary) !important;
+    padding-bottom: 0.2em !important;
 }
 ul, li {
     list-style: none;
@@ -133,7 +133,7 @@ button:disabled{
     padding: 0px 0px;
 }
 .btn-active {
-    color: var(--text-primary-hover);
+    color: var(--text-primary-hover) !important;
 }
 .btn-clean:hover {
     background-color: transparent;

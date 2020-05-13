@@ -6,7 +6,6 @@
     z-index: 1000;
     color: var(--text-primary-white);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    opacity: 1;
 }
 .alert-floating {
     position: absolute;

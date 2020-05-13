@@ -34,6 +34,7 @@ const Save = function ({ setAlert, session, setSession }) {
 
     function handleSubmit(e){
         e.preventDefault()
+        setBtnDisable(true)
 
         api.put(`/users/${session.id}`, {
             username,
@@ -60,6 +61,7 @@ const Save = function ({ setAlert, session, setSession }) {
                 message: "Seus dados foram salvo com sucesso",
                 float: true
             })
+            setBtnDisable(false)
         })
         .catch( dataError => {
             if(dataError.response.data[0]){
@@ -77,6 +79,7 @@ const Save = function ({ setAlert, session, setSession }) {
                     float: true
                 })
             }
+            setBtnDisable(false)
         })
 
     }
@@ -203,7 +206,7 @@ const Save = function ({ setAlert, session, setSession }) {
 
     useEffect(() => {
         setBtnDisable(true)
-        if(Object.keys(errors).length === 0 ){
+        if( Object.keys(errors).length === 0 ){
             setBtnDisable(false)
         }
     }, [ errors ])

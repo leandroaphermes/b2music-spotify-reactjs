@@ -56,7 +56,7 @@ export default function Aside(props) {
                     {
                     menuList.map( (item) =>(
                         <li key={item.url} >
-                            <NavLink exact to={item.url} className="menu-item" >
+                            <NavLink exact to={item.url} className="menu-item" activeClassName="active" >
                                 {item.icon}
                                 <span className="menu-item-title ml-1">{item.nameTitle}</span>
                             </NavLink>
