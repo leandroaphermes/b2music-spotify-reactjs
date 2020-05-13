@@ -25,7 +25,7 @@ export default function Login() {
             </section>
             <div className="login-text">
                 Escute suas musicas<br/>
-                Como se você estivese na 
+                Como se você estivesse na 
                 <span>festa</span>
             </div>
         </div>

@@ -11,7 +11,7 @@ export default function Profile() {
                     <section className="card">
                         <div className="card-header">
                             <div className="card-title">
-                                <a href="#edit">Meus Dados</a>
+                                Meus Dados
                             </div>
                             <small>Gerenciar meus dados como Nome, Email, Telefone, Data de nascimento, País e Estado</small>
                         </div>
@@ -24,7 +24,7 @@ export default function Profile() {
                     <section className="card">
                         <div className="card-header">
                             <div className="card-title">
-                                <a href="#new-password">Alterar senha</a>
+                                Alterar senha
                             </div>
                             <small>Alterar a senha da sua conta</small>
                         </div>

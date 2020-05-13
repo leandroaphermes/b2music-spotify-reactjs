@@ -1,11 +1,9 @@
 import React from "react";
 
-import ComponentHome from '../../components/Home/Home';
+import ComponentHome from '../../components/Home/Home'
 
 
-const Home = (props) => (
-    <ComponentHome />
-);
+const Home = () => <ComponentHome />
 
 
 export default Home;
