@@ -19,31 +19,37 @@ export default function Aside(props) {
             nameTitle : props.username,
             icon : <IconUser width="32px" height="32px" />,
             url : "/profile",
+            exactEnable: true
         },
         {
             nameTitle : "Inicio",
             icon : <IconHome width="20px" height="20px" />,
             url : "/",
+            exactEnable: true
         },
         {
             nameTitle : "Buscar",
             icon : <IconSearch width="20px" height="20px" />,
             url : "/search",
+            exactEnable: true,
         },
         {
             nameTitle : "Minha Blibioteca",
             icon : <IconMusicalNotes width="20px" height="20px" />,
-            url : "/my-library"
+            url : "/my-library/playlists",
+            exactEnable: false
         },
         {
             nameTitle : "Favoritos",
             icon : <IconStar width="20px" height="20px" />,
             url : "/favorite",
+            exactEnable: true
         },
         {
             nameTitle : "Sair",
             icon : <IconLogOut width="20px" height="20px" />,
             url : "/logout",
+            exactEnable: true
         },
     ];
 
@@ -56,7 +62,7 @@ export default function Aside(props) {
                     {
                     menuList.map( (item) =>(
                         <li key={item.url} >
-                            <NavLink exact to={item.url} className="menu-item" activeClassName="active" >
+                            <NavLink exact={item.exactEnable} to={item.url} className="menu-item" activeClassName="active" >
                                 {item.icon}
                                 <span className="menu-item-title ml-1">{item.nameTitle}</span>
                             </NavLink>
