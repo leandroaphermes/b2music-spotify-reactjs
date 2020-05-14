@@ -1,41 +1,40 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
 
 import api from '../../services/Api'
 
 import ComponentCardsGenres from '../Cards/Genres/Genres'
 import ComponentSearchResults from './Results/Results'
+import ComponentLoading from '../UI/Loading/Loading'
 
 
 import "./Search.css"
 
 const Search = function () {
-    const [search, setSearch] = useState("")
+    const history = useHistory() 
+    const { searchUrl } = useParams() 
+    const [search, setSearch] = useState( searchUrl ? searchUrl : "")
     const [searchResults, setSearchResults] = useState({})
 
     function handleSearch(search){
         setSearch(search)
+        history.push(`/search/${search}`)
     }
 
     useEffect(() => {
-        if(search.length > 0){
-
+        if(searchUrl && searchUrl.length > 0){
             const id = setTimeout(() => {
-                api.get(`/search/${search}`)
+                api.get(`/search/${searchUrl}`)
                 .then( response => {
-                    
                     setSearchResults(response.data)
-    
                 })
                 .catch( dataError => console.log("Erro API search", dataError))
             }, 800)
-    
             return () => {
                 clearInterval(id)
             }
-
-
         }
-    }, [search])
+    }, [searchUrl])
 
     return (
         <div>
@@ -48,7 +47,7 @@ const Search = function () {
                 </header>
                 <div className="card-content card-page p-0">
 
-                    <input 
+                    <input
                         type="search" 
                         className="form-control" 
                         name="search" 
@@ -57,14 +56,14 @@ const Search = function () {
                         autoCapitalize="off"
                         value={search}
                         onChange={(e) => handleSearch(e.target.value)}
+                        autoFocus
                     />
 
                 </div>
             </section>
-            { search !== "" && Object.keys(searchResults).length > 0 ? 
+            { searchUrl !== "" && Object.keys(searchResults).length > 0 ? 
               <ComponentSearchResults search={search} searchResults={searchResults} />
-            : <ComponentCardsGenres /> }
-            
+            : search !== "" ? <ComponentLoading /> : <ComponentCardsGenres /> }
         </div>
     )
 }

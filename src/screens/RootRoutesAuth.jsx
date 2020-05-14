@@ -30,6 +30,7 @@ const RootRoutesAuth = function ({ session, setSession }) {
                 <main className="body-content">
                     <Route exact path="/" component={ScreenHome} />
                     <Route exact path="/search" component={ScreenSearch} />
+                    <Route exact path="/search/:searchUrl" component={ScreenSearch} />
                     <Route exact path="/my-library" component={() => <h3>Você ta na blibioteca</h3>} />
                     <Route exact path="/favorite" component={() => <h3>Você ta nos favoritos</h3>} />
                     <Route exact path="/profile" component={ScreenProfile} />

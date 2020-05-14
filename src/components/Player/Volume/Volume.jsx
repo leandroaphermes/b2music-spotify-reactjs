@@ -37,7 +37,14 @@ const Volume = function(props) {
     return (
         <div className="song-volume" aria-label="Controles de Volume">
             <div className="song-volume-playlist mr-2">
-                <button type="button" className="btn btn-clean" title="Fila de Reprodução" onClick={handleClickQueue}><IconList /></button>
+                <button 
+                    type="button" 
+                    className="btn btn-clean" 
+                    title="Fila de Reprodução" 
+                    onClick={handleClickQueue}
+                >
+                    <IconList />
+                </button>
             </div>
             <div className="song-volume-slide mr-5">
                 <div className="song-volume-volume-icon mr-1">

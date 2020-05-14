@@ -9,6 +9,7 @@
     width: 100%;
     max-width: 70px;
     height: auto;
+    text-align: center;
 }
 .card-results-photo img {
     border-radius: 50%;
