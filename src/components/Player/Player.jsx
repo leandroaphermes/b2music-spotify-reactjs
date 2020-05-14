@@ -12,12 +12,10 @@ import ComponentPlayerVolume from "./Volume/Volume";
 
 import "./Player.css";
 
-const audio = new Audio();
-
-
  const Player = function({ player, setPlayer, status, setStatus }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
+    const [audio] = useState(new Audio())
 
     const [random, setRandom] = useState(false);
     const [repeat, setRepeat] = useState(false);
@@ -117,12 +115,18 @@ const audio = new Audio();
         getLastPlaylist()
     }, [setPlayer]);
 
+    useEffect(() => {
+        return () => {
+            audio.pause()
+        }
+    }, [ audio ])
+
     /* Alteração de State volume afeta o som */
     useEffect(() => {
         audio.volume = volume.now/100;
         localStorage.setItem("volume", JSON.stringify(volume).toString());
         console.log("---- AUDIO.volume Atualizou ----");
-    }, [volume]);
+    }, [volume, audio]);
 
     /* Alteração no State player afeta o source do Audio */
     useEffect(() => {
@@ -141,7 +145,7 @@ const audio = new Audio();
                 audio.removeEventListener("canplaythrough", eventPlay);
             };
         }
-    }, [player, status]);
+    }, [player, status, audio]);
 
     /* Alteração no State status & mouseUpProgress afeta o play e pause do Audio */
     useEffect( () => {
@@ -158,7 +162,7 @@ const audio = new Audio();
             audio.pause();
         }
         return () => clearInterval(timeInterval);
-    }, [status, mouseUpProgress]);
+    }, [status, mouseUpProgress, audio]);
 
 
     audio.onended = (() => {

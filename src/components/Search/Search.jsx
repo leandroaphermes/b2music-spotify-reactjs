@@ -42,7 +42,7 @@ const Search = function () {
             <section className="card">
                 <header className="card-header">
                     <div className="card-title">
-                        <a href="">Buscar</a>
+                        <a href="/search">Buscar</a>
                     </div>
                     <small className="card-small">Busque artistas, musicas ou podcast</small>
                 </header>
@@ -62,7 +62,7 @@ const Search = function () {
                 </div>
             </section>
             { Object.keys(searchResults).length > 0 ? 
-              <ComponentSearchResults searchResults={searchResults} />
+              <ComponentSearchResults search searchResults={searchResults} />
             : <ComponentCardsGenres /> }
             
         </div>

@@ -22,10 +22,10 @@ export default function Results(props) {
                     <header className="card-header">
                         <div className="card-flex">
                             <div className="card-title">
-                                <a href="">Musicas</a>
+                                <a href={`/search/${props.search}/tracks`}>Musicas</a>
                             </div>
                             <div className="card-options">
-                                <a href="">Mostar mais</a>
+                                <a href={`/search/${props.search}/tracks`}>Mostar mais</a>
                             </div>
                         </div>
                     </header>
