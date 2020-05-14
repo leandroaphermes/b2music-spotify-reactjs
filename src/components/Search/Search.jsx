@@ -61,8 +61,8 @@ const Search = function () {
 
                 </div>
             </section>
-            { Object.keys(searchResults).length > 0 ? 
-              <ComponentSearchResults search searchResults={searchResults} />
+            { search !== "" && Object.keys(searchResults).length > 0 ? 
+              <ComponentSearchResults search={search} searchResults={searchResults} />
             : <ComponentCardsGenres /> }
             
         </div>
