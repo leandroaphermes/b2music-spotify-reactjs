@@ -1,0 +1,20 @@
+.card-results-list {
+    display: flex;
+    padding: 10px 10px;
+}
+.card-results-list:hover {
+    background-color: rgba( 255, 255, 255, 0.08);
+}
+.card-results-photo {
+    width: 100%;
+    max-width: 70px;
+    height: auto;
+}
+.card-results-photo img {
+    border-radius: 50%;
+}
+.card-results-details {
+    display: block;
+    width: 100%;
+    padding-left: 15px;
+}

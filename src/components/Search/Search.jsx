@@ -17,21 +17,23 @@ const Search = function () {
     }
 
     useEffect(() => {
+        if(search.length > 0){
 
-        const id = setTimeout(() => {
-            api.get('/search')
-            .then( response => {
+            const id = setTimeout(() => {
+                api.get(`/search/${search}`)
+                .then( response => {
+                    
+                    setSearchResults(response.data)
+    
+                })
+                .catch( dataError => console.log("Erro API search", dataError))
+            }, 800)
+    
+            return () => {
+                clearInterval(id)
+            }
 
-                setSearchResults(response.data)
 
-            })
-            .catch( dataError => console.log("Erro API search", dataError))
-
-            
-        }, 2000)
-
-        return () => {
-            clearInterval(id)
         }
     }, [search])
 
@@ -40,7 +42,7 @@ const Search = function () {
             <section className="card">
                 <header className="card-header">
                     <div className="card-title">
-                        Buscar
+                        <a href="">Buscar</a>
                     </div>
                     <small className="card-small">Busque artistas, musicas ou podcast</small>
                 </header>
@@ -59,8 +61,8 @@ const Search = function () {
 
                 </div>
             </section>
-            { search ? 
-              <ComponentSearchResults />
+            { Object.keys(searchResults).length > 0 ? 
+              <ComponentSearchResults searchResults={searchResults} />
             : <ComponentCardsGenres /> }
             
         </div>
