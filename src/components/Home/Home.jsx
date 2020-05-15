@@ -50,7 +50,7 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
     
 
     useEffect(() => {
-        api.get("/cards/home-page")
+        api.get("/me/home-page")
         .then( response => {
             if(response.status === 200){
                 setData(response.data);

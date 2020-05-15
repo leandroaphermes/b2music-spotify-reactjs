@@ -20,6 +20,7 @@ export default function Results(props) {
 
     return (
         <div className="row">
+            
             {/* Tracks */}
             <div className="col-xl-4 col-lg-6 col-md-12 col-sm-12 py-2">
                 <div className="card">

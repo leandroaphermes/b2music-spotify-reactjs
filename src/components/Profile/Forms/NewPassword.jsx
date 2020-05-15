@@ -25,7 +25,7 @@ const NewPassword = function({ session, setAlert }) {
         
         setBtnDisable(true)
 
-        api.put(`/users/${session.id}/password`, {
+        api.put(`/me/password`, {
             password_old: passwordOld,
             password_new: passwordNew,
             password_new_confirmation: passwordConfirm

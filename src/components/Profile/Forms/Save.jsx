@@ -36,8 +36,7 @@ const Save = function ({ setAlert, session, setSession }) {
         e.preventDefault()
         setBtnDisable(true)
 
-        api.put(`/users/${session.id}`, {
-            username,
+        api.put(`/me`, {
             truename,
             email,
             birth,
@@ -94,16 +93,6 @@ const Save = function ({ setAlert, session, setSession }) {
     }
 
     /* validações de input */
-    function handleUsername(username){
-        if(username.length < 4 || username.length > 32){
-            addError( "username", "Nome de Usuario deve conter 4 a 32 caracteres")
-        }else if(!new RegExp(USERNAME_VALIDATION).test(username)){
-            addError( "username", "Nome de Usuario pode conter letras ou numeros, Sendo que primeira letra não pode ser numero")
-        }else{
-            delError( "username" )
-        }
-        setUsername(username)
-    }
     function handleTruename(truename){
         if(truename.length < 4 || truename.length > 100){
             addError( "truename", "Nome Completo deve conter 4 a 100 caracteres")
@@ -190,7 +179,7 @@ const Save = function ({ setAlert, session, setSession }) {
             const response = await api.get("/utils/global/countrys")
             setContentCountrys(response.data)
 
-            const responseUser = await api.get("/users/current-auth")
+            const responseUser = await api.get("/me")
             setUsername(responseUser.data.username)
             setTruename(responseUser.data.truename)
             setEmail(responseUser.data.email)
@@ -230,10 +219,10 @@ const Save = function ({ setAlert, session, setSession }) {
                     id="username"
                     name="username" 
                     value={username} 
-                    onChange={(e) => handleUsername(e.target.value)}
                     placeholder="Nome de usuario"
                     minLength="4"
                     maxLength="32"
+                    disabled="true"
                 />
                 {errors.username && (
                     <div className="input-error" id="input-error-username">
