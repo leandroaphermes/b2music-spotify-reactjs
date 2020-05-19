@@ -6,9 +6,7 @@ import * as actionsAlert from '../../../store/actions/alert'
 import * as actionsSession from '../../../store/actions/session'
 
 import { 
-    USERNAME_VALIDATION, 
     ALFA_NUMBER_SPACE_CS, 
-    EMAIL_VALIDATION, 
     DATE_VALIDATION, 
     MASK_PHONE, 
     PHONE_VALIDATION

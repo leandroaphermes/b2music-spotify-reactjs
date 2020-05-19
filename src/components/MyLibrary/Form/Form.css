@@ -1,5 +1,6 @@
-/* .playlist-form-add {
-} */
+.playlist-form-add {
+  width: 100%;
+}
 .playlist-form-add > .playlist-form-add-picture {
   width: 200px;
   height: 200px;
@@ -12,7 +13,6 @@
 }
 
 .playlist-form-add > .playlist-form-inputs {
-  padding: 0px 15px;
-  width: 100%;
   box-sizing: border-box;
+  flex: 1;
 }

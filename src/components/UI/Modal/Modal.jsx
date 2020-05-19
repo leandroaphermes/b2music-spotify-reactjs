@@ -6,9 +6,15 @@ import "./Modal.css"
 
 export default function Modal(props) {
 
+  function handleClosed(e) {
+    if(e.target.id !== 'modal') return 
+
+    props.onClosed(false)
+  }
+
   return (
     props.visible && (
-      <div className="modal" id="modal">
+      <div className="modal" id="modal" onClick={handleClosed}>
         <div className="modal-content">
           <div className="modal-header">
             <h4 className="modal-title">{props.title}</h4>

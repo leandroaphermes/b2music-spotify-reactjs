@@ -76,6 +76,7 @@ input[type="tel"],
 input[type="url"],
 input[type="date"],
 select,
+textarea,
 input[type="search"] {
     outline: none;
     outline-offset: none;
@@ -86,6 +87,9 @@ input[type="search"] {
     -moz-appearance:none; /* Firefox */
     -webkit-appearance:none; /* Safari and Chrome */
     appearance:none;
+}
+textarea {
+    resize: vertical;
 }
 select {
     position: relative;

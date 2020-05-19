@@ -64,9 +64,9 @@ const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
     return (
         <div>
             <ComponentUIModal 
-                title="Criar nova playlist"
-                /* visible={modalVisible} */
-                visible={true}
+                title="Criar playlist"
+                visible={modalVisible}
+                /* visible={true} */
                 onClosed={() => setModalVisible(!modalVisible)}
             >
                 <FormModal />
@@ -99,7 +99,7 @@ const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
                     {data.map( playlist => (
                         <div key={playlist.id} className="card-content">
                             <div className="image-album">
-                                <img src={playlist.playlist.photo_url} alt={playlist.playlist.name} />
+                                <img src={playlist.playlist.photo_url ? playlist.playlist.photo_url : imageDefault} alt={playlist.playlist.name} />
                             </div>
                             <div className="song-description mt-2">
                                 <div className="song-description-title">
