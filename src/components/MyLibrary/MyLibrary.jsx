@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import * as actionsPlayer from '../../store/actions/player'
 import api from '../../services/Api'
 
-import ComponentUILoading from '../UI/Loading/Loading';
+import ComponentUIModal from '../UI/Modal/Modal'
+import FormModal from './Form/Form'
 
 import imageDefault from '../../assets/img/music/default.jpg';
 import { ReactComponent as IconAddCircle } from "../../assets/img/icons/add-circle-outline.svg";
@@ -16,7 +17,7 @@ import "./MyLibrary.css"
 
 const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
 
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false)
     const [data, setData] = useState([])
 
     function play(e, playlistId){
@@ -49,22 +50,27 @@ const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
         })
       
     }
-    
 
     useEffect(() => {
-/*         api.get("/cards/home-page")
+        api.get("/me/playlists")
         .then( response => {
             if(response.status === 200){
                 setData(response.data);
-                setIsLoaded(true);
             }
         })
-        .catch(); */
+        .catch();
     }, [])
-
 
     return (
         <div>
+            <ComponentUIModal 
+                title="Criar nova playlist"
+                /* visible={modalVisible} */
+                visible={true}
+                onClosed={() => setModalVisible(!modalVisible)}
+            >
+                <FormModal />
+            </ComponentUIModal>
             <section className="card card-auto-rows">
                 <header className="card-header">
                     <div className="card-flex card-title">
@@ -76,7 +82,10 @@ const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
 
 
                 <div className="card-content">
-                    <div className="image-album text-center mt-4 mb-5">
+                    <div 
+                        className="image-album text-center mt-4 mb-5" 
+                        onClick={() => setModalVisible(!modalVisible)}
+                    >
                         <IconAddCircle max="100px" width="100%" height="100px" />
                     </div>
                     <div className="song-description mt-2">
@@ -87,22 +96,24 @@ const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
                     </div>
                 </div>
 
-                <div className="card-content">
-                    <div className="image-album">
-                        <img src={imageDefault} alt="Imagem default" />
-                    </div>
-                    <div className="song-description mt-2">
-                        <div className="song-description-title">
-                            Descobertas da Semana
+                    {data.map( playlist => (
+                        <div key={playlist.id} className="card-content">
+                            <div className="image-album">
+                                <img src={playlist.playlist.photo_url} alt={playlist.playlist.name} />
+                            </div>
+                            <div className="song-description mt-2">
+                                <div className="song-description-title">
+                                    {playlist.playlist.name}
+                                </div>
+                                <div className="song-description-body">{playlist.playlist.description}</div>
+                            </div>
+                            <div className="song-player">
+                                <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, playlist.playlist.id)}>
+                                        {(status && playlist.playlist.id === player.id) ? <IconPause /> : <IconPlay />}
+                                    </button>
+                            </div>
                         </div>
-                        <div className="song-description-body">Suas mixtape tocado durante a semana</div>
-                    </div>
-                    <div className="song-player">
-          {/*                   <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, playlist.id)}>
-                                {(status && playlist.id === player.id) ? <IconPause /> : <IconPlay />}
-                            </button> */}
-                    </div>
-                </div>
+                    ))}
 
             </section>
 

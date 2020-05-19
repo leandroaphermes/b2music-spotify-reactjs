@@ -38,7 +38,6 @@ const Save = function ({ setAlert, session, setSession }) {
 
         api.put(`/me`, {
             truename,
-            email,
             birth,
             gender,
             phone,
@@ -102,17 +101,6 @@ const Save = function ({ setAlert, session, setSession }) {
             delError( "truename" )
         }
         setTruename(truename)
-    }
-
-    function handleEmail(email){
-        if(email.length < 6 || email.length > 64){
-            addError( "email", "Email deve conter 6 a 64 caracteres")
-        }else if(!new RegExp(EMAIL_VALIDATION).test(email)) {
-            addError( "email", "Email deve ser valido")
-        }else{
-            delError( "email" )
-        }
-        setEmail(email)
     }
 
     function handleBirth(birth) {
@@ -224,11 +212,21 @@ const Save = function ({ setAlert, session, setSession }) {
                     maxLength="32"
                     disabled="true"
                 />
-                {errors.username && (
-                    <div className="input-error" id="input-error-username">
-                        {errors.username}
-                    </div>
-                )}
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input 
+                    type="email" 
+                    className="form-control" 
+                    id="email" 
+                    name="email"
+                    value={email} 
+                    placeholder="Email"
+                    minLength="6"
+                    maxLength="64"
+                    disabled="true"
+                />
             </div>
 
             <div className="form-group">
@@ -251,25 +249,6 @@ const Save = function ({ setAlert, session, setSession }) {
                 )}
             </div>
 
-            <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input 
-                    type="email" 
-                    className="form-control" 
-                    id="email" 
-                    name="email"
-                    value={email} 
-                    onChange={(e) => handleEmail(e.target.value)} 
-                    placeholder="Email"
-                    minLength="6"
-                    maxLength="64"
-                />
-                {errors.email && (
-                    <div className="input-error" id="input-error-email">
-                        {errors.email}
-                    </div>
-                )}
-            </div>
 
             <div className="row">
                 <div className="col-md-3 col-sm-12">

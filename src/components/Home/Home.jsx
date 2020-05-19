@@ -19,12 +19,12 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
 
     function play(e, playlistId){
         e.preventDefault();
-
+        
         if(status && playlistId === player.id) return setStatus(false)
 
         api.get(`/playlists/${playlistId}`)
         .then( response => {
-            if(response.status === 200){
+            if(response.status === 200 && response.data.tracks.length > 0){
                 
                 const data = {
                     id: response.data.id,
