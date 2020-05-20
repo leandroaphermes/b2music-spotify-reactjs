@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
+import api from '../../../services/Api'
 import { ALFA_NUMBER_SPACE_CS } from '../../../utils/const-regex'
 
 import { ReactComponent as IconMusicTon } from '../../../assets/img/icons/musical-notes-outline.svg'
@@ -8,14 +9,30 @@ import "./Form.css"
 
 export default function Form() {
   const refInputFile = useRef(null)
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({
+    name: ""
+  })
   const [btnDisable, setBtnDisable] = useState(true)
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
+  const [image, setImage] = useState({})
+  const [urlImagem, setUrlImagem] = useState("")
 
   function handleOnSubmit(e){
     e.preventDefault()
 
+    const formDate = new FormData()
+    formDate.append("image", image)
+    formDate.append("name", name)
+    formDate.append("description", description)
+
+    console.log("FORMDATE", formDate);
+    
+/*     api.post("/playlists", formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+    })
+ */
 
     alert("Foi o submit")
 
@@ -33,7 +50,18 @@ export default function Form() {
 
 
   function handleFileImage(e){
-    console.log(e.target.files[0]);
+    
+    if(e.target.files.length > 0){
+      setImage(e.target.files[0])
+
+      const url = URL.createObjectURL(e.target.files[0])
+      setUrlImagem(url)
+
+    }else{
+      setImage({})
+      URL.revokeObjectURL(urlImagem)
+      setUrlImagem("")
+    }
     
   }
   
@@ -50,6 +78,13 @@ export default function Form() {
     setName(name)
   }
   function handleDescripton(description){
+
+    if(description.length < 0 || description.length > 255){
+      addError( "description", "Tamanho maximo é de 255 caracteres" )
+    }else{
+      delError( "description" )
+    }
+
     setDescription(description)
   }
 
@@ -61,6 +96,7 @@ export default function Form() {
     }
 
   }, [errors])
+
 
   return (
     <form onSubmit={handleOnSubmit}>
@@ -77,19 +113,31 @@ export default function Form() {
 
       <div className="d-flex playlist-form-add">
         
-        <button 
-          type="button" 
-          className="btn btn-clean playlist-form-add-picture"
-          onClick={() => refInputFile.current.click()}
-        >
-          <IconMusicTon width="60" height="60" />
-          <span>Escolher Imagem</span>
+        <div className="playlist-form-add-picture-container">
+          <button 
+            type="button" 
+            className="btn btn-clean playlist-form-add-picture-container-button"
+            style={ urlImagem !== "" ? {
+              backgroundImage: `url(${urlImagem})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundPosition: "center center"
+            } : { }}
+            onClick={() => refInputFile.current.click()}
+          >
+            { !urlImagem &&  (
+              <div className="playlist-form-add-picture-label">
+                <IconMusicTon width="60" height="60" />
+                <span>Escolher Imagem</span>
+              </div>
+            )}
+          </button>
           {errors.fileimage && (
             <div className="input-error">
               {errors.fileimage}
             </div>
           )}
-        </button>
+        </div>
         <div className="playlist-form-inputs ml-3">
 
           <div className="form-group">
@@ -117,7 +165,7 @@ export default function Form() {
               type="text" 
               className="form-control"
               id="description"
-              placeholder="Minha melhor playlist"
+              placeholder="Essa tem tudo com você"
               rows="4"
               maxLength="255"
               value={description}
