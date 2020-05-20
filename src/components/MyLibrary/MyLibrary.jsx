@@ -17,7 +17,7 @@ import "./MyLibrary.css"
 
 const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
 
-    const [modalVisible, setModalVisible] = useState(false)
+    const [modalVisible, setModalVisible] = useState(true)
     const [data, setData] = useState([])
 
     function play(e, playlistId){
@@ -66,7 +66,6 @@ const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
             <ComponentUIModal 
                 title="Criar playlist"
                 visible={modalVisible}
-                /* visible={true} */
                 onClosed={() => setModalVisible(!modalVisible)}
             >
                 <FormModal />

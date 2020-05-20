@@ -18,7 +18,7 @@ export const EMAIL_VALIDATION = /^((?!.*__+)(?!.*\.\.+)[a-zA-Z]{1}[a-zA-Z0-9._]{
 export const USERNAME_VALIDATION = /^[a-z]{1}[a-z0-9]+$/
 
 /* Dates */
-export const DATE_VALIDATION = /^(\d{4})-(\d{2})-(\d{2})$/
+export const DATE_VALIDATION = /^(\d{4})-((0[1-9])|(1[0-2]))-((0[1-9])|(1[0-9])|(2[0-9])|(3[0-1]))$/
 
 export const PHONE_VALIDATION = {
     br: /^\([1-9]{2}\) \d{5}-\d{4}$/

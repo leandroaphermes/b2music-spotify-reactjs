@@ -8,7 +8,6 @@ export default function Modal(props) {
 
   function handleClosed(e) {
     if(e.target.id !== 'modal') return 
-
     props.onClosed(false)
   }
 

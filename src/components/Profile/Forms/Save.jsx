@@ -102,10 +102,9 @@ const Save = function ({ setAlert, session, setSession }) {
     }
 
     function handleBirth(birth) {
-        let rer = birth.match(DATE_VALIDATION)
         if(birth.length !== 10){
             addError( "birth", "Data de Nascimento Invalida")
-        }else if(!rer || rer[1] < 1700 || rer[2] > 12 || rer[2] < 1 || rer[3] > 31 || rer[2] < 1){
+        }else if( !DATE_VALIDATION.test(birth) ){
             addError( "birth", "Data de Nascimento formato invalido")
         }else{
             delError( "birth" )
