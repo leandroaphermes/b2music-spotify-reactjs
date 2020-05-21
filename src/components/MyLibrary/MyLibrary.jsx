@@ -96,22 +96,24 @@ const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
                 </div>
 
                     {data.map( playlist => (
-                        <div key={playlist.id} className="card-content">
-                            <div className="image-album">
-                                <img src={playlist.playlist.photo_url ? playlist.playlist.photo_url : imageDefault} alt={playlist.playlist.name} />
-                            </div>
-                            <div className="song-description mt-2">
-                                <div className="song-description-title">
-                                    {playlist.playlist.name}
+                        <article key={playlist.playlist.id} className="card-container">
+                            <a href={`/playlist/${playlist.playlist.id}`} className="d-block card-content">
+                                <div className="image-album">
+                                    <img src={playlist.playlist.photo_url ? playlist.playlist.photo_url : imageDefault } alt={playlist.playlist.name} />
                                 </div>
-                                <div className="song-description-body">{playlist.playlist.description}</div>
-                            </div>
-                            <div className="song-player">
-                                <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, playlist.playlist.id)}>
-                                        {(status && playlist.playlist.id === player.id) ? <IconPause /> : <IconPlay />}
+                                <div className="song-description mt-2">
+                                    <div className="song-description-title">
+                                        {playlist.playlist.name}
+                                    </div>
+                                    <div className="song-description-body hide-text-two-lines">{playlist.playlist.description}</div>
+                                </div>
+                                <div className="song-player">
+                                    <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, playlist.playlist.id)}>
+                                        {(status && playlist.id === player.id) ? <IconPause /> : <IconPlay />}
                                     </button>
-                            </div>
-                        </div>
+                                </div>
+                            </a>
+                        </article>
                     ))}
 
             </section>

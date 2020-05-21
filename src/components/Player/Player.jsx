@@ -102,10 +102,13 @@ import "./Player.css";
                                 data.playing = data.playlist[0];
                             }
 
-                            localStorage.setItem('last_playlist', response.data.id)
-                            
-                            setPlayer(data);
-                            setIsLoaded(true);
+                            if(data.playlist.length > 0) {
+                                
+                                localStorage.setItem('last_playlist', response.data.id)
+                                
+                                setPlayer(data);
+                                setIsLoaded(true);
+                            }
                             
                         }
                     })

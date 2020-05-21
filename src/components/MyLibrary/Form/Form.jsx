@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import api from '../../../services/Api'
 import { ALFA_NUMBER_SPACE_CS } from '../../../utils/const-regex'
@@ -18,21 +19,34 @@ export default function Form() {
   const [image, setImage] = useState({})
   const [urlImagem, setUrlImagem] = useState("")
 
+  const history = useHistory()
+
   function handleOnSubmit(e){
     e.preventDefault()
 
-    const formDate = new FormData()
-    formDate.append("image", image)
-    formDate.append("name", name)
-    formDate.append("description", description)
+    setBtnDisable(true)
 
-    console.log("FORMDATE", formDate);
-    
-/*     api.post("/playlists", formData, {
+    const formData = new FormData()
+    if(image && image.name && image.name !== "") formData.append("photo", image)
+    formData.append("name", name)
+    formData.append("description", description)
+
+
+    api.post("/playlists", formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
+      },
+      validateStatus: (s) => s === 201
     })
- */
+    .then( response => {
+
+      history.push(`/playlist/${response.data.id}`)
+
+    })
+    .catch( dataError => {
+      console.log(dataError);
+    })
+
 
     alert("Foi o submit")
 
