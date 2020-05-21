@@ -4,11 +4,8 @@ import { connect } from 'react-redux'
 import api from '../../services/Api'
 import * as actionsPlayer from '../../store/actions/player'
 
+import ComponentUICardPlaylistImage from '../UI/Cards/PlaylistImage/PlaylistImage'
 import ComponentUILoading from '../UI/Loading/Loading';
-
-import imageDefault from '../../assets/img/music/default.jpg';
-import { ReactComponent as IconPause } from "../../assets/img/icons/pause-outline.svg";
-import { ReactComponent as IconPlay } from "../../assets/img/icons/play-outline.svg";
 
 import "./Home.css";
 
@@ -22,9 +19,11 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
         
         if(status && playlistId === player.id) return setStatus(false)
 
-        api.get(`/playlists/${playlistId}`)
+        api.get(`/playlists/${playlistId}`, {
+            validateStatus: (status) => status === 200
+        })
         .then( response => {
-            if(response.status === 200 && response.data.tracks.length > 0){
+            if(response.data.tracks.length > 0){
                 
                 const data = {
                     id: response.data.id,
@@ -50,12 +49,12 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
     
 
     useEffect(() => {
-        api.get("/me/home-page")
+        api.get("/me/home-page", {
+            validateStatus: (status) => status === 200
+        })
         .then( response => {
-            if(response.status === 200){
-                setData(response.data);
-                setIsLoaded(true);
-            }
+            setData(response.data);
+            setIsLoaded(true);
         })
         .catch();
     }, [])
@@ -64,7 +63,26 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
     return (
         <div>
             { isLoaded ? (
-                data.map( (cardItem) => (
+                <div>
+                <section className="card">
+                    <header className="card-header">
+                        <div className="card-flex">
+                            <h3 className="card-title">Tocado recentemente</h3>
+                        </div>
+                        <small className="card-small">Playlists que você andou escutando recentimente</small>
+                    </header>
+                        {data.playlist_histories.map( (playlist) => (
+                            <ComponentUICardPlaylistImage
+                                key={playlist.id}
+                                prefixRoute="/playlist/"
+                                statusPlayer={status}
+                                player={player}
+                                data={playlist}
+                                click={play}
+                            />
+                        ))}
+                </section>
+                {data.cards.map( (cardItem) => (
                     cardItem.playlists.length > 0 && (
                         <section key={cardItem.id} className="card">
                             <header className="card-header">
@@ -80,29 +98,21 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
                                 <small className="card-small">{cardItem.description}</small>
                             </header>
                                 {cardItem.playlists.map( (playlist) => (
-                                    <article key={playlist.id} className="card-container">
-                                        <a href={`/playlist/${playlist.id}`} className="d-block card-content">
-                                            <div className="image-album">
-                                                <img src={playlist.photo_url ? playlist.photo_url : imageDefault } alt={playlist.name} />
-                                            </div>
-                                            <div className="song-description mt-2">
-                                                <div className="song-description-title">
-                                                    {playlist.name}
-                                                </div>
-                                                <div className="song-description-body hide-text-two-lines">{playlist.description}</div>
-                                            </div>
-                                            <div className="song-player">
-                                                <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, playlist.id)}>
-                                                    {(status && playlist.id === player.id) ? <IconPause /> : <IconPlay />}
-                                                </button>
-                                            </div>
-                                        </a>
-                                    </article>
+
+                                    <ComponentUICardPlaylistImage
+                                        key={playlist.id}
+                                        prefixRoute="/playlist/"
+                                        statusPlayer={status}
+                                        player={player}
+                                        data={playlist}
+                                        click={play}
+                                    />
                                 )
                                 )}
                         </section>
                     )
-                ))
+                ))}
+                </div>
             ): (
                 <ComponentUILoading />
             )}
@@ -116,7 +126,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
     setStatus: (status) => dispatch(actionsPlayer.status(status)),
-    setPlayer: (data) => dispatch(actionsPlayer.set(data))
+    setPlayer: (dataPlayer) => dispatch(actionsPlayer.newPlaylist(dataPlayer))
 })
 
 export default connect( mapStateToProps, mapDispatchToProps)(Home)

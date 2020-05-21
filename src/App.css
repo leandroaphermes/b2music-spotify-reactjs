@@ -193,6 +193,10 @@ img.shadow {
     box-shadow: 0px 0px 10px var(--box-content);
 }
 
+img.cover {
+    object-fit: cover !important;
+}
+
 
 
 .form-group {

@@ -7,17 +7,14 @@ import api from '../../services/Api'
 
 import ComponentUIModal from '../UI/Modal/Modal'
 import FormModal from './Form/Form'
+import ComponentUICardPlaylistImage from '../UI/Cards/PlaylistImage/PlaylistImage'
 
-import imageDefault from '../../assets/img/music/default.jpg';
+
 import { ReactComponent as IconAddCircle } from "../../assets/img/icons/add-circle-outline.svg";
-import { ReactComponent as IconPause } from "../../assets/img/icons/pause-outline.svg";
-import { ReactComponent as IconPlay } from "../../assets/img/icons/play-outline.svg";
-
-import "./MyLibrary.css"
 
 const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
 
-    const [modalVisible, setModalVisible] = useState(true)
+    const [modalVisible, setModalVisible] = useState(false)
     const [data, setData] = useState([])
 
     function play(e, playlistId){
@@ -66,9 +63,9 @@ const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
             <ComponentUIModal 
                 title="Criar playlist"
                 visible={modalVisible}
-                onClosed={() => setModalVisible(!modalVisible)}
+                onToggleModal={() => setModalVisible(!modalVisible)}
             >
-                <FormModal />
+                <FormModal onToggleModal={() => setModalVisible(!modalVisible)} />
             </ComponentUIModal>
             <section className="card card-auto-rows">
                 <header className="card-header">
@@ -96,24 +93,16 @@ const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
                 </div>
 
                     {data.map( playlist => (
-                        <article key={playlist.playlist.id} className="card-container">
-                            <a href={`/playlist/${playlist.playlist.id}`} className="d-block card-content">
-                                <div className="image-album">
-                                    <img src={playlist.playlist.photo_url ? playlist.playlist.photo_url : imageDefault } alt={playlist.playlist.name} />
-                                </div>
-                                <div className="song-description mt-2">
-                                    <div className="song-description-title">
-                                        {playlist.playlist.name}
-                                    </div>
-                                    <div className="song-description-body hide-text-two-lines">{playlist.playlist.description}</div>
-                                </div>
-                                <div className="song-player">
-                                    <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, playlist.playlist.id)}>
-                                        {(status && playlist.id === player.id) ? <IconPause /> : <IconPlay />}
-                                    </button>
-                                </div>
-                            </a>
-                        </article>
+
+                        <ComponentUICardPlaylistImage
+                            key={playlist.playlist.id}
+                            prefixRoute="/playlist/"
+                            statusPlayer={status}
+                            player={player}
+                            data={playlist.playlist}
+                            click={play}
+                        />
+
                     ))}
 
             </section>

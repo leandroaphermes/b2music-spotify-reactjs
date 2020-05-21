@@ -6,14 +6,14 @@ import "./Modal.css"
 
 export default function Modal(props) {
 
-  function handleClosed(e) {
+  function handleClose(e) {
     if(e.target.id !== 'modal') return 
-    props.onClosed(false)
+    props.onToggleModal()
   }
 
   return (
     props.visible && (
-      <div className="modal" id="modal" onClick={handleClosed}>
+      <div className="modal" id="modal" onClick={handleClose}>
         <div className="modal-content">
           <div className="modal-header">
             <h4 className="modal-title">{props.title}</h4>
@@ -21,7 +21,7 @@ export default function Modal(props) {
               type="button" 
               className="btn btn-clean" 
               title="Fechar janela"
-              onClick={props.onClosed}
+              onClick={props.onToggleModal}
             >
               <IconClose width="36" height="36" />
             </button>

@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
 
+import * as actionsAlert from '../../../store/actions/alert'
 import api from '../../../services/Api'
+
+import { calcSizeBits } from '../../../utils/utils'
 import { ALFA_NUMBER_SPACE_CS } from '../../../utils/const-regex'
+import { UPLOAD_IMG_MINETYPES, UPLOAD_IMG_SIZE } from '../../../utils/upload'
 
 import { ReactComponent as IconMusicTon } from '../../../assets/img/icons/musical-notes-outline.svg'
 
 import "./Form.css"
 
-export default function Form() {
+const Form = function ({ setAlert }) {
   const refInputFile = useRef(null)
   const [errors, setErrors] = useState({
     name: ""
@@ -44,13 +49,23 @@ export default function Form() {
 
     })
     .catch( dataError => {
-      console.log(dataError);
+      if(dataError.response.data[0]){
+        let errorsApi = {};
+        dataError.response.data.forEach( field => {
+            errorsApi[field.field] = field.message
+        })
+        setErrors(errorsApi)
+      
+      }else{
+        setAlert({
+          status: true,
+          type: "danger",
+          message: dataError.response.data.message,
+          float: true
+        })
+      }
+      setBtnDisable(false)
     })
-
-
-    alert("Foi o submit")
-
-
   }
     
   function addError( field, message){
@@ -63,22 +78,20 @@ export default function Form() {
   }
 
 
-  function handleFileImage(e){
+  function handleFileImage(files){
     
-    if(e.target.files.length > 0){
-      setImage(e.target.files[0])
-
-      const url = URL.createObjectURL(e.target.files[0])
-      setUrlImagem(url)
-
+    if(files.length === 1){
+      if(files[0].size >= calcSizeBits(UPLOAD_IMG_SIZE)){
+        addError( "fileimage" , `O tamanho maximo da imagem se execeu os ${UPLOAD_IMG_SIZE}` )
+        setImage({})
+      }else{
+        delError( "fileimage" )
+        setImage(files[0])
+      }
     }else{
       setImage({})
-      URL.revokeObjectURL(urlImagem)
-      setUrlImagem("")
     }
-    
-  }
-  
+  }  
   function handleName(name){
 
     if(name.length < 3 || name.length > 50){
@@ -111,6 +124,21 @@ export default function Form() {
 
   }, [errors])
 
+  useEffect(() => {
+    if(image.name){
+      
+      const url = URL.createObjectURL(image)
+      setUrlImagem(url)
+
+      return () => {
+        if(url) {
+          URL.revokeObjectURL(url)
+          setUrlImagem("")
+        }
+      }
+    }
+
+  }, [image])
 
   return (
     <form onSubmit={handleOnSubmit}>
@@ -120,9 +148,9 @@ export default function Form() {
         className="hide"
         name="file-image" 
         id="file-image" 
-        accept="image/gif, image/png, image/jpeg, image/jpg" 
+        accept={UPLOAD_IMG_MINETYPES.join(", ")}
         ref={refInputFile}
-        onChange={handleFileImage}
+        onChange={e => handleFileImage(e.target.files)}
       />
 
       <div className="d-flex playlist-form-add">
@@ -203,3 +231,13 @@ export default function Form() {
     </form>
   )
 }
+
+const mapStateToProps = state => ({
+
+})
+
+const mapDispatchToProps = dispatch => ({
+  setAlert: (dataAlert) => dispatch(actionsAlert.set(dataAlert))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form)
