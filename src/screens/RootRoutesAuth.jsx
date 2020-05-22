@@ -33,6 +33,7 @@ const RootRoutesAuth = function ({ session, setSession }) {
                     <Route exact path="/search" component={ScreenSearch} />
                     <Route exact path="/search/:searchUrl" component={ScreenSearch} />
                     <Route exact path="/my-library/playlists" component={ScreenMyLibrary} />
+                    <Route exact path="/my-library/authors" component={ScreenMyLibrary} />
                     <Route exact path="/favorite" component={() => <h3>Você ta nos favoritos</h3>} />
                     <Route exact path="/profile" component={ScreenProfile} />
                 </main>

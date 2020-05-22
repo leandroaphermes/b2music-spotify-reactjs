@@ -179,7 +179,7 @@ import "./Player.css";
 
     return (
         <section className="player-container" id="player-container" aria-label="Tocador de Musica">
-            { isLoaded ? (
+            { isLoaded && player.playing.id ? (
                 <>
                     <ComponentPlayerDetails
                         {...player.playing}

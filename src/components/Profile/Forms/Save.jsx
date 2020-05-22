@@ -187,9 +187,11 @@ const Save = function ({ setAlert, session, setSession }) {
 
     useEffect(() => {
         async function changeProvinves(){
-            await getPronvice(country)
-            const state = contentCountrys.find( countryItem => countryItem.iso2 === country )
-            if(state) setCodeDDI( state.phone_code )
+            if(country){
+                await getPronvice(country)
+                const state = contentCountrys.find( countryItem => countryItem.iso2 === country )
+                if(state) setCodeDDI( state.phone_code )
+            }
         }
         changeProvinves()
     }, [ country, contentCountrys ])

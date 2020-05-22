@@ -117,7 +117,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
     setStatus: (status) => dispatch(actionsPlayer.status(status)),
-    setPlayer: (data) => dispatch(actionsPlayer.set(data))
+    setPlayer: (dataPlayer) => dispatch(actionsPlayer.newPlaylist(dataPlayer, "library-card-grid"))
 })
 
 export default connect( mapStateToProps, mapDispatchToProps )(MyLibrary)

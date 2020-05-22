@@ -23,7 +23,7 @@ const PlaylistImage = function(props) {
           <div className="song-description-body hide-text-two-lines">{props.data.description}</div>
         </div>
         <div className="song-player">
-          <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => props.play(e, props.data.id)}>
+          <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => props.click(e, props.data.id)}>
             {(props.statusPlayer && props.data.id === props.player.id) ? <IconPause /> : <IconPlay />}
           </button>
         </div>

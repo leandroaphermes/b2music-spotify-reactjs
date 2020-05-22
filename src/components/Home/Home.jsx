@@ -16,7 +16,7 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
 
     function play(e, playlistId){
         e.preventDefault();
-        
+
         if(status && playlistId === player.id) return setStatus(false)
 
         api.get(`/playlists/${playlistId}`, {
@@ -77,7 +77,7 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
                                 prefixRoute="/playlist/"
                                 statusPlayer={status}
                                 player={player}
-                                data={playlist}
+                                data={playlist.playlist}
                                 click={play}
                             />
                         ))}
@@ -126,7 +126,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
     setStatus: (status) => dispatch(actionsPlayer.status(status)),
-    setPlayer: (dataPlayer) => dispatch(actionsPlayer.newPlaylist(dataPlayer))
+    setPlayer: (dataPlayer) => dispatch(actionsPlayer.newPlaylist(dataPlayer, "home-card-grid"))
 })
 
 export default connect( mapStateToProps, mapDispatchToProps)(Home)
