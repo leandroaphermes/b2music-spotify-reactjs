@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ComponentsUICardsResults from '../../UI/Cards/Results/Results'
+import ComponentsUICardsResults from '../../../components/UI/Cards/Results/Results'
 
 import { ReactComponent as IconUserDefault } from '../../../assets/img/icons/person-outline.svg'
 

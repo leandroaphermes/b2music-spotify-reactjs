@@ -14,7 +14,9 @@ import ComponentsPlayer from "../components/Player/Player";
 import ScreenHome from "./Home/Home";
 import ScreenProfile from "./Profile/Profile";
 import ScreenSearch from "./Search/Search";
-import ScreenMyLibrary from "./MyLibrary/MyLibrary";
+import ScreenMyLibraryPlaylists from "./MyLibrary/Playlists/Playlists";
+import ScreenMyLibraryAlbums from "./MyLibrary/Albums/Albums";
+import ScreenMyLibraryAuthors from "./MyLibrary/Authors/Authors";
 
 const RootRoutesAuth = function ({ session, setSession }) {
     const token = getSessionToken()
@@ -32,8 +34,9 @@ const RootRoutesAuth = function ({ session, setSession }) {
                     <Route exact path="/" component={ScreenHome} />
                     <Route exact path="/search" component={ScreenSearch} />
                     <Route exact path="/search/:searchUrl" component={ScreenSearch} />
-                    <Route exact path="/my-library/playlists" component={ScreenMyLibrary} />
-                    <Route exact path="/my-library/authors" component={ScreenMyLibrary} />
+                    <Route exact path="/my-library/playlists" component={ScreenMyLibraryPlaylists} />
+                    <Route exact path="/my-library/albums" component={ScreenMyLibraryAlbums} />
+                    <Route exact path="/my-library/authors" component={ScreenMyLibraryAuthors} />
                     <Route exact path="/favorite" component={() => <h3>Você ta nos favoritos</h3>} />
                     <Route exact path="/profile" component={ScreenProfile} />
                 </main>

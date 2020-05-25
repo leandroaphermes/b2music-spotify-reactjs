@@ -8,7 +8,7 @@ import * as actionsAlert from '../../../store/actions/alert'
 import { setSessionToken } from '../../../utils/utils'
 import { EMAIL_VALIDATION } from '../../../utils/const-regex'
 
-import ComponentAlert from "../../UI/Alert/Alert"
+import ComponentAlert from "../../../components/UI/Alert/Alert"
 
 const Form = function ({ setAlert, setSession }) {
     const [errors, setErrors] = useState({

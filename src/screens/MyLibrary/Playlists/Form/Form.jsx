@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import * as actionsAlert from '../../../store/actions/alert'
-import api from '../../../services/Api'
+import * as actionsAlert from '../../../../store/actions/alert'
+import api from '../../../../services/Api'
 
-import { calcSizeBits } from '../../../utils/utils'
-import { ALFA_NUMBER_SPACE_CS } from '../../../utils/const-regex'
-import { UPLOAD_IMG_MINETYPES, UPLOAD_IMG_SIZE } from '../../../utils/upload'
+import { calcSizeBits } from '../../../../utils/utils'
+import { ALFA_NUMBER_SPACE_CS } from '../../../../utils/const-regex'
+import { UPLOAD_IMG_MINETYPES, UPLOAD_IMG_SIZE } from '../../../../utils/upload'
 
-import { ReactComponent as IconMusicTon } from '../../../assets/img/icons/musical-notes-outline.svg'
+import { ReactComponent as IconMusicTon } from '../../../../assets/img/icons/musical-notes-outline.svg'
 
 import "./Form.css"
 

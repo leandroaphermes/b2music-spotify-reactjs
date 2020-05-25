@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux';
 
-import * as actionsPlayer from '../../store/actions/player'
-import api from '../../services/Api'
+import * as actionsPlayer from '../../../store/actions/player'
+import api from '../../../services/Api'
 
-import ComponentUIModal from '../UI/Modal/Modal'
+import ComponentUIModal from '../../../components/UI/Modal/Modal'
 import FormModal from './Form/Form'
-import ComponentUICardPlaylistImage from '../UI/Cards/PlaylistImage/PlaylistImage'
+import ComponentUICardPlaylistImage from '../../../components/UI/Cards/PlaylistImage/PlaylistImage'
 
 
-import { ReactComponent as IconAddCircle } from "../../assets/img/icons/add-circle-outline.svg";
+import { ReactComponent as IconAddCircle } from "../../../assets/img/icons/add-circle-outline.svg";
 
-const MyLibrary = function ({ player, setPlayer, status, setStatus }) {
+const Playlists = function ({ player, setPlayer, status, setStatus }) {
 
     const [modalVisible, setModalVisible] = useState(false)
     const [data, setData] = useState([])
@@ -120,4 +120,4 @@ const mapDispatchToProps = dispatch => ({
     setPlayer: (dataPlayer) => dispatch(actionsPlayer.newPlaylist(dataPlayer, "library-card-grid"))
 })
 
-export default connect( mapStateToProps, mapDispatchToProps )(MyLibrary)
+export default connect( mapStateToProps, mapDispatchToProps )(Playlists)
