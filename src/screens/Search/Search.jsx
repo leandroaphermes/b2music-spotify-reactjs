@@ -7,9 +7,6 @@ import ComponentCardsGenres from '../../components/Cards/Genres/Genres'
 import ComponentSearchResults from './Results/Results'
 import ComponentLoading from '../../components/UI/Loading/Loading'
 
-
-import "./Search.css"
-
 const Search = function () {
     const history = useHistory() 
     const { searchUrl } = useParams() 

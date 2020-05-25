@@ -5,6 +5,8 @@ import imageDefault from '../../../../assets/img/music/default.jpg';
 import { ReactComponent as IconPause } from "../../../../assets/img/icons/pause-outline.svg";
 import { ReactComponent as IconPlay } from "../../../../assets/img/icons/play-outline.svg";
 
+import "./PlaylistImage.css"
+
 const PlaylistImage = function(props) {
   return (
     <article className="card-container">

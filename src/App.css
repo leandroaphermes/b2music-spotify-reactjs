@@ -320,7 +320,55 @@ div.dropdown div.dropdown-menu a {
 
 
 
-
+.card {
+    display: grid;
+    grid-auto-rows: 0;
+    grid-template-columns: repeat( auto-fill, minmax(180px, 1fr));
+    grid-template-rows: auto 1fr;
+    grid-gap: 16px;
+    margin-bottom: 25px;
+    overflow: hidden;
+  }
+  .card-header{
+    grid-column: 1/-1;
+  }
+  .card-header .card-flex{
+    display: flex;
+    justify-content: space-between;
+  }
+  .card-header .card-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--text-primary-white);
+    letter-spacing: 0.1em;
+  }
+  .card-header .card-options a {
+    letter-spacing: normal;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+  .card-content {
+    background-color: var(--box-secundary-dark);
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    padding: 15px;
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+  }
+  .card-page {
+    grid-column: 1/-1;
+    background-color: transparent;
+    cursor: initial;
+  }
+  .card-auto-rows {
+    grid-auto-rows: auto;
+    overflow: auto;
+  }
+  
 .card-content:hover .song-player {
     opacity: 1;
     visibility: visible;

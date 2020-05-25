@@ -1,9 +1,16 @@
 import React from 'react'
 
+import ComponentHeader from '../Header'
+
 export default function Albums() {
   return (
     <div>
-      aqui sou album
+      <section className="card card-auto-rows">
+        <ComponentHeader />
+
+
+
+      </section>
     </div>
   )
 }

@@ -1,0 +1,10 @@
+.image-album-circle{
+  text-align: center;
+}
+.image-album-circle > img {
+  border-radius: 50%;
+}
+.image-album-circle > svg {
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px var(--box-content);
+}
