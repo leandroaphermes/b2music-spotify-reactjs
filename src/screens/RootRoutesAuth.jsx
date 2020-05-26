@@ -18,6 +18,9 @@ import ScreenMyLibraryPlaylists from "./MyLibrary/Playlists/Playlists";
 import ScreenMyLibraryAlbums from "./MyLibrary/Albums/Albums";
 import ScreenMyLibraryAuthors from "./MyLibrary/Authors/Authors";
 
+/* Errors Pages */
+import ScreenInternalError from './Errors/Internal/Internal'
+
 const RootRoutesAuth = function ({ session, setSession }) {
     const token = getSessionToken()
     if(!token) {
@@ -39,6 +42,7 @@ const RootRoutesAuth = function ({ session, setSession }) {
                     <Route exact path="/my-library/authors" component={ScreenMyLibraryAuthors} />
                     <Route exact path="/favorite" component={() => <h3>Você ta nos favoritos</h3>} />
                     <Route exact path="/profile" component={ScreenProfile} />
+                    <Route exact path="/internal-error" component={ScreenInternalError} />
                 </main>
             </div>
             <ComponentsPlayer />

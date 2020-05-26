@@ -1,72 +1,72 @@
 :root{
-    --box-primary-dark: #232323;
-    --box-secundary-dark: #303030;
-    --box-content: #171416;
-    --text-primary-white: #86e2e2;
-    --text-primary: #36a1a1;
-    --text-primary-hover: #60e0e0;
-    --btn-primary: #e55812;
-    --btn-secundary: #616163;
-    --btn-success: #4ea52c;
-    --btn-danger: #b42121;
-    --progress-bar-active: #5a8888;
-    --progress-bar-full: #325050;
-    --alert-success: #4ea52c;
-    --alert-info: #0f7eaa;
-    --alert-danger: #b42121;
-    --text-success: #4ea52c;
-    --text-info: #0f7eaa;
-    --text-danger: #e23737;
-    
-    --scrollbarBG: rgba(9, 10, 10, 0.452);
-    --thumbBG: rgba(43, 47, 48, 0.904);
+  --box-primary-dark: #232323;
+  --box-secundary-dark: #303030;
+  --box-content: #171416;
+  --text-primary-white: #86e2e2;
+  --text-primary: #36a1a1;
+  --text-primary-hover: #60e0e0;
+  --btn-primary: #e55812;
+  --btn-secundary: #616163;
+  --btn-success: #4ea52c;
+  --btn-danger: #b42121;
+  --progress-bar-active: #5a8888;
+  --progress-bar-full: #325050;
+  --alert-success: #4ea52c;
+  --alert-info: #0f7eaa;
+  --alert-danger: #b42121;
+  --text-success: #4ea52c;
+  --text-info: #0f7eaa;
+  --text-danger: #e23737;
+      
+  --scrollbarBG: rgba(9, 10, 10, 0.452);
+  --thumbBG: rgba(43, 47, 48, 0.904);
 }
 html,body {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 body{
-    background-color: var(--box-content);
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    font-family: 'Roboto', Tahoma, sans-serif;
-    color: var(--text-primary);
-    font-weight: normal;
-    scrollbar-width: thin;
-    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+  background-color: var(--box-content);
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Roboto', Tahoma, sans-serif;
+  color: var(--text-primary);
+  font-weight: normal;
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
 }
 ::-webkit-scrollbar { width: 11px; }
 ::-webkit-scrollbar-track { background: var(--scrollbarBG); }
 ::-webkit-scrollbar-thumb { background-color: var(--thumbBG); border-radius: 6px; }
 a {
-    text-decoration: none;
-    color: var(--text-primary);
+  text-decoration: none;
+  color: var(--text-primary);
 }
 .active, a:active, a:hover, a:focus {
-    color: var(--text-primary-hover) !important;
+  color: var(--text-primary-hover) !important;
 }
 a.active-line {
-    text-decoration: none;
-    color: var(--text-primary-hover);
-    border-bottom: 3px solid var(--btn-secundary) !important;
-    padding-bottom: 0.2em !important;
+  text-decoration: none;
+  color: var(--text-primary-hover);
+  border-bottom: 3px solid var(--btn-secundary) !important;
+  padding-bottom: 0.2em !important;
 }
 ul, li {
-    list-style: none;
-    padding: 0px;
-    margin: 0px
+  list-style: none;
+  padding: 0px;
+  margin: 0px
 }
 img {
-    max-width: 100%;
-    display: block;
+  max-width: 100%;
+  display: block;
 }
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
-    display: none; 
+  display: none; 
 }
 input[type="text"],
 input[type="number"],
@@ -78,29 +78,29 @@ input[type="date"],
 select,
 textarea,
 input[type="search"] {
-    outline: none;
-    outline-offset: none;
-    width: 100%;
-    font-family: 'Roboto', Tahoma, sans-serif;
-    box-sizing: border-box;
-    font-size: 16px;
-    -moz-appearance:none; /* Firefox */
-    -webkit-appearance:none; /* Safari and Chrome */
-    appearance:none;
+  outline: none;
+  outline-offset: none;
+  width: 100%;
+  font-family: 'Roboto', Tahoma, sans-serif;
+  box-sizing: border-box;
+  font-size: 16px;
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari and Chrome */
+  appearance:none;
 }
 textarea {
-    resize: vertical;
+  resize: vertical;
 }
 select {
-    position: relative;
-    background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%), linear-gradient(to right, #ccc, #ccc);
-    background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
-    background-size: 5px 5px, 5px 5px, 1px 1.5em;
-    background-repeat: no-repeat;
+  position: relative;
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%), linear-gradient(to right, #ccc, #ccc);
+  background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-repeat: no-repeat;
 }
 
 p, h1, h2, h3, h4, h5, h6 {
-    margin: 0px;
+  margin: 0px;
 }
 
 
@@ -108,212 +108,212 @@ p, h1, h2, h3, h4, h5, h6 {
 
 
 button {
-    opacity: 1;
+  opacity: 1;
 }
 button:disabled{
-    opacity: 0.5;
+  opacity: 0.5;
 }
 .btn {
-    display: inline-block;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    touch-action: manipulation;
-    color: var(--text-primary);
-    font-size: 1rem;
-    border-radius: 50px;
-    padding: 0.7rem 2rem;
-    border: 1px solid transparent;
-    margin-bottom: 5px;
-    cursor: pointer;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  color: var(--text-primary);
+  font-size: 1rem;
+  border-radius: 50px;
+  padding: 0.7rem 2rem;
+  border: 1px solid transparent;
+  margin-bottom: 5px;
+  cursor: pointer;
 }
 .btn:hover {
-    box-shadow: 0px 0px 14px -3px var(--box-content);
-    transition: box-shadow .3s;
+  box-shadow: 0px 0px 14px -3px var(--box-content);
+  transition: box-shadow .3s;
 }
 .btn-clean {
-    background-color: transparent;
-    padding: 0px 0px;
+  background-color: transparent;
+  padding: 0px 0px;
 }
 .btn-active {
-    color: var(--text-primary-hover) !important;
+  color: var(--text-primary-hover) !important;
 }
 .btn-clean:hover {
-    background-color: transparent;
-    box-shadow: 0px 0px 0px 0px transparent;
+  background-color: transparent;
+  box-shadow: 0px 0px 0px 0px transparent;
 }
 .btn-primary {
-    background-color: var(--btn-primary);
-    color: var(--text-primary-white);
+  background-color: var(--btn-primary);
+  color: var(--text-primary-white);
 }
 .btn-secundary {
-    background-color: var(--btn-secundary);
-    color: var(--text-primary-white);
+  background-color: var(--btn-secundary);
+  color: var(--text-primary-white);
 }
 .btn-success {
-    background-color: var(--btn-success);
-    color: var(--text-primary-white);
+  background-color: var(--btn-success);
+  color: var(--text-primary-white);
 }
 .btn-danger {
-    background-color: var(--btn-danger);
-    color: var(--text-primary-white);
+  background-color: var(--btn-danger);
+  color: var(--text-primary-white);
 }
 .btn-block {
-    display: block;
-    width: 100%;
+  display: block;
+  width: 100%;
 }
 .btn-bold {
-    font-weight: bolder;
+  font-weight: bolder;
 }
 .btn-shadow {
-    box-shadow: 0px 0px 10px var(--box-content);
+  box-shadow: 0px 0px 10px var(--box-content);
 }
 .btn-spacing {
-    letter-spacing: 0.1em
+  letter-spacing: 0.1em
 }
 .btn-circle {
-    display: block;
-    border-radius: 50px;
-    padding: 12px;
+  display: block;
+  border-radius: 50px;
+  padding: 12px;
 }
 .btn-sm {
-    padding: 0.6rem 1.3rem;
-    font-size: 0.8rem;
+  padding: 0.6rem 1.3rem;
+  font-size: 0.8rem;
 }
 .btn-lg {
-    padding: .6rem .8rem;
-    font-size: 1.4rem;
+  padding: .6rem .8rem;
+  font-size: 1.4rem;
 }
 .btn:focus {
-    outline: none;
+  outline: none;
 }
 
 img.shadow {
-    box-shadow: 0px 0px 10px var(--box-content);
+  box-shadow: 0px 0px 10px var(--box-content);
 }
 
 img.cover {
-    object-fit: cover !important;
+  object-fit: cover !important;
 }
 
 
 
 .form-group {
-    margin: 0px 0px 15px 0px;
+  margin: 0px 0px 15px 0px;
 }
 .form-group label {
-    margin-bottom: 0.2em;
-    display: block;
+  margin-bottom: 0.2em;
+  display: block;
 }
 .form-control {
-    border: none;
-    padding: 10px 15px;
-    border-radius: 15px;
-    background-color: var(--text-primary-white);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 15px;
+  background-color: var(--text-primary-white);
 }
 input[type="date"].form-control {
-    padding: 8px 15px;
+  padding: 8px 15px;
 }
 .form-group .form-group-input{
-    display: flex;
+  display: flex;
 }
 .form-group .form-group-text {
-    display: inline-block;
-    border-right: 1px solid rgba(0, 0, 0, 0.219);
-    padding: 10px 15px;
-    border-radius: 15px 0px 0px 15px;
-    background-color: var(--text-primary-white);
-    box-sizing: border-box;
-    white-space: nowrap;
+  display: inline-block;
+  border-right: 1px solid rgba(0, 0, 0, 0.219);
+  padding: 10px 15px;
+  border-radius: 15px 0px 0px 15px;
+  background-color: var(--text-primary-white);
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 .form-group .form-group-input input {
-    border-radius: 0px 15px 15px 0px;
+  border-radius: 0px 15px 15px 0px;
 }
 
 
 .text-center{
-    text-align: center;
+  text-align: center;
 }
 .text-left{
-    text-align: left;
+  text-align: left;
 }
 .text-right{
-    text-align: right;
+  text-align: right;
 }
 
 .hide-text-two-lines {
-    line-height: 1.5em;
-    height: 3em;       /* height is 2x line-height, so two lines will display */
-    overflow: hidden;  /* prevents extra lines from being visible */
+  line-height: 1.5em;
+  height: 3em;     /* height is 2x line-height, so two lines will display */
+  overflow: hidden;  /* prevents extra lines from being visible */
 }
 
 /* Input Error */
 .input-error{
-    font-size: 0.9em;
-    color: var(--text-danger);
-    font-weight: bold;
-    margin-top: 0.3em;
+  font-size: 0.9em;
+  color: var(--text-danger);
+  font-weight: bold;
+  margin-top: 0.3em;
 }
 
 .separator {
-    width: 100%;
-    height: 1px;
-    background-color: var(--btn-primary);
-    margin-bottom: 15px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--btn-primary);
+  margin-bottom: 15px;
 }
 
 
 
 /* Drop menu button */
 div.dropdown {
-    display: inline-block;
-    position: relative;
+  display: inline-block;
+  position: relative;
 }
 div.dropdown div.dropdown-menu {
-    position: absolute;
-    display: none;
-    left: 0px;
-    background-color: var(--box-content);
-    border-radius: 5px;
-    min-width: 230px;
-    z-index: 100;
+  position: absolute;
+  display: none;
+  left: 0px;
+  background-color: var(--box-content);
+  border-radius: 5px;
+  min-width: 230px;
+  z-index: 100;
 }
 
 div.dropdown:hover div.dropdown-menu {
-    display: block;
-    padding: 15px;
-    font-size: 16px;
-    font-weight: normal;
-    letter-spacing: normal;
+  display: block;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: normal;
+  letter-spacing: normal;
 }
 div.dropdown div.dropdown-menu a {
-    display: block;
-    padding: 7px 0px;
+  display: block;
+  padding: 7px 0px;
 }
 
 
 
 
 .container {
-    overflow: hidden;
-    display: flex;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    height: calc(100vh - 90px);
-    position: relative;
+  overflow: hidden;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  height: calc(100vh - 90px);
+  position: relative;
 }
 
 .body-content {
-    width: 100vw;
-    height: auto;
-    box-shadow: inset -4px -4px 25px #000;
-    background-color: var(--box-content);
-    padding: 25px;
-    box-sizing: border-box;
-    overflow: auto;
-    position: relative;
+  width: 100vw;
+  height: auto;
+  box-shadow: inset -4px -4px 25px #000;
+  background-color: var(--box-content);
+  padding: 25px;
+  box-sizing: border-box;
+  overflow: auto;
+  position: relative;
 }
 
 
@@ -321,110 +321,119 @@ div.dropdown div.dropdown-menu a {
 
 
 .card {
-    display: grid;
-    grid-auto-rows: 0;
-    grid-template-columns: repeat( auto-fill, minmax(180px, 1fr));
-    grid-template-rows: auto 1fr;
-    grid-gap: 16px;
-    margin-bottom: 25px;
-    overflow: hidden;
+  display: grid;
+  grid-auto-rows: 0;
+  grid-template-columns: repeat( auto-fill, minmax(180px, 1fr));
+  grid-template-rows: auto 1fr;
+  grid-gap: 16px;
+  margin-bottom: 25px;
+  overflow: hidden;
   }
   .card-header{
-    grid-column: 1/-1;
+  grid-column: 1/-1;
   }
   .card-header .card-flex{
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
   }
   .card-header .card-title {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: var(--text-primary-white);
-    letter-spacing: 0.1em;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--text-primary-white);
+  letter-spacing: 0.1em;
   }
   .card-header .card-options a {
-    letter-spacing: normal;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    letter-spacing: 0.1em;
-    font-weight: 600;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 0.1em;
+  font-weight: 600;
   }
   .card-content {
-    background-color: var(--box-secundary-dark);
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    padding: 15px;
-    box-sizing: border-box;
-    position: relative;
-    cursor: pointer;
+  background-color: var(--box-secundary-dark);
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  padding: 15px;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
   }
   .card-page {
-    grid-column: 1/-1;
-    background-color: transparent;
-    cursor: initial;
+  grid-column: 1/-1;
+  background-color: transparent;
+  cursor: initial;
   }
   .card-auto-rows {
-    grid-auto-rows: auto;
-    overflow: auto;
+  grid-auto-rows: auto;
+  overflow: auto;
   }
   
 .card-content:hover .song-player {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 .just-content-base {
-    justify-content: initial !important;
+  justify-content: initial !important;
 }
 
 .card-favorite{
-    width: 100%;
+  width: 100%;
 }
 .card-favorite small {
-    font-size: 0.6em;
-    font-weight: normal;
-    letter-spacing: normal;
-    color: var(--text-primary);
+  font-size: 0.6em;
+  font-weight: normal;
+  letter-spacing: normal;
+  color: var(--text-primary);
 }
 
 .songs-list {
-    display: flex;
-    padding: 10px 0px;
+  display: flex;
+  padding: 10px 0px;
 }
 .songs-list:hover {
-    background-color: rgba( 255, 255, 255, 0.08);
-    transition: all 0.3s;
+  background-color: rgba( 255, 255, 255, 0.08);
+  transition: all 0.3s;
 }
 .songs-list-icon{
-    width: 5%;
-    font-size: 1.3em;
-    position: relative;
+  width: 5%;
+  font-size: 1.3em;
+  position: relative;
 }
 .songs-list-icon ion-icon {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    transform: translatex(-50%);
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translatex(-50%);
 }
 .songs-list:hover ion-icon:nth-child(1),.songs-list-icon ion-icon:nth-child(2) {
-    opacity: 0;
+  opacity: 0;
 }
 .songs-list:hover ion-icon:nth-child(2) {
-    opacity: 1;
+  opacity: 1;
 }
 .songs-list-name {
-    width: 84%;
+  width: 84%;
 }
 .songs-list-name div:first-child a {
-    color: var(--text-primary-white) !important;
-    font-size: 1.0em;
+  color: var(--text-primary-white) !important;
+  font-size: 1.0em;
 }
 .songs-list-time {
-   width: 10%;
+  width: 10%;
 }
-
-
+.image-album {
+  width: 100%;
+  height: 155px;
+}
+.image-album img {
+  height: 100%;
+  width: 100%;
+}
+.vertical-align-middle {
+  vertical-align: middle;
+}
 
 
 
@@ -468,167 +477,167 @@ div.dropdown div.dropdown-menu a {
 
 
 div.row {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-row: 1;
-    column-gap: 25px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-row: 1;
+  column-gap: 25px;
 }
 
 /* col-sm-* */
 @media screen and (max-width: 780px){
-    div.row div.col-sm-1 {
-        grid-column: span 1;
-    }
-    div.row div.col-sm-2 {
-        grid-column: span 2;
-    }
-    div.row div.col-sm-3 {
-        grid-column: span 3;
-    }
-    div.row div.col-sm-4 {
-        grid-column: span 4;
-    }
-    div.row div.col-sm-5 {
-        grid-column: span 5;
-    }
-    div.row div.col-sm-6 {
-        grid-column: span 6;
-    }
-    div.row div.col-sm-7 {
-        grid-column: span 7;
-    }
-    div.row div.col-sm-8 {
-        grid-column: span 8;
-    }
-    div.row div.col-sm-9 {
-        grid-column: span 9;
-    }
-    div.row div.col-sm-10 {
-        grid-column: span 10;
-    }
-    div.row div.col-sm-11 {
-        grid-column: span 11;
-    }
-    div.row div.col-sm-12 {
-        grid-column: span 12;
-    }
+  div.row div.col-sm-1 {
+    grid-column: span 1;
+  }
+  div.row div.col-sm-2 {
+    grid-column: span 2;
+  }
+  div.row div.col-sm-3 {
+    grid-column: span 3;
+  }
+  div.row div.col-sm-4 {
+    grid-column: span 4;
+  }
+  div.row div.col-sm-5 {
+    grid-column: span 5;
+  }
+  div.row div.col-sm-6 {
+    grid-column: span 6;
+  }
+  div.row div.col-sm-7 {
+    grid-column: span 7;
+  }
+  div.row div.col-sm-8 {
+    grid-column: span 8;
+  }
+  div.row div.col-sm-9 {
+    grid-column: span 9;
+  }
+  div.row div.col-sm-10 {
+    grid-column: span 10;
+  }
+  div.row div.col-sm-11 {
+    grid-column: span 11;
+  }
+  div.row div.col-sm-12 {
+    grid-column: span 12;
+  }
 }
 /* col-md-* */
 @media screen and (min-width: 780px) {
-    div.row div.col-md-1 {
-        grid-column: span 1;
-    }
-    div.row div.col-md-2 {
-        grid-column: span 2;
-    }
-    div.row div.col-md-3 {
-        grid-column: span 3;
-    }
-    div.row div.col-md-4 {
-        grid-column: span 4;
-    }
-    div.row div.col-md-5 {
-        grid-column: span 5;
-    }
-    div.row div.col-md-6 {
-        grid-column: span 6;
-    }
-    div.row div.col-md-7 {
-        grid-column: span 7;
-    }
-    div.row div.col-md-8 {
-        grid-column: span 8;
-    }
-    div.row div.col-md-9 {
-        grid-column: span 9;
-    }
-    div.row div.col-md-10 {
-        grid-column: span 10;
-    }
-    div.row div.col-md-11 {
-        grid-column: span 11;
-    }
-    div.row div.col-md-12 {
-        grid-column: span 12;
-    }
+  div.row div.col-md-1 {
+    grid-column: span 1;
+  }
+  div.row div.col-md-2 {
+    grid-column: span 2;
+  }
+  div.row div.col-md-3 {
+    grid-column: span 3;
+  }
+  div.row div.col-md-4 {
+    grid-column: span 4;
+  }
+  div.row div.col-md-5 {
+    grid-column: span 5;
+  }
+  div.row div.col-md-6 {
+    grid-column: span 6;
+  }
+  div.row div.col-md-7 {
+    grid-column: span 7;
+  }
+  div.row div.col-md-8 {
+    grid-column: span 8;
+  }
+  div.row div.col-md-9 {
+    grid-column: span 9;
+  }
+  div.row div.col-md-10 {
+    grid-column: span 10;
+  }
+  div.row div.col-md-11 {
+    grid-column: span 11;
+  }
+  div.row div.col-md-12 {
+    grid-column: span 12;
+  }
 }
 /* col-lg-* */
 @media screen  and (min-width: 1200px) {
-    div.row div.col-lg-1 {
-        grid-column: span 1;
-    }
-    div.row div.col-lg-2 {
-        grid-column: span 2;
-    }
-    div.row div.col-lg-3 {
-        grid-column: span 3;
-    }
-    div.row div.col-lg-4 {
-        grid-column: span 4;
-    }
-    div.row div.col-lg-5 {
-        grid-column: span 5;
-    }
-    div.row div.col-lg-6 {
-        grid-column: span 6;
-    }
-    div.row div.col-lg-7 {
-        grid-column: span 7;
-    }
-    div.row div.col-lg-8 {
-        grid-column: span 8;
-    }
-    div.row div.col-lg-9 {
-        grid-column: span 9;
-    }
-    div.row div.col-lg-10 {
-        grid-column: span 10;
-    }
-    div.row div.col-lg-11 {
-        grid-column: span 11;
-    }
-    div.row div.col-lg-12 {
-        grid-column: span 12;
-    }
+  div.row div.col-lg-1 {
+    grid-column: span 1;
+  }
+  div.row div.col-lg-2 {
+    grid-column: span 2;
+  }
+  div.row div.col-lg-3 {
+    grid-column: span 3;
+  }
+  div.row div.col-lg-4 {
+    grid-column: span 4;
+  }
+  div.row div.col-lg-5 {
+    grid-column: span 5;
+  }
+  div.row div.col-lg-6 {
+    grid-column: span 6;
+  }
+  div.row div.col-lg-7 {
+    grid-column: span 7;
+  }
+  div.row div.col-lg-8 {
+    grid-column: span 8;
+  }
+  div.row div.col-lg-9 {
+    grid-column: span 9;
+  }
+  div.row div.col-lg-10 {
+    grid-column: span 10;
+  }
+  div.row div.col-lg-11 {
+    grid-column: span 11;
+  }
+  div.row div.col-lg-12 {
+    grid-column: span 12;
+  }
 }
 /* col-xl-* */
 @media screen and (min-width: 1600px) {
-    div.row div.col-xl-1 {
-        grid-column: span 1;
-    }
-    div.row div.col-xl-2 {
-        grid-column: span 2;
-    }
-    div.row div.col-xl-3 {
-        grid-column: span 3;
-    }
-    div.row div.col-xl-4 {
-        grid-column: span 4;
-    }
-    div.row div.col-xl-5 {
-        grid-column: span 5;
-    }
-    div.row div.col-xl-6 {
-        grid-column: span 6;
-    }
-    div.row div.col-xl-7 {
-        grid-column: span 7;
-    }
-    div.row div.col-xl-8 {
-        grid-column: span 8;
-    }
-    div.row div.col-xl-9 {
-        grid-column: span 9;
-    }
-    div.row div.col-xl-10 {
-        grid-column: span 10;
-    }
-    div.row div.col-xl-11 {
-        grid-column: span 11;
-    }
-    div.row div.col-xl-12 {
-        grid-column: span 12;
-    }
+  div.row div.col-xl-1 {
+    grid-column: span 1;
+  }
+  div.row div.col-xl-2 {
+    grid-column: span 2;
+  }
+  div.row div.col-xl-3 {
+    grid-column: span 3;
+  }
+  div.row div.col-xl-4 {
+    grid-column: span 4;
+  }
+  div.row div.col-xl-5 {
+    grid-column: span 5;
+  }
+  div.row div.col-xl-6 {
+    grid-column: span 6;
+  }
+  div.row div.col-xl-7 {
+    grid-column: span 7;
+  }
+  div.row div.col-xl-8 {
+    grid-column: span 8;
+  }
+  div.row div.col-xl-9 {
+    grid-column: span 9;
+  }
+  div.row div.col-xl-10 {
+    grid-column: span 10;
+  }
+  div.row div.col-xl-11 {
+    grid-column: span 11;
+  }
+  div.row div.col-xl-12 {
+    grid-column: span 12;
+  }
 }
 
 
@@ -649,148 +658,148 @@ div.row {
 
 
 .m-0 {
-    margin: 0px !important;
+  margin: 0px !important;
 }
 .m-1 {
-    margin: 0.5rem !important;
+  margin: 0.5rem !important;
 }
 .m-2 {
-    margin: 0.8rem !important;
+  margin: 0.8rem !important;
 }
 .m-3 {
-    margin: 1rem !important;
+  margin: 1rem !important;
 }
 .m-4 {
-    margin: 1.5rem !important;
+  margin: 1.5rem !important;
 }
 .m-5 {
-    margin: 2rem !important;
+  margin: 2rem !important;
 }
 
 .mx-0 {
-    margin-top: 0px !important;
-    margin-bottom: 0px !important;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }
 .mx-1 {
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
 }
 .mx-2 {
-    margin-top: 0.8rem !important;
-    margin-bottom: 0.8rem !important;
+  margin-top: 0.8rem !important;
+  margin-bottom: 0.8rem !important;
 }
 .mx-3 {
-    margin-top: 1rem !important;
-    margin-bottom: 1rem !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
 }
 .mx-4 {
-    margin-top: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
 }
 .mx-5 {
-    margin-top: 2rem !important;
-    margin-bottom: 2rem !important;
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
 }
 .my-0 {
-    margin-left: 0px !important;
-    margin-right: 0px !important;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
 }
 .my-1 {
-    margin-left: 0.5rem !important;
-    margin-right: 0.5rem !important;
+  margin-left: 0.5rem !important;
+  margin-right: 0.5rem !important;
 }
 .my-2 {
-    margin-left: 0.8rem !important;
-    margin-right: 0.8rem !important;
+  margin-left: 0.8rem !important;
+  margin-right: 0.8rem !important;
 }
 .my-3 {
-    margin-left: 1rem !important;
-    margin-right: 1rem !important;
+  margin-left: 1rem !important;
+  margin-right: 1rem !important;
 }
 .my-4 {
-    margin-left: 1.5rem !important;
-    margin-right: 1.5rem !important;
+  margin-left: 1.5rem !important;
+  margin-right: 1.5rem !important;
 }
 .my-5 {
-    margin-left: 2rem !important;
-    margin-right: 2rem !important;
+  margin-left: 2rem !important;
+  margin-right: 2rem !important;
 }
 
 
 .mt-0 {
-    margin-top: 0px !important;
+  margin-top: 0px !important;
 }
 .mt-1 {
-    margin-top: 0.5rem !important;
+  margin-top: 0.5rem !important;
 }
 .mt-2 {
-    margin-top: 0.8rem !important;
+  margin-top: 0.8rem !important;
 }
 .mt-3 {
-    margin-top: 1rem !important;
+  margin-top: 1rem !important;
 }
 .mt-4 {
-    margin-top: 1.5rem !important;
+  margin-top: 1.5rem !important;
 }
 .mt-5 {
-    margin-top: 2rem !important;
+  margin-top: 2rem !important;
 }
 
 .mr-0 {
-    margin-right: 0px !important;
+  margin-right: 0px !important;
 }
 .mr-1 {
-    margin-right: 0.5rem !important;
+  margin-right: 0.5rem !important;
 }
 .mr-2 {
-    margin-right: 0.8rem !important;
+  margin-right: 0.8rem !important;
 }
 .mr-3 {
-    margin-right: 1rem !important;
+  margin-right: 1rem !important;
 }
 .mr-4 {
-    margin-right: 1.5rem !important;
+  margin-right: 1.5rem !important;
 }
 .mr-5 {
-    margin-right: 2rem !important;
+  margin-right: 2rem !important;
 }
 
 .mb-0 {
-    margin-bottom: 0px !important;
+  margin-bottom: 0px !important;
 }
 .mb-1 {
-    margin-bottom: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
 }
 .mb-2 {
-    margin-bottom: 0.8rem !important;
+  margin-bottom: 0.8rem !important;
 }
 .mb-3 {
-    margin-bottom: 1rem !important;
+  margin-bottom: 1rem !important;
 }
 .mb-4 {
-    margin-bottom: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
 }
 .mb-5 {
-    margin-bottom: 2rem !important;
+  margin-bottom: 2rem !important;
 }
 
 .ml-0 {
-    margin-left: 0px !important;
+  margin-left: 0px !important;
 }
 .ml-1 {
-    margin-left: 0.5rem !important;
+  margin-left: 0.5rem !important;
 }
 .ml-2 {
-    margin-left: 0.8rem !important;
+  margin-left: 0.8rem !important;
 }
 .ml-3 {
-    margin-left: 1rem !important;
+  margin-left: 1rem !important;
 }
 .ml-4 {
-    margin-left: 1.5rem !important;
+  margin-left: 1.5rem !important;
 }
 .ml-5 {
-    margin-left: 2rem !important;
+  margin-left: 2rem !important;
 }
 
 
@@ -801,173 +810,173 @@ div.row {
 
 
 .p-0 {
-    padding: 0px !important;
+  padding: 0px !important;
 }
 .p-1 {
-    padding: 0.5rem !important;
+  padding: 0.5rem !important;
 }
 .p-2 {
-    padding: 0.8rem !important;
+  padding: 0.8rem !important;
 }
 .p-3 {
-    padding: 1rem !important;
+  padding: 1rem !important;
 }
 .p-4 {
-    padding: 1.5rem !important;
+  padding: 1.5rem !important;
 }
 .p-5 {
-    padding: 2rem !important;
+  padding: 2rem !important;
 }
 
 .px-0 {
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
 .px-1 {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
 }
 .px-2 {
-    padding-top: 0.8rem !important;
-    padding-bottom: 0.8rem !important;
+  padding-top: 0.8rem !important;
+  padding-bottom: 0.8rem !important;
 }
 .px-3 {
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 }
 .px-4 {
-    padding-top: 1.5rem !important;
-    padding-bottom: 1.5rem !important;
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
 }
 .px-5 {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
 }
 .py-0 {
-    padding-left: 0px !important;
-    padding-right: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 .py-1 {
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
 }
 .py-2 {
-    padding-left: 0.8rem !important;
-    padding-right: 0.8rem !important;
+  padding-left: 0.8rem !important;
+  padding-right: 0.8rem !important;
 }
 .py-3 {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
 }
 .py-4 {
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
 }
 .py-5 {
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
 }
 
 .pt-0 {
-    padding-top: 0px !important;
+  padding-top: 0px !important;
 }
 .pt-1 {
-    padding-top: 0.5rem !important;
+  padding-top: 0.5rem !important;
 }
 .pt-2 {
-    padding-top: 0.8rem !important;
+  padding-top: 0.8rem !important;
 }
 .pt-3 {
-    padding-top: 1rem !important;
+  padding-top: 1rem !important;
 }
 .pt-4 {
-    padding-top: 1.5rem !important;
+  padding-top: 1.5rem !important;
 }
 .pt-5 {
-    padding-top: 2rem !important;
+  padding-top: 2rem !important;
 }
 
 .pl-0 {
-    padding-left: 0px !important;
+  padding-left: 0px !important;
 }
 .pl-1 {
-    padding-left: 0.5rem !important;
+  padding-left: 0.5rem !important;
 }
 .pl-2 {
-    padding-left: 0.8rem !important;
+  padding-left: 0.8rem !important;
 }
 .pl-3 {
-    padding-left: 1rem !important;
+  padding-left: 1rem !important;
 }
 .pl-4 {
-    padding-left: 1.5rem !important;
+  padding-left: 1.5rem !important;
 }
 .pl-5 {
-    padding-left: 2rem !important;
+  padding-left: 2rem !important;
 }
 .pl-0 {
-    padding-left: 0px !important;
+  padding-left: 0px !important;
 }
 
 .pr-1 {
-    padding-right: 0.5rem !important;
+  padding-right: 0.5rem !important;
 }
 .pr-2 {
-    padding-right: 0.8rem !important;
+  padding-right: 0.8rem !important;
 }
 .pr-3 {
-    padding-right: 1rem !important;
+  padding-right: 1rem !important;
 }
 .pr-4 {
-    padding-right: 1.5rem !important;
+  padding-right: 1.5rem !important;
 }
 .pr-5 {
-    padding-right: 2rem !important;
+  padding-right: 2rem !important;
 }
 
 .pb-1 {
-    padding-bottom: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
 }
 .pb-2 {
-    padding-bottom: 0.8rem !important;
+  padding-bottom: 0.8rem !important;
 }
 .pb-3 {
-    padding-bottom: 1rem !important;
+  padding-bottom: 1rem !important;
 }
 .pb-4 {
-    padding-bottom: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
 }
 .pb-5 {
-    padding-bottom: 2rem !important;
+  padding-bottom: 2rem !important;
 }
 
 .hide{
-    display: none !important;
+  display: none !important;
 }
 .show, .d-block{
-    display: block !important;
+  display: block !important;
 }
 .d-inline-block {
-    display: inline-block !important;
+  display: inline-block !important;
 }
 .d-flex {
-    display: flex !important;
+  display: flex !important;
 }
 
 .vw-100 {
-    width: 100vw !important;
+  width: 100vw !important;
 }
 .vh-100 {
-    height: 100vh !important;
+  height: 100vh !important;
 }
 
 .just-content-center{
-    justify-content: center;
+  justify-content: center;
 }
 .alig-content-center{
-    align-content: center;
+  align-content: center;
 }
 
 svg path, svg polyline, svg line, svg circle, svg rect {
-    stroke: currentColor !important;
+  stroke: currentColor !important;
 }

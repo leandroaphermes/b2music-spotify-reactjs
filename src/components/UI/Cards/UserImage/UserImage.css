@@ -3,6 +3,10 @@
 }
 .image-album-circle > img {
   border-radius: 50%;
+  width: 100%;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .image-album-circle > svg {
   border-radius: 50%;

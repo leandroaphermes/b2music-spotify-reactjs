@@ -72,10 +72,10 @@ const Playlists = function ({ player, setPlayer, status, setStatus }) {
 
 					<div className="card-content">
 							<div 
-									className="image-album text-center mt-4 mb-5" 
+									className="image-album text-center" 
 									onClick={() => setModalVisible(!modalVisible)}
 							>
-									<IconAddCircle max="100px" width="100%" height="100px" />
+									<IconAddCircle className="mt-4" max="100px" width="100%" height="100px" />
 							</div>
 							<div className="song-description mt-2">
 									<div className="song-description-title">
