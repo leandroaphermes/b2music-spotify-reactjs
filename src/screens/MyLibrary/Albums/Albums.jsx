@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
 
 import api from '../../../services/Api'
-import * as actionsPlayer from '../../../store/actions/player'
 
 import ComponentHeader from '../Header'
-import ComponentUICardPlaylistImage from '../../../components/UI/Cards/PlaylistImage/PlaylistImage'
+import ComponentCardAlbumImage from '../../../components/Cards/AlbumImage/AlbumImage'
 
-const Albums = function ({ player, setPlayer, statusPlayer }) {
+const Albums = function () {
 
   const [albums, setAlbums] = useState([])
-
-  function play(){
-    
-  }
 
   useEffect( ()=> {
 
@@ -35,13 +29,10 @@ const Albums = function ({ player, setPlayer, statusPlayer }) {
         <ComponentHeader />
 
         { albums.map( album => (
-          <ComponentUICardPlaylistImage
+          <ComponentCardAlbumImage
             key={album.id}
             prefixRoute="/album/"
             data={album.album}
-            click={(e) => play()}
-            player
-            statusPlayer
           />
         ))}
       </section>
@@ -49,13 +40,4 @@ const Albums = function ({ player, setPlayer, statusPlayer }) {
   )
 }
 
-const mapStateToProps =  state => ({
-  statusPlayer: state.player.status,
-  player: state.player.player,
-})
-
-const mapDispatchToProps = dispatch => ({
-  setPlayer: (dataPlayer) => dispatch(actionsPlayer.newPlaylist(dataPlayer))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Albums)
+export default Albums

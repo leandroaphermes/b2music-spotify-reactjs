@@ -1,15 +1,15 @@
 .player-container {
-    height: 90px;
-    background-color: var(--box-secundary-dark);
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: 1fr;
+  height: 90px;
+  background-color: var(--box-secundary-dark);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr;
 }
 
-.loading {
-    grid-column: 1/-1;
-    text-align: center;
-    align-self: center;
-    justify-self: center;
+.grid-text-center {
+  grid-column: 1/-1;
+  text-align: center;
+  align-self: center;
+  justify-self: center;
 }

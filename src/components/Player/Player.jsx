@@ -14,7 +14,7 @@ import "./Player.css";
 
  const Player = function({ player, setPlayer, status, setStatus }) {
 
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(0);
     const [audio] = useState(new Audio())
 
     const [random, setRandom] = useState(false);
@@ -84,10 +84,11 @@ import "./Player.css";
     useEffect(() => {
 
         function getLastPlaylist(){
-            const lastID = parseInt(localStorage.getItem('last_playlist')) || 0
+            const lastPlayerID = parseInt(localStorage.getItem('last_player_id')) || 0
+            const lastPlayerType = localStorage.getItem('last_player_type') || null
             
-            if(lastID > 0){
-                api.get(`/playlists/${lastID}`)
+            if(lastPlayerID > 0 || lastPlayerType){
+                api.get(`/${lastPlayerType}/${lastPlayerID}`)
                     .then( (response) => {
                         if(response.status === 200){
                             
@@ -104,15 +105,18 @@ import "./Player.css";
 
                             if(data.playlist.length > 0) {
                                 
-                                localStorage.setItem('last_playlist', response.data.id)
+                                localStorage.setItem('last_player_id', response.data.id)
+                                localStorage.setItem('last_player_type', lastPlayerType)
                                 
                                 setPlayer(data);
-                                setIsLoaded(true);
+                                setIsLoaded(2);
                             }
                             
                         }
                     })
                     .catch( (err) => console.error(err) )
+            } else{
+                setIsLoaded(1)
             }
         }
         getLastPlaylist()
@@ -155,7 +159,7 @@ import "./Player.css";
         console.log("---- Status Atualizou ----");
         let timeInterval = null;
         if(status){
-            setIsLoaded(true)
+            setIsLoaded(2)
             audio.play();
             timeInterval = setInterval( () =>{
                 console.log("Atualizando setInterval");
@@ -179,7 +183,7 @@ import "./Player.css";
 
     return (
         <section className="player-container" id="player-container" aria-label="Tocador de Musica">
-            { isLoaded && player.playing.id ? (
+            { isLoaded === 2 && player.playing.id ? (
                 <>
                     <ComponentPlayerDetails
                         {...player.playing}
@@ -211,6 +215,12 @@ import "./Player.css";
                         onChange={ e => setVolume({ now: parseInt(e.target.value), last: null })}
                     />
                 </>
+            ) : isLoaded === 1 ? (
+                <p className="grid-text-center">
+                    Esta muito parado aqui
+                    <br/>
+                    Escolha uma Playlist ou Album
+                </p>
             ) : (
                 <ComponentUILoading />
             )}

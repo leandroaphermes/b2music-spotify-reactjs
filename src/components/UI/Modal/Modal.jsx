@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { ReactComponent as IconClose } from '../../../assets/img/icons/close-outline.svg'
 
 import "./Modal.css"
 
-export default function Modal(props) {
+const Modal = function (props) {
 
   function handleClose(e) {
     if(e.target.id !== 'modal') return 
@@ -34,3 +35,13 @@ export default function Modal(props) {
     )
   )
 }
+
+Modal.prototype = {
+  visible: PropTypes.bool.isRequired,
+  onToggleModal: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired
+}
+
+
+export default Modal

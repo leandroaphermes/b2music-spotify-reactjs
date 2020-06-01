@@ -1,52 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
-
 import api from '../../services/Api'
-import * as actionsPlayer from '../../store/actions/player'
 
-import ComponentUICardPlaylistImage from '../../components/UI/Cards/PlaylistImage/PlaylistImage'
+import ComponentCardPlaylistImage from '../../components/Cards/PlaylistImage/PlaylistImage'
 import ComponentUILoading from '../../components/UI/Loading/Loading';
 
 import "./Home.css";
 
-const Home = function ({ status, setStatus, player, setPlayer }) {
+const Home = function () {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState([])
-
-    function play(e, playlistId){
-        e.preventDefault();
-
-        if(status && playlistId === player.id) return setStatus(false)
-
-        api.get(`/playlists/${playlistId}`, {
-            validateStatus: (status) => status === 200
-        })
-        .then( response => {
-            if(response.data.tracks.length > 0){
-                
-                const data = {
-                    id: response.data.id,
-                    playingIndex: 0,
-                    playing: { },
-                    playlist: response.data.tracks
-                }
-
-                if(data.playlist[0] && Object.keys(data.playing).length === 0){
-                    data.playing = data.playlist[0];
-                }
-
-                localStorage.setItem('last_playlist', response.data.id)
-                setPlayer(data);
-                setStatus(true);
-            }
-        })
-        .catch( dataError => {
-            alert(`Erro de processo. Code: ${dataError.status}`)
-        })
-      
-    }
-    
 
     useEffect(() => {
         api.get("/me/home-page", {
@@ -64,28 +27,25 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
         <div>
             { isLoaded ? (
                 <div>
-                <section className="card">
-                    <header className="card-header">
+                <section className="card gap-row-none">
+                    <header className="card-header mb-3">
                         <div className="card-flex">
                             <h3 className="card-title">Tocado recentemente</h3>
                         </div>
                         <small className="card-small">Playlists que você andou escutando recentimente</small>
                     </header>
                         {data.playlist_histories.map( (playlist) => (
-                            <ComponentUICardPlaylistImage
+                            <ComponentCardPlaylistImage
                                 key={playlist.id}
                                 prefixRoute="/playlist/"
-                                statusPlayer={status}
-                                player={player}
                                 data={playlist.playlist}
-                                click={play}
                             />
                         ))}
                 </section>
                 {data.cards.map( (cardItem) => (
                     cardItem.playlists.length > 0 && (
-                        <section key={cardItem.id} className="card">
-                            <header className="card-header">
+                        <section key={cardItem.id} className="card gap-row-none">
+                            <header className="card-header mb-3">
                                 <div className="card-flex">
                                     <a href={cardItem.url} className="card-title">{cardItem.title}</a>
                                     { cardItem.url && (
@@ -99,13 +59,10 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
                             </header>
                                 {cardItem.playlists.map( (playlist) => (
 
-                                    <ComponentUICardPlaylistImage
+                                    <ComponentCardPlaylistImage
                                         key={playlist.id}
                                         prefixRoute="/playlist/"
-                                        statusPlayer={status}
-                                        player={player}
                                         data={playlist}
-                                        click={play}
                                     />
                                 )
                                 )}
@@ -120,13 +77,4 @@ const Home = function ({ status, setStatus, player, setPlayer }) {
     )
 }
 
-const mapStateToProps = state => ({
-    status: state.player.status,
-    player: state.player.player,
-})
-const mapDispatchToProps = dispatch => ({
-    setStatus: (status) => dispatch(actionsPlayer.status(status)),
-    setPlayer: (dataPlayer) => dispatch(actionsPlayer.newPlaylist(dataPlayer, "home-card-grid"))
-})
-
-export default connect( mapStateToProps, mapDispatchToProps)(Home)
+export default Home
