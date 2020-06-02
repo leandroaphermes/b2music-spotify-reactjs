@@ -379,51 +379,7 @@ div.dropdown div.dropdown-menu a {
   justify-content: initial !important;
 }
 
-.card-favorite{
-  width: 100%;
-}
-.card-favorite small {
-  font-size: 0.6em;
-  font-weight: normal;
-  letter-spacing: normal;
-  color: var(--text-primary);
-}
 
-.songs-list {
-  display: flex;
-  padding: 10px 0px;
-}
-.songs-list:hover {
-  background-color: rgba( 255, 255, 255, 0.08);
-  transition: all 0.3s;
-}
-.songs-list-icon{
-  width: 5%;
-  font-size: 1.3em;
-  position: relative;
-}
-.songs-list-icon ion-icon {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translatex(-50%);
-}
-.songs-list:hover ion-icon:nth-child(1),.songs-list-icon ion-icon:nth-child(2) {
-  opacity: 0;
-}
-.songs-list:hover ion-icon:nth-child(2) {
-  opacity: 1;
-}
-.songs-list-name {
-  width: 84%;
-}
-.songs-list-name div:first-child a {
-  color: var(--text-primary-white) !important;
-  font-size: 1.0em;
-}
-.songs-list-time {
-  width: 10%;
-}
 .image-album {
   width: 100%;
   height: 155px;

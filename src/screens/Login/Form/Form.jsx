@@ -28,6 +28,8 @@ const Form = function ({ setAlert, setSession }) {
         api.post('/auth', {
             email,
             password
+        },{
+            validateStatus: (status) => status === 200
         })
         .then( response => {
 

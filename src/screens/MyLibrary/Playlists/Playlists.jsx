@@ -36,7 +36,7 @@ const Playlists = function () {
 			</ComponentUIModal>
 			<section className="card card-auto-rows">
 				<ComponentHeader />
-
+				
 					<div className="card-content">
 							<div 
 									className="image-album text-center" 

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { secondsToMinutos } from '../../../utils/utils'
+
 import ComponentProgressBar from '../../UI/ProgressBar/ProgressBar';
 
 import { ReactComponent as IconShuflle } from "../../../assets/img/icons/shuffle-outline.svg";
@@ -15,11 +17,7 @@ import "./Control.css";
 
 
 export default function Control(props) {
-    function secondsToMinutos(time){
-        const minutes = Math.floor(time / 60);
-        const seconds = Math.floor(time % 60);
-        return `${("0" + minutes).slice(-2)}:${("0" + seconds).slice(-2)}`;
-    }
+
     return (
         <div className="song-control" aria-label="Controles de Musica">
             <div className="song-control-controls">

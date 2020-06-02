@@ -17,6 +17,8 @@ import ScreenSearch from "./Search/Search";
 import ScreenMyLibraryPlaylists from "./MyLibrary/Playlists/Playlists";
 import ScreenMyLibraryAlbums from "./MyLibrary/Albums/Albums";
 import ScreenMyLibraryAuthors from "./MyLibrary/Authors/Authors";
+import ScreenFavorite from './Favorite/Favorite'
+import ScreenPlaylist from './Playlist/Playlist'
 
 /* Errors Pages */
 import ScreenInternalError from './Errors/Internal/Internal'
@@ -34,13 +36,23 @@ const RootRoutesAuth = function ({ session, setSession }) {
                 <ComponentsAlert />
                 <ComponentsUIHeader username={session.truename} />
                 <main className="body-content">
+                    {/* Home */}
                     <Route exact path="/" component={ScreenHome} />
+                    
+                    {/* Search */}
                     <Route exact path="/search" component={ScreenSearch} />
                     <Route exact path="/search/:searchUrl" component={ScreenSearch} />
+
+                    {/* MyLibrary */}
                     <Route exact path="/my-library/playlists" component={ScreenMyLibraryPlaylists} />
                     <Route exact path="/my-library/albums" component={ScreenMyLibraryAlbums} />
                     <Route exact path="/my-library/authors" component={ScreenMyLibraryAuthors} />
-                    <Route exact path="/favorite" component={() => <h3>Você ta nos favoritos</h3>} />
+                    
+
+                    {/* Playlist Show */}
+                    <Route exact path="/playlist/:id" component={ScreenPlaylist} />
+
+                    <Route exact path="/favorite" component={ScreenFavorite} />
                     <Route exact path="/profile" component={ScreenProfile} />
                     <Route exact path="/internal-error" component={ScreenInternalError} />
                 </main>
