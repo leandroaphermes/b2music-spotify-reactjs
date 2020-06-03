@@ -2,20 +2,23 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import * as actionsPlayer from '../../store/actions/player'
+import * as actionsThunkPlayer from '../../store/thunk/player'
 import api from '../../services/Api'
 import { secondsToMinutos } from '../../utils/utils'
 
 import ComponentUILinkOfComma from '../../components/UI/LinkOfComma/LinkOfComma'
+import ComponentUIDropdown from '../../components/UI/Dropdown/Dropdown'
 
 import imageDefault from '../../assets/img/music/default.jpg'
-import { ReactComponent as IconEllipsis, ReactComponent } from '../../assets/img/icons/ellipsis-vertical-outline.svg'
+import { ReactComponent as IconEllipsis } from '../../assets/img/icons/ellipsis-vertical-outline.svg'
 import { ReactComponent as IconMusicalNotes } from '../../assets/img/icons/musical-notes-outline.svg'
 import { ReactComponent as IconPause } from '../../assets/img/icons/pause-outline.svg'
 import { ReactComponent as IconPlay } from '../../assets/img/icons/play-outline.svg'
 
 import "./Playlist.css"
 
-const Playlist = function () {
+const Playlist = function ({ status, setStatus, player, setPlayer }) {
 
   const [playlist, setPlaylist] = useState({
     id: 1,
@@ -29,6 +32,11 @@ const Playlist = function () {
     tracks: [],
   })
   const { id } = useParams()
+
+  function handlePlayPlaylist(){
+    setPlayer(id, "playlist")
+    alert("Foi só deu bugs")
+  }
 
   function handlePlay(){
 
@@ -74,20 +82,23 @@ const Playlist = function () {
 
                     <button type="button" 
                       className="btn d-inline-block btn-primary btn-bold btn-spacing"
-                    >
-                      Play
+                      onClick={handlePlayPlaylist}
+                    > 
+                      {status && player.id === id ? 
+                          (<IconPause width="22px" height="22px" />) 
+                        : (<IconPlay width="22px" height="22px" />)
+                      }
+                      
                     </button>
 
-                    <div className="dropdown">
-                      <button className="btn btn-clean btn-circle d-inline-block ">
-                        <IconEllipsis height="32px" width="32px" />
-                      </button>
-                      <div className="dropdown-menu">
-                        <a href="#">Editar nome de playlist</a>
-                        <a href="#">Compartilhar</a>
-                        <a href="#">Excluir</a>
-                      </div>
-                    </div>
+
+                    <ComponentUIDropdown
+                      button={<IconEllipsis height="32px" width="32px" />}
+                    >
+                      <button type="button" className="btn btn-block btn-clean" >Editar nome de playlist</button>
+                      <button type="button" className="btn btn-block btn-clean" >Compartilhar</button>
+                      <button type="button" className="btn btn-block btn-clean" >Excluir</button>
+                    </ComponentUIDropdown>
 
                   </div>
                   <div className="favorite-info">
@@ -97,7 +108,8 @@ const Playlist = function () {
                     >{playlist.owner.truename}
                     </a>
                     <span className="ml-2">{playlist.tracks.length} músicas</span>
-                    <span className="ml-2">Tocados: {playlist.playcount} vezes</span>
+                    <span className="ml-2">Seguidores: {playlist.total_followers}</span>
+                    <span className="ml-2">Ouvidos: {playlist.playcount} vezes</span>
                   </div>
 
                 </div>
@@ -142,10 +154,12 @@ const Playlist = function () {
 }
 
 const mapStateToProps = state => ({
-  
+  status: state.player.status,
+  player: state.player.player
 })
 const mapDispatchToProps = dispatch => ({
-
+  setStatus: (dataStatus) => dispatch(actionsPlayer.status(dataStatus)),
+  setPlayer: (id, type) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type))
 })
 
 export default connect( mapStateToProps, mapDispatchToProps)(Playlist)

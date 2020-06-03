@@ -1,0 +1,26 @@
+/* Drop menu button */
+div.dropdown {
+  display: inline-block;
+  position: relative;
+}
+div.dropdown div.dropdown-menu {
+  position: absolute;
+  display: none;
+  left: 0px;
+  background-color: var(--box-primary-dark);
+  border-radius: 5px;
+  min-width: 230px;
+  z-index: 100;
+}
+
+div.dropdown:hover div.dropdown-menu {
+  display: block;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: normal;
+  letter-spacing: normal;
+}
+div.dropdown div.dropdown-menu a {
+  display: block;
+  padding: 7px 0px;
+}

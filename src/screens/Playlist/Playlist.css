@@ -1,0 +1,72 @@
+.card-favorite {
+  width: 100%;
+  position: relative;
+}
+.float-favorite-details {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+.float-favorite-details > h3 {
+  font-size: 56px;
+}
+.float-favorite-details > small {
+  font-size: 0.6em;
+  font-weight: normal;
+  letter-spacing: normal;
+  color: var(--text-primary);
+}
+.favorite-img {
+  max-width: 250px;
+}
+.favorite-info {
+  font-size: 16px;
+  letter-spacing: normal;
+  color: var(--text-primary);
+  font-weight: normal;
+}
+.favorite-owner {
+  font-weight: bolder;
+}
+
+
+.songs-list {
+  display: flex;
+  padding: 10px 0px;
+}
+.songs-list:hover {
+  background-color: rgba( 255, 255, 255, 0.08);
+  transition: all 0.3s;
+}
+.songs-list-icon{
+  width: 5%;
+  font-size: 1.3em;
+  position: relative;
+}
+.songs-list-icon svg {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translatex(-50%);
+}
+.songs-list-name {
+  flex: 1;
+}
+.songs-list-name div:first-child a {
+  color: var(--text-primary-white) !important;
+  font-size: 1.0em;
+}
+
+.songs-list-time{
+  vertical-align: middle;
+}
+
+.songs-list-icon-play {
+  opacity: 0;
+}
+.songs-list:hover .songs-list-icon-play {
+  opacity: 1;
+}
+.songs-list:hover .songs-list-icon-notes {
+  opacity: 0;
+}

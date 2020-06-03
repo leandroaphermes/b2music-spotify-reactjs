@@ -23,22 +23,22 @@ const PlaylistImage = function({ status, setStatus, player, setPlayer, ...props 
     })
     .then( response => {
         if(response.data.tracks.length > 0){
-            
-            const data = {
-                id: response.data.id,
-                playingIndex: 0,
-                playing: { },
-                playlist: response.data.tracks
-            }
+          
+          const data = {
+            id: response.data.id,
+            playingIndex: 0,
+            playing: { },
+            playlist: response.data.tracks
+          }
 
-            if(data.playlist[0] && Object.keys(data.playing).length === 0){
-                data.playing = data.playlist[0];
-            }
+          if(data.playlist[0] && Object.keys(data.playing).length === 0){
+            data.playing = data.playlist[0];
+          }
 
-            localStorage.setItem('last_player_id', response.data.id)
-            localStorage.setItem('last_player_type', "playlists")
-            setPlayer(data);
-            setStatus(true);
+          localStorage.setItem('last_player_id', response.data.id)
+          localStorage.setItem('last_player_type', "playlists")
+          setPlayer(data);
+          setStatus(true);
         }
     })
     .catch( dataError => {

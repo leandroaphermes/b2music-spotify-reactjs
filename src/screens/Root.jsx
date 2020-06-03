@@ -11,7 +11,6 @@ import ScreenLogout from "./Logout/Logout.jsx";
 
 
 const Routes = function() {
-    console.log("Renderizou o routes: ");
     return (
         <BrowserRouter>
             <Provider store={store}>
