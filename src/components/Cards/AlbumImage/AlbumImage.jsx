@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 
 
-import api from '../../../services/Api'
 import * as actionsPlayer from '../../../store/actions/player'
+import * as actionsThunkPlayer from '../../../store/thunk/player'
 
 import ComponentUILinkOfComma from '../../UI/LinkOfComma/LinkOfComma'
 import imageDefault from '../../../assets/img/music/default.jpg';
@@ -15,38 +15,12 @@ import "./AlbumImage.css"
 
 const AlbumImage = function({ status, setStatus, player, setPlayer, ...props }) {
 
-  function play(e, playlistId){
+  function play(e, album_id){
     e.preventDefault();
 
-    if(status && playlistId === player.id) return setStatus(false)
-
-    api.get(`/albums/${playlistId}`, {
-        validateStatus: (status) => status === 200
-    })
-    .then( response => {
-        if(response.data.tracks.length > 0){
-            
-            const data = {
-                id: response.data.id,
-                playingIndex: 0,
-                playing: { },
-                playlist: response.data.tracks
-            }
-
-            if(data.playlist[0] && Object.keys(data.playing).length === 0){
-                data.playing = data.playlist[0];
-            }
-
-            localStorage.setItem('last_player_id', response.data.id)
-            localStorage.setItem('last_player_type', "albums")
-            setPlayer(data);
-            setStatus(true);
-        }
-    })
-    .catch( dataError => {
-        alert(`Erro de processo. Code: ${dataError.status}`)
-    })
-  
+    if(status && album_id === player.id) return setStatus(false)
+    
+    setPlayer(album_id, "album")
   }
   
   return (
@@ -94,7 +68,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setStatus: (status) => dispatch(actionsPlayer.status(status)),
-  setPlayer: (dataPlayer, actionLocation) => dispatch(actionsPlayer.newPlaylist(dataPlayer, actionLocation))
+  setPlayer: (id, type) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type))
 })
 
 

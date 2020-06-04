@@ -915,3 +915,6 @@ svg path, svg polyline, svg line, svg circle, svg rect {
 .gap-row-none {
   row-gap: 0;
 }
+.svg-fill-current{
+  fill: currentColor !important;
+}

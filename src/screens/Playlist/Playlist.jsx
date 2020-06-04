@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import * as actionsAlert from '../../store/actions/alert'
 import * as actionsPlayer from '../../store/actions/player'
 import * as actionsThunkPlayer from '../../store/thunk/player'
 import api from '../../services/Api'
@@ -15,10 +16,12 @@ import { ReactComponent as IconEllipsis } from '../../assets/img/icons/ellipsis-
 import { ReactComponent as IconMusicalNotes } from '../../assets/img/icons/musical-notes-outline.svg'
 import { ReactComponent as IconPause } from '../../assets/img/icons/pause-outline.svg'
 import { ReactComponent as IconPlay } from '../../assets/img/icons/play-outline.svg'
+import { ReactComponent as IconHeartDislike } from '../../assets/img/icons/heart-dislike-outline.svg'
+import { ReactComponent as IconHeartLike } from '../../assets/img/icons/heart-outline.svg'
 
 import "./Playlist.css"
 
-const Playlist = function ({ status, setStatus, player, setPlayer }) {
+const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlaylist, setAlert }) {
 
   const [playlist, setPlaylist] = useState({
     id: 1,
@@ -31,17 +34,65 @@ const Playlist = function ({ status, setStatus, player, setPlayer }) {
     },
     tracks: [],
   })
+  const [favoritePlaylist, setFavoritePlaylist] = useState(false)
   const { id } = useParams()
 
-  function handlePlayPlaylist(){
-    setPlayer(id, "playlist")
-    alert("Foi só deu bugs")
+  function handleFavorite(action){
+    
+    if(action){
+      api.post(`/me/favorites/${id}/playlist`, {
+        validateStatus: (status) =>  status === 204 
+      })
+      .then( response => {
+        setFavoritePlaylist(true)
+        setAlert({
+          status: true,
+          type: "success",
+          message: "Agora você esta seguindo a playlist"
+        })
+        setPlaylist({...playlist, total_followers: playlist.total_followers + 1 })
+      })
+      .catch( dataError => {
+        setAlert({
+          status: true,
+          type: "danger",
+          message: "Ocorreu um erro ao seguir a playlist"
+        })
+      })
+    }else{
+      api.delete(`/me/favorites/${id}/playlist`, {
+        validateStatus: (status) =>  status === 204 
+      })
+      .then( response => {
+        setFavoritePlaylist(false)
+        setAlert({
+          status: true,
+          type: "success",
+          message: "Agora você não esta seguindo a playlist"
+        })
+        setPlaylist({...playlist, total_followers: playlist.total_followers - 1  })
+      })
+      .catch( dataError => {
+        setAlert({
+          status: true,
+          type: "danger",
+          message: "Ocorreu um erro"
+        })
+      })
+    }
   }
 
-  function handlePlay(){
+  function handlePlayPlaylist(){
+        
+    if(parseInt(id) === player.id) return setStatus(!status)
 
-    alert("Clicou na musica")
+    setNewPlaylist(id, "playlist")
+  }
 
+  /* Ouvir uma musica especifica da playlist */
+  function handlePlay(index){
+    if(player.id === parseInt(id) && player.playingIndex === index) return 
+    setPlayIndex(id, "playlist", index )
   }
 
   useEffect( () => {
@@ -50,9 +101,17 @@ const Playlist = function ({ status, setStatus, player, setPlayer }) {
       validateStatus: (status) => status === 200
     })
     .then( response => {
-
       setPlaylist(response.data)
+    })
+    .catch( dataError => {
+      console.log(dataError)
+    })
 
+    api.get(`/me/favorites/${id}/playlist`, {
+      validateStatus: (status) => status === 200
+    })
+    .then( response => {
+      setFavoritePlaylist(response.data.favorite)
     })
     .catch( dataError => {
       console.log(dataError)
@@ -84,11 +143,20 @@ const Playlist = function ({ status, setStatus, player, setPlayer }) {
                       className="btn d-inline-block btn-primary btn-bold btn-spacing"
                       onClick={handlePlayPlaylist}
                     > 
-                      {status && player.id === id ? 
+                      {status && player.id === parseInt(id) ? 
                           (<IconPause width="22px" height="22px" />) 
                         : (<IconPlay width="22px" height="22px" />)
                       }
-                      
+                    </button>
+
+                    <button type="button" 
+                      className="btn btn-clean btn-circle d-inline-block svg-fill-current ml-2"
+                      onClick={()=> handleFavorite(!favoritePlaylist)}
+                    > 
+                      { favoritePlaylist ? 
+                          (<IconHeartDislike className="svg-fill-current" width="32px" height="32px" />) 
+                        : (<IconHeartLike className="svg-fill-current" width="32px" height="32px" />)
+                      }
                     </button>
 
 
@@ -123,8 +191,8 @@ const Playlist = function ({ status, setStatus, player, setPlayer }) {
         <div className="card-content card-page p-0">
           <div className="separator"></div>
           
-          {playlist.tracks.map( track => (
-            <div key={track.id} className="songs-list" onClick={handlePlay}>
+          {playlist.tracks.map( (track, index) => (
+            <div key={track.id} className={`songs-list ${player.id === parseInt(id) && player.playingIndex === index ? `active-hover` :``}`} onClick={()=>handlePlay(index)}>
               <div className="songs-list-icon">
                 <IconMusicalNotes className="songs-list-icon-notes" width="22px" height="22px" />
                 <IconPlay className="songs-list-icon-play" width="22px" height="22px" />
@@ -159,7 +227,9 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
   setStatus: (dataStatus) => dispatch(actionsPlayer.status(dataStatus)),
-  setPlayer: (id, type) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type))
+  setPlayIndex: (id, type, index) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type, index)),
+  setNewPlaylist: (id, type) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type)),
+  setAlert: (dataAlert) => dispatch(actionsAlert.set(dataAlert))
 })
 
 export default connect( mapStateToProps, mapDispatchToProps)(Playlist)

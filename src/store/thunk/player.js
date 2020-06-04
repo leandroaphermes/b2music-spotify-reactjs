@@ -7,7 +7,7 @@ import * as actionsPlayer from '../actions/player'
  * @param {int} id ID da playlist ou Album
  * @param {string} router playlist | album
  */
-export function setNewPlaylist(id, router){
+export function setNewPlaylist(id, router, index = null){
   return dispatch => {
 
     let prefixrouter = ""
@@ -15,7 +15,8 @@ export function setNewPlaylist(id, router){
       case "playlist" : prefixrouter = "playlists"
         break
       case "album" : prefixrouter = "albums"
-      break
+        break
+      default : prefixrouter = "playlists"
     }
 
     api.get(`/${prefixrouter}/${id}`, {
@@ -29,9 +30,18 @@ export function setNewPlaylist(id, router){
             playing: { },
             playlist: response.data.tracks
         }
+        console.log(index);
+        
   
-        if(data.playlist[0] && Object.keys(data.playing).length === 0){
-            data.playing = data.playlist[0];
+        if(index !== null && data.playlist[index]){
+
+          data.playing = data.playlist[index];
+          data.playingIndex = index;
+
+        }else if(data.playlist[0] && Object.keys(data.playing).length === 0){
+          
+          data.playing = data.playlist[0];
+
         }
   
         localStorage.setItem('last_player_id', response.data.id)

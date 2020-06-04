@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 
 import * as actionsPlayer from '../../../store/actions/player'
-import api from '../../../services/Api'
+import * as actionsThunkPlayer from '../../../store/thunk/player'
+
 
 import imageDefault from '../../../assets/img/music/default.jpg';
 import { ReactComponent as IconPause } from "../../../assets/img/icons/pause-outline.svg";
@@ -13,40 +14,13 @@ import "./PlaylistImage.css"
 
 const PlaylistImage = function({ status, setStatus, player, setPlayer, ...props }) {
 
-  function play(e, playlistId){
+  function play(e, playlist_id){
     e.preventDefault();
 
-    if(status && playlistId === player.id) return setStatus(false)
+    if(status && playlist_id === player.id) return setStatus(false)
 
-    api.get(`/playlists/${playlistId}`, {
-        validateStatus: (status) => status === 200
-    })
-    .then( response => {
-        if(response.data.tracks.length > 0){
-          
-          const data = {
-            id: response.data.id,
-            playingIndex: 0,
-            playing: { },
-            playlist: response.data.tracks
-          }
-
-          if(data.playlist[0] && Object.keys(data.playing).length === 0){
-            data.playing = data.playlist[0];
-          }
-
-          localStorage.setItem('last_player_id', response.data.id)
-          localStorage.setItem('last_player_type', "playlists")
-          setPlayer(data);
-          setStatus(true);
-        }
-    })
-    .catch( dataError => {
-        alert(`Erro de processo. Code: ${dataError.status}`)
-    })
-  
+    setPlayer(playlist_id, "playlist")
   }
-
 
 
   return (
@@ -87,7 +61,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setStatus: (status) => dispatch(actionsPlayer.status(status)),
-  setPlayer: (dataPlayer, actionLocation) => dispatch(actionsPlayer.newPlaylist(dataPlayer, actionLocation))
+  setPlayer: (id, type) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type))
 })
 
 export default connect( mapStateToProps, mapDispatchToProps)(PlaylistImage)
