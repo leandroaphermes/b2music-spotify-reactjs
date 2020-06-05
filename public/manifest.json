@@ -1,6 +1,7 @@
 {
-  "short_name": "B2 Music - Spotify Clone",
-  "name": "B2 Music - Spotify Clone - Estudos",
+  "short_name": "B2M - Spotify Clone",
+  "name": "B2 Music - Spotify Clone",
+  "lang": "pt-br",
   "icons": [
     {
       "src": "favicon.ico",

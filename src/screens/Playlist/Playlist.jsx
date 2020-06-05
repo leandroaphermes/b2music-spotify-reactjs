@@ -10,6 +10,8 @@ import { secondsToMinutos } from '../../utils/utils'
 
 import ComponentUILinkOfComma from '../../components/UI/LinkOfComma/LinkOfComma'
 import ComponentUIDropdown from '../../components/UI/Dropdown/Dropdown'
+import ComponentUIModal from '../../components/UI/Modal/Modal'
+import Form from './Form/Form'
 
 import imageDefault from '../../assets/img/music/default.jpg'
 import { ReactComponent as IconEllipsis } from '../../assets/img/icons/ellipsis-vertical-outline.svg'
@@ -35,8 +37,28 @@ const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlay
     tracks: [],
   })
   const [favoritePlaylist, setFavoritePlaylist] = useState(false)
+  const [modalEdit, setModalEdit] = useState(false)
   const { id } = useParams()
 
+
+/* Options */
+function handleActionEdit() { 
+  setModalEdit(true)
+}
+async function handleActionCopy(){
+  await navigator.clipboard.writeText(window.location.href)
+  setAlert({
+    status: true,
+    type: "success",
+    message: "Link copiado para sua area de transferencia"
+  })
+}
+
+
+
+
+
+  /* Player */
   function handleFavorite(action){
     
     if(action){
@@ -81,14 +103,12 @@ const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlay
       })
     }
   }
-
   function handlePlayPlaylist(){
         
     if(parseInt(id) === player.id) return setStatus(!status)
 
     setNewPlaylist(id, "playlist")
   }
-
   /* Ouvir uma musica especifica da playlist */
   function handlePlay(index){
     if(player.id === parseInt(id) && player.playingIndex === index) return 
@@ -98,7 +118,7 @@ const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlay
   useEffect( () => {
 
     api.get(`/playlists/${id}`, {
-      validateStatus: (status) => status === 200
+      validateStatus: (s) => s === 200
     })
     .then( response => {
       setPlaylist(response.data)
@@ -108,7 +128,7 @@ const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlay
     })
 
     api.get(`/me/favorites/${id}/playlist`, {
-      validateStatus: (status) => status === 200
+      validateStatus: (s) => s === 200
     })
     .then( response => {
       setFavoritePlaylist(response.data.favorite)
@@ -122,12 +142,24 @@ const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlay
   return (
     <>
       <section className="card">
-        
+
+        <ComponentUIModal
+          title="Editar Playlist"
+          visible={modalEdit}
+          onToggleModal={ () => setModalEdit(!modalEdit)}
+        >
+          <Form
+            data={playlist}
+            setData={(data) => setPlaylist(data)}
+            onToggleModal={ () => setModalEdit(!modalEdit)}
+          />
+        </ComponentUIModal>
+
         <header className="card-header">
           <div className="card-title just-content-base">
             <div className="card-flex">
 
-              <img src={ playlist.photo_url ? playlist.photo_url : imageDefault} className="shadow favorite-img" alt={playlist.name}/>
+              <img src={ playlist.photo_url ? playlist.photo_url : imageDefault} className="shadow favorite-img cover" alt={playlist.name}/>
               <div className="card-favorite ml-5">
                 <div className="float-favorite-details">
 
@@ -163,11 +195,12 @@ const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlay
                     <ComponentUIDropdown
                       button={<IconEllipsis height="32px" width="32px" />}
                     >
-                      <button type="button" className="btn btn-block btn-clean" >Editar nome de playlist</button>
-                      <button type="button" className="btn btn-block btn-clean" >Compartilhar</button>
-                      <button type="button" className="btn btn-block btn-clean" >Excluir</button>
+                      <ul>
+                        <li className="item-list" onClick={handleActionEdit} >Editar playlist</li>
+                        <li className="item-list" onClick={handleActionCopy} >Copiar link da playlist</li>
+                        <li className="item-list" >Apagar</li>
+                      </ul>
                     </ComponentUIDropdown>
-
                   </div>
                   <div className="favorite-info">
                     <a 

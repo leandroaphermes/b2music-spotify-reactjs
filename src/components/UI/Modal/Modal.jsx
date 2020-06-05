@@ -8,14 +8,14 @@ import "./Modal.css"
 const Modal = function (props) {
 
   function handleClose(e) {
-    if(e.target.id !== 'modal') return 
+    if(e.target.className !== 'modal') return 
     props.onToggleModal()
   }
 
   return (
     props.visible && (
-      <div className="modal" id="modal" onClick={handleClose}>
-        <div className="modal-content">
+      <div className="modal" onClick={handleClose}>
+        <div className={`modal-content ${props.size ? props.size : ``}`}>
           <div className="modal-header">
             <h4 className="modal-title">{props.title}</h4>
             <button 

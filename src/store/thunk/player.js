@@ -6,6 +6,7 @@ import * as actionsPlayer from '../actions/player'
  * 
  * @param {int} id ID da playlist ou Album
  * @param {string} router playlist | album
+ * @param {number} index Set track init playyer
  */
 export function setNewPlaylist(id, router, index = null){
   return dispatch => {
@@ -29,19 +30,12 @@ export function setNewPlaylist(id, router, index = null){
             playingIndex: 0,
             playing: { },
             playlist: response.data.tracks
-        }
-        console.log(index);
-        
-  
+        }  
         if(index !== null && data.playlist[index]){
-
           data.playing = data.playlist[index];
           data.playingIndex = index;
-
         }else if(data.playlist[0] && Object.keys(data.playing).length === 0){
-          
           data.playing = data.playlist[0];
-
         }
   
         localStorage.setItem('last_player_id', response.data.id)
@@ -54,6 +48,5 @@ export function setNewPlaylist(id, router, index = null){
     .catch( dataError => {
         console.error(`Erro de processo. Code: ${dataError.status}`)
     })
-
   }
 }

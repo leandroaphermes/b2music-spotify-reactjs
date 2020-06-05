@@ -20,7 +20,14 @@ div.dropdown:hover div.dropdown-menu {
   font-weight: normal;
   letter-spacing: normal;
 }
-div.dropdown div.dropdown-menu a {
-  display: block;
-  padding: 7px 0px;
+
+div.dropdown-menu > ul li.item-list {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: color .3s;
+}
+div.dropdown-menu > ul li.item-list:hover {
+  color: var(--text-primary-hover);
 }

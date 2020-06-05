@@ -18,6 +18,7 @@
 }
 .favorite-img {
   max-width: 250px;
+  height: 250px;
 }
 .favorite-info {
   font-size: 16px;
@@ -27,6 +28,7 @@
 }
 .favorite-owner {
   font-weight: bolder;
+  text-transform: capitalize;
 }
 
 
@@ -56,17 +58,15 @@
   color: var(--text-primary-white) !important;
   font-size: 1.0em;
 }
-
 .songs-list-time{
   vertical-align: middle;
 }
-
 .songs-list-icon-play {
   opacity: 0;
 }
-.songs-list:hover .songs-list-icon-play {
+.songs-list:hover .songs-list-icon-play, .songs-list.active-hover .songs-list-icon-play {
   opacity: 1;
 }
-.songs-list:hover .songs-list-icon-notes {
+.songs-list:hover .songs-list-icon-notes, .songs-list.active-hover .songs-list-icon-notes {
   opacity: 0;
 }

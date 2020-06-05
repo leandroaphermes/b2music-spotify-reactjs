@@ -146,6 +146,7 @@ import "./Player.css";
         if(player.playing.src && audio.src !== player.playing.src){
             console.log("---- AUDIO.src Atualizou ----");
             audio.src = player.playing.src;
+            document.title = `${player.playing.name} | B2 Music - Spotify Clone`
             audio.addEventListener("canplaythrough", eventPlay);
 
             return () => {

@@ -28,37 +28,37 @@ const Playlists = function () {
 	return (
 		<div>
 			<ComponentUIModal 
-					title="Criar playlist"
-					visible={modalVisible}
-					onToggleModal={() => setModalVisible(!modalVisible)}
+				title="Criar playlist"
+				visible={modalVisible}
+				onToggleModal={() => setModalVisible(!modalVisible)}
 			>
-					<FormModal onToggleModal={() => setModalVisible(!modalVisible)} />
+				<FormModal onToggleModal={() => setModalVisible(!modalVisible)} />
 			</ComponentUIModal>
 			<section className="card card-auto-rows">
 				<ComponentHeader />
-				
-					<div className="card-content">
-							<div 
-									className="image-album text-center" 
-									onClick={() => setModalVisible(!modalVisible)}
-							>
-									<IconAddCircle className="mt-4" max="100px" width="100%" height="100px" />
-							</div>
-							<div className="song-description mt-2">
-									<div className="song-description-title">
-											Criar nova Playlist
-									</div>
-									<div className="song-description-body">Crie nova playlist para ouvir mais tarde</div>
-							</div>
+			
+				<div className="card-content">
+					<div 
+						className="image-album text-center" 
+						onClick={() => setModalVisible(!modalVisible)}
+					>
+						<IconAddCircle className="mt-4" max="100px" width="100%" height="100px" />
 					</div>
+					<div className="song-description mt-2">
+						<div className="song-description-title">
+							Criar nova Playlist
+						</div>
+						<div className="song-description-body">Crie nova playlist para ouvir mais tarde</div>
+					</div>
+				</div>
 
-					{data.map( playlist => (
-						<ComponentCardPlaylistImage
-								key={playlist.playlist.id}
-								prefixRoute="/playlist/"
-								data={playlist.playlist}
-						/>
-					))}
+				{data.map( playlist => (
+					<ComponentCardPlaylistImage
+						key={playlist.playlist.id}
+						prefixRoute="/playlist/"
+						data={playlist.playlist}
+					/>
+				))}
 			</section>
 		</div>
 	)
