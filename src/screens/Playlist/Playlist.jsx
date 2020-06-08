@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import * as actionsAlert from '../../store/actions/alert'
@@ -39,6 +39,7 @@ const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlay
   const [favoritePlaylist, setFavoritePlaylist] = useState(false)
   const [modalEdit, setModalEdit] = useState(false)
   const { id } = useParams()
+  const history = useHistory()
 
 
 /* Options */
@@ -52,6 +53,23 @@ async function handleActionCopy(){
     type: "success",
     message: "Link copiado para sua area de transferencia"
   })
+}
+function handleActionDelete(){
+  
+  api.delete(`/playlists/${id}`, {
+    validateStatus: (s) => s === 204
+  })
+  .then( response => {
+    history.push(`/my-library/playlists`)
+  })
+  .catch( dataError => {
+    setAlert({
+      status: true,
+      type: "danger",
+      message: dataError.data.message
+    })
+  })
+
 }
 
 
@@ -198,7 +216,7 @@ async function handleActionCopy(){
                       <ul>
                         <li className="item-list" onClick={handleActionEdit} >Editar playlist</li>
                         <li className="item-list" onClick={handleActionCopy} >Copiar link da playlist</li>
-                        <li className="item-list" >Apagar</li>
+                        <li className="item-list" onClick={handleActionDelete} >Apagar</li>
                       </ul>
                     </ComponentUIDropdown>
                   </div>
