@@ -22,6 +22,7 @@ import ScreenPlaylist from './Playlist/Playlist'
 
 /* Errors Pages */
 import ScreenInternalError from './Errors/Internal/Internal'
+import ScreenNotFoundError from './Errors/NotFound/NotFound'
 
 const RootRoutesAuth = function ({ session, setSession }) {
     const token = getSessionToken()
@@ -55,6 +56,7 @@ const RootRoutesAuth = function ({ session, setSession }) {
                     {/* <Route exact path="/favorite" component={ScreenFavorite} /> */}
                     <Route exact path="/profile" component={ScreenProfile} />
                     <Route exact path="/internal-error" component={ScreenInternalError} />
+                    <Route exact path="/notfound-error" component={ScreenNotFoundError} />
                 </main>
             </div>
             <ComponentsPlayer />

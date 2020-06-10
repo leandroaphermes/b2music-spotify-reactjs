@@ -1,0 +1,30 @@
+.error-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.error-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.error-icon {
+  width: 150px;
+  height: 150px;
+}
+.error-icon svg path {
+  fill: currentColor;
+}
+
+.error-details {
+  margin-left: 15px;
+  align-self: center;
+}
+.error-details h4 {
+  font-size: 34px;
+}
+.error-icon-text{
+  font-size: 100px;
+}

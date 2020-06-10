@@ -342,6 +342,7 @@ input[type="date"].form-control {
   grid-auto-rows: auto;
   overflow: auto;
 }
+
  
   
 .card-content:hover .song-player {
@@ -904,8 +905,11 @@ div.row {
 .just-content-center{
   justify-content: center;
 }
-.alig-content-center{
-  align-content: center;
+.alig-items-center{
+  align-items: center;
+}
+.overflow-visible{
+  overflow: visible;
 }
 
 svg path, svg polyline, svg line, svg circle, svg rect {

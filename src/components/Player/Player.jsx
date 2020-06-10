@@ -88,33 +88,32 @@ import "./Player.css";
             const lastPlayerType = localStorage.getItem('last_player_type') || null
             
             if(lastPlayerID > 0 || lastPlayerType){
-                api.get(`/${lastPlayerType}/${lastPlayerID}`)
+                api.get(`/${lastPlayerType}/${lastPlayerID}`, {
+                    validateStatus: (s) => s === 200
+                })
                     .then( (response) => {
-                        if(response.status === 200){
-                            
-                            const data = {
-                                id: response.data.id,
-                                playingIndex: 0,
-                                playing: { },
-                                playlist: response.data.tracks
-                            }
+                        
+                        const data = {
+                            id: response.data.id,
+                            playingIndex: 0,
+                            playing: { },
+                            playlist: response.data.tracks
+                        }
 
-                            if(data.playlist[0] && Object.keys(data.playing).length === 0){
-                                data.playing = data.playlist[0];
-                            }
-
-                            if(data.playlist.length > 0) {
-                                
-                                localStorage.setItem('last_player_id', response.data.id)
-                                localStorage.setItem('last_player_type', lastPlayerType)
-                                
-                                setPlayer(data);
-                                setIsLoaded(2);
-                            }
-                            
+                        if(data.playlist[0] && Object.keys(data.playing).length === 0){
+                            data.playing = data.playlist[0];
+                        }
+                        if(data.playlist.length > 0) {
+                            localStorage.setItem('last_player_id', response.data.id)
+                            localStorage.setItem('last_player_type', lastPlayerType)
+                            setPlayer(data)
+                            setIsLoaded(2)
                         }
                     })
-                    .catch( (err) => console.error(err) )
+                    .catch( (err) => {
+                        console.log("PLAYER ERR: ", err)
+                        setIsLoaded(1)
+                    })
             } else{
                 setIsLoaded(1)
             }
