@@ -1,15 +1,20 @@
 import React from 'react'
-import PropsTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import "./Dropdown.css"
 
 const Dropdown = function(props) {
+  
+
   return (
     <div className="dropdown">
-      <button className="btn btn-clean btn-circle d-inline-block ">
+      <button 
+        className={`btn btn-clean btn-circle d-inline-block ${props.buttonSize ? `btn-${props.buttonSize}` : ``}`}
+        {...props.buttonOptions}
+        >
         {props.button}
       </button>
-      <div className="dropdown-menu">
+      <div className={`dropdown-menu ${props.dropDirection ? `drop-${props.dropDirection}` : `drop-right`}`}>
         {props.children}
       </div>
     </div>
@@ -18,8 +23,11 @@ const Dropdown = function(props) {
 
 
 Dropdown.prototype = {
-  children: PropsTypes.element.isRequired,
-  button: PropsTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  button: PropTypes.element.isRequired,
+  buttonSize: PropTypes.string,
+  buttonOptions: PropTypes.object,
+  dropDirection: PropTypes.oneOf(['up', 'right', 'bottom', 'left'])
 }
 
 export default Dropdown

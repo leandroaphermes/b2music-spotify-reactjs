@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import * as actionsAlert from '../../store/actions/alert'
 import * as actionsPlayer from '../../store/actions/player'
 import * as actionsThunkPlayer from '../../store/thunk/player'
+import { removeTrackInPlaylist } from '../../services/function/playlist'
 import api from '../../services/Api'
 import { secondsToMinutos } from '../../utils/utils'
 
@@ -39,7 +40,7 @@ const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlay
   })
   const [favoritePlaylist, setFavoritePlaylist] = useState(false)
   const [modalEdit, setModalEdit] = useState(false)
-  const [modalAddTrack, setModalAddTrack] = useState(true)
+  const [modalAddTrack, setModalAddTrack] = useState(false)
   const { id } = useParams()
   const history = useHistory()
 
@@ -79,6 +80,19 @@ function handleActionDelete(){
 function handleClickBtnAddTrack(){
   setModalAddTrack(!modalAddTrack)
 }
+function handleClickBtnRemoveTrack(track){
+
+  removeTrackInPlaylist(playlist.tracks, playlist.id, track)
+  .then(() => {
+  
+    setPlaylist({...playlist, tracks: playlist.tracks.filter( track_item => track_item.id !== track.id )})
+    
+  })
+  .catch()
+
+
+}
+
 
 
   /* Player */
@@ -184,7 +198,9 @@ function handleClickBtnAddTrack(){
         visible={modalAddTrack}
         onToggleModal={ ()=> setModalAddTrack(!modalAddTrack)}
       >
-        <ComponentCardsSearchAddTrack />
+        <ComponentCardsSearchAddTrack
+          playlist={playlist}
+        />
       </ComponentUIModal>
 
       <header className="card-header">
@@ -259,7 +275,10 @@ function handleClickBtnAddTrack(){
         
         { playlist.tracks.length ? (
           playlist.tracks.map( (track, index) => (
-          <div key={track.id} className={`songs-list ${player.id === parseInt(id) && player.playingIndex === index ? `active-hover` :``}`} onClick={()=>handlePlay(index)}>
+          <div 
+            key={track.id} 
+            className={`songs-list ${player.id === parseInt(id) && player.playingIndex === index ? `active-hover` :``}`} 
+            onDoubleClick={()=>handlePlay(index)}>
             <div className="songs-list-icon">
               <IconMusicalNotes className="songs-list-icon-notes" width="22px" height="22px" />
               <IconPlay className="songs-list-icon-play" width="22px" height="22px" />
@@ -274,6 +293,16 @@ function handleClickBtnAddTrack(){
               </div>
             </div>
             <div className="songs-list-time py-3 pt-1">
+              <ComponentUIDropdown
+                button={<IconEllipsis width="22px" height="22px" />}
+                buttonSize="sm"
+                dropDirection="left"
+              >
+                <ul>
+                  <li className="item-list" onClick={() => handleClickBtnRemoveTrack(track)}>Remover da playlist</li>
+                </ul>
+              </ComponentUIDropdown>
+
               {secondsToMinutos(track.duration)}
             </div>
           </div>
@@ -281,12 +310,15 @@ function handleClickBtnAddTrack(){
         ) : (
           <div className="text-center">
             <p>Não há musicas</p>
-
-            <button type="button" className="btn btn-primary mt-5" onClick={handleClickBtnAddTrack} >
-              Adicionar musicas a playlist
-            </button>
           </div>
         ) }
+
+        
+        <div className="text-center">
+          <button type="button" className="btn btn-primary mt-5" onClick={handleClickBtnAddTrack} >
+            Adicionar musicas a playlist
+          </button>
+        </div>
 
       </div>
 

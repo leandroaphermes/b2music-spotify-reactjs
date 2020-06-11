@@ -6,11 +6,27 @@ div.dropdown {
 div.dropdown div.dropdown-menu {
   position: absolute;
   display: none;
-  left: 0px;
   background-color: var(--box-primary-dark);
   border-radius: 5px;
   min-width: 230px;
   z-index: 100;
+}
+
+div.dropdown div.dropdown-menu.drop-up {
+  top: 0;
+  left: 0;
+}
+
+div.dropdown div.dropdown-menu.drop-right {
+  left: 0;
+}
+
+div.dropdown div.dropdown-menu.drop-bottom {
+  left: 0;
+}
+
+div.dropdown div.dropdown-menu.drop-left {
+  right: 0;
 }
 
 div.dropdown:hover div.dropdown-menu {

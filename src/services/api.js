@@ -2,7 +2,7 @@ import axios from "axios"
 import { getSessionToken, deleteSessionToken } from '../utils/utils'
 
 const api = axios.create({
-    baseURL: "http://localhost:3333",
+    baseURL: "http://localhost:3333/api/v1/",
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
