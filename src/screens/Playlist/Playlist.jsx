@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -9,19 +9,21 @@ import { removeTrackInPlaylist } from '../../services/function/playlist'
 import api from '../../services/Api'
 import { secondsToMinutos } from '../../utils/utils'
 
+/* Components Funcional */
+import ComponentButtonsFavorite from '../../components/Buttons/Favorite/Favorite'
+import ComponentCardsSearchAddTrack from '../../components/Cards/SearchAddTrack/SearchAddTrack'
+import Form from './Form/Form'
+
+/* Components Generico */
 import ComponentUILinkOfComma from '../../components/UI/LinkOfComma/LinkOfComma'
 import ComponentUIDropdown from '../../components/UI/Dropdown/Dropdown'
 import ComponentUIModal from '../../components/UI/Modal/Modal'
-import ComponentCardsSearchAddTrack from '../../components/Cards/SearchAddTrack/SearchAddTrack'
-import Form from './Form/Form'
 
 import imageDefault from '../../assets/img/music/default.jpg'
 import { ReactComponent as IconEllipsis } from '../../assets/img/icons/ellipsis-vertical-outline.svg'
 import { ReactComponent as IconMusicalNotes } from '../../assets/img/icons/musical-notes-outline.svg'
 import { ReactComponent as IconPause } from '../../assets/img/icons/pause-outline.svg'
 import { ReactComponent as IconPlay } from '../../assets/img/icons/play-outline.svg'
-import { ReactComponent as IconHeartDislike } from '../../assets/img/icons/heart-dislike-outline.svg'
-import { ReactComponent as IconHeartLike } from '../../assets/img/icons/heart-outline.svg'
 
 import "./Playlist.css"
 
@@ -38,14 +40,13 @@ const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlay
     },
     tracks: [],
   })
-  const [favoritePlaylist, setFavoritePlaylist] = useState(false)
   const [modalEdit, setModalEdit] = useState(false)
   const [modalAddTrack, setModalAddTrack] = useState(false)
   const { id } = useParams()
   const history = useHistory()
 
 
-/* Options */
+/* Options Playlist */
 function handleActionEdit() { 
   setModalEdit(true)
 }
@@ -93,53 +94,16 @@ function handleClickBtnRemoveTrack(track){
 
 }
 
+/* Toogle Track Favorite */
+function handleAddTrackToFavorite() {
+  
+}
+function handleRemoveTrackToFavorite() {
+
+}
 
 
   /* Player */
-  function handleFavorite(action){
-    
-    if(action){
-      api.post(`/me/favorites/${id}/playlist`, {
-        validateStatus: (status) =>  status === 204 
-      })
-      .then( response => {
-        setFavoritePlaylist(true)
-        setAlert({
-          status: true,
-          type: "success",
-          message: "Agora você esta seguindo a playlist"
-        })
-        setPlaylist({...playlist, total_followers: playlist.total_followers + 1 })
-      })
-      .catch( dataError => {
-        setAlert({
-          status: true,
-          type: "danger",
-          message: "Ocorreu um erro ao seguir a playlist"
-        })
-      })
-    }else{
-      api.delete(`/me/favorites/${id}/playlist`, {
-        validateStatus: (status) =>  status === 204 
-      })
-      .then( response => {
-        setFavoritePlaylist(false)
-        setAlert({
-          status: true,
-          type: "success",
-          message: "Agora você não esta seguindo a playlist"
-        })
-        setPlaylist({...playlist, total_followers: playlist.total_followers - 1  })
-      })
-      .catch( dataError => {
-        setAlert({
-          status: true,
-          type: "danger",
-          message: "Ocorreu um erro"
-        })
-      })
-    }
-  }
   function handlePlayPlaylist(){
         
     if(parseInt(id) === player.id) return setStatus(!status)
@@ -164,16 +128,6 @@ function handleClickBtnRemoveTrack(track){
       history.push("/notfound-error", {
         message: "Playlist não encontrada"
       })
-    })
-
-    api.get(`/me/favorites/${id}/playlist`, {
-      validateStatus: (s) => s === 200
-    })
-    .then( response => {
-      setFavoritePlaylist(response.data.favorite)
-    })
-    .catch( dataError => {
-      console.log(dataError)
     })
 
   }, [ id, history ])
@@ -229,17 +183,15 @@ function handleClickBtnRemoveTrack(track){
                       : (<IconPlay width="22px" height="22px" />)
                     }
                   </button>
-
-                  <button type="button" 
-                    className="btn btn-clean btn-circle d-inline-block svg-fill-current ml-2"
-                    onClick={()=> handleFavorite(!favoritePlaylist)}
-                  > 
-                    { favoritePlaylist ? 
-                        (<IconHeartDislike className="svg-fill-current" width="32px" height="32px" />) 
-                      : (<IconHeartLike className="svg-fill-current" width="32px" height="32px" />)
-                    }
-                  </button>
-
+                  
+                  { playlist.id > 0 && (
+                    <ComponentButtonsFavorite 
+                    type="playlist"
+                    dataID={playlist.id}
+                    onAddFavorite={ () =>  setPlaylist({...playlist, total_followers: playlist.total_followers + 1 }) }
+                    onRemoveFavorite={ () => setPlaylist({...playlist, total_followers: playlist.total_followers - 1 }) }
+                  />
+                  )}
 
                   <ComponentUIDropdown
                     button={<IconEllipsis height="32px" width="32px" />}
@@ -299,6 +251,8 @@ function handleClickBtnRemoveTrack(track){
                 dropDirection="left"
               >
                 <ul>
+                  <li className="item-list" onClick={() => handleAddTrackToFavorite(track)}>Adicionar no Favorito</li>
+                  <li className="item-list" onClick={() => handleRemoveTrackToFavorite(track)}>Remover do Favorito</li>
                   <li className="item-list" onClick={() => handleClickBtnRemoveTrack(track)}>Remover da playlist</li>
                 </ul>
               </ComponentUIDropdown>
@@ -338,4 +292,4 @@ const mapDispatchToProps = dispatch => ({
   setAlert: (dataAlert) => dispatch(actionsAlert.set(dataAlert))
 })
 
-export default connect( mapStateToProps, mapDispatchToProps)(Playlist)
+export default connect( mapStateToProps, mapDispatchToProps)(memo(Playlist))

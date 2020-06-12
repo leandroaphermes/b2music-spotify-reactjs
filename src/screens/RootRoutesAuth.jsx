@@ -19,6 +19,7 @@ import ScreenMyLibraryAlbums from "./MyLibrary/Albums/Albums";
 import ScreenMyLibraryAuthors from "./MyLibrary/Authors/Authors";
 /* import ScreenFavorite from './Favorite/Favorite' */
 import ScreenPlaylist from './Playlist/Playlist'
+import ScreenAlbum from './Album/Album'
 
 /* Errors Pages */
 import ScreenInternalError from './Errors/Internal/Internal'
@@ -52,6 +53,9 @@ const RootRoutesAuth = function ({ session, setSession }) {
 
                     {/* Playlist Show */}
                     <Route exact path="/playlist/:id" component={ScreenPlaylist} />
+                    {/* Album Show */}
+                    <Route exact path="/album/:id" component={ScreenAlbum} />
+                    
 
                     {/* <Route exact path="/favorite" component={ScreenFavorite} /> */}
                     <Route exact path="/profile" component={ScreenProfile} />

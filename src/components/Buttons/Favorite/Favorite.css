@@ -1,0 +1,10 @@
+.favorite-btn .favorite-disable {
+  display: none;
+}
+
+.favorite-btn:hover .favorite-active {
+  display: none;
+}
+.favorite-btn:hover .favorite-disable {
+  display: block;
+}
