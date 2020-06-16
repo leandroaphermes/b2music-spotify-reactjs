@@ -43,6 +43,10 @@ export function calcSizeBits(value) {
     return result
 }
 
+/**
+ * 
+ * @param {int} time Seconds in integer to parse hours
+ */
 export function secondsToMinutos(time){
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);

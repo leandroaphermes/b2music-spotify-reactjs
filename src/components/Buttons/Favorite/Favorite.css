@@ -6,5 +6,5 @@
   display: none;
 }
 .favorite-btn:hover .favorite-disable {
-  display: block;
+  display: inline-block;
 }

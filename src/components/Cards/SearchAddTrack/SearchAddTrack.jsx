@@ -63,6 +63,7 @@ const SearchAddTrack = function (props) {
       <div className="search-results">
 
         {isLoaded && search.length > 0 && result.length > 0 ? (
+
           result.map( track => (
             <div key={track.id} className="songs-list">
               <div className="songs-list-icon">
@@ -85,6 +86,7 @@ const SearchAddTrack = function (props) {
               </div>
             </div>
           ))
+          
           ) : isLoaded && search.length > 0 &&  result.length === 0 ?  (
             <p className="text-center">Nenhum resultado</p>
           ) : ""

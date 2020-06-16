@@ -42,7 +42,7 @@ export function setNewPlaylist(id, router, index = null){
         localStorage.setItem('last_player_type', prefixrouter)
 
         dispatch( actionsPlayer.status(true));
-        dispatch( actionsPlayer.set(data));
+        dispatch( actionsPlayer.newPlaylist(data, "new-playlist-player"));
       }
     })
     .catch( dataError => {

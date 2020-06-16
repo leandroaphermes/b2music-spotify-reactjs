@@ -13,10 +13,7 @@ import "./Favorite.css"
 
 function Favorite({ setAlert, ...props }) {
 
-  const [favorite, setFavorite] = useState(false)
-
-  console.log("---- RENDERIZOU O FAVORITE ----");
-  
+  const [favorite, setFavorite] = useState(false) 
 
   function handleFavorite(action){
     if(action){
@@ -75,6 +72,7 @@ function Favorite({ setAlert, ...props }) {
       type="button" 
       className="btn btn-clean btn-block-inline svg-fill-current ml-2 favorite-btn"
       onClick={()=> handleFavorite(!favorite)}
+      title={ favorite ? "Remover do favorito" : "Adicionar no favorito" }
     > 
       { favorite ? 
           (

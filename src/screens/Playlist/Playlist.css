@@ -70,3 +70,8 @@
 .songs-list:hover .songs-list-icon-notes, .songs-list.active-hover .songs-list-icon-notes {
   opacity: 0;
 }
+.float-favorite-details-type{
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: normal;
+}

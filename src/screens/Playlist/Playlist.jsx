@@ -30,7 +30,7 @@ import "./Playlist.css"
 const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlaylist, setAlert }) {
 
   const [playlist, setPlaylist] = useState({
-    id: 1,
+    id: 0,
     name: "",
     photo_url: "",
     owner: {
@@ -93,15 +93,6 @@ function handleClickBtnRemoveTrack(track){
 
 
 }
-
-/* Toogle Track Favorite */
-function handleAddTrackToFavorite() {
-  
-}
-function handleRemoveTrackToFavorite() {
-
-}
-
 
   /* Player */
   function handlePlayPlaylist(){
@@ -166,6 +157,7 @@ function handleRemoveTrackToFavorite() {
               <div className="float-favorite-details">
 
 
+                <div className="float-favorite-details-type">Playlist</div>
                 <h3>{playlist.name}</h3>
                 { playlist.description !== "" && (
                   <small>{playlist.description}</small>
@@ -186,11 +178,11 @@ function handleRemoveTrackToFavorite() {
                   
                   { playlist.id > 0 && (
                     <ComponentButtonsFavorite 
-                    type="playlist"
-                    dataID={playlist.id}
-                    onAddFavorite={ () =>  setPlaylist({...playlist, total_followers: playlist.total_followers + 1 }) }
-                    onRemoveFavorite={ () => setPlaylist({...playlist, total_followers: playlist.total_followers - 1 }) }
-                  />
+                      type="playlist"
+                      dataID={playlist.id}
+                      onAddFavorite={ () =>  setPlaylist({...playlist, total_followers: playlist.total_followers + 1 }) }
+                      onRemoveFavorite={ () => setPlaylist({...playlist, total_followers: playlist.total_followers - 1 }) }
+                    />
                   )}
 
                   <ComponentUIDropdown
@@ -245,14 +237,16 @@ function handleRemoveTrackToFavorite() {
               </div>
             </div>
             <div className="songs-list-time py-3 pt-1">
+              <ComponentButtonsFavorite 
+                type="track"
+                dataID={track.id}
+              />
               <ComponentUIDropdown
                 button={<IconEllipsis width="22px" height="22px" />}
                 buttonSize="sm"
                 dropDirection="left"
               >
                 <ul>
-                  <li className="item-list" onClick={() => handleAddTrackToFavorite(track)}>Adicionar no Favorito</li>
-                  <li className="item-list" onClick={() => handleRemoveTrackToFavorite(track)}>Remover do Favorito</li>
                   <li className="item-list" onClick={() => handleClickBtnRemoveTrack(track)}>Remover da playlist</li>
                 </ul>
               </ComponentUIDropdown>

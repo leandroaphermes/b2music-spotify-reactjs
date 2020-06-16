@@ -70,8 +70,32 @@
 .songs-list:hover .songs-list-icon-notes, .songs-list.active-hover .songs-list-icon-notes {
   opacity: 0;
 }
+
 .float-favorite-details-type{
-  font-size: 12px;
+  font-size: 14px;
   text-transform: uppercase;
   font-weight: normal;
+}
+.author-track-popular-icon {
+  width: 60px;
+  height: 60pxs;
+}
+
+.author-track-popular-title {
+  flex: 1;
+}
+.author-track-popular-title a {
+  font-size: 26px !important;
+}
+
+.popular-tracks-title{
+  font-size: 26px;
+}
+.popular-author-title{
+  font-size: 26px;
+}
+.content-author-album {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-row: auto;
 }
