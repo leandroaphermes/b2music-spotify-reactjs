@@ -27,7 +27,7 @@ import { ReactComponent as IconPlay } from '../../assets/img/icons/play-outline.
 
 import "./Playlist.css"
 
-const Playlist = function ({ status, setStatus, player, setPlayIndex, setNewPlaylist, setAlert }) {
+const Playlist = function ({ status, setStatus, player, setPlayByTrack, setNewPlaylist, setAlert }) {
 
   const [playlist, setPlaylist] = useState({
     id: 0,
@@ -102,9 +102,9 @@ function handleClickBtnRemoveTrack(track){
     setNewPlaylist(id, "playlist")
   }
   /* Ouvir uma musica especifica da playlist */
-  function handlePlay(index){
-    if(player.id === parseInt(id) && player.playingIndex === index) return 
-    setPlayIndex(id, "playlist", index )
+  function handlePlayByTrack(track_id){
+    if(player.id === parseInt(id) && player.playing.id === track_id) return 
+    setPlayByTrack(id, "playlist", track_id )
   }
 
   useEffect( () => {
@@ -222,7 +222,7 @@ function handleClickBtnRemoveTrack(track){
           <div 
             key={track.id} 
             className={`songs-list ${player.id === parseInt(id) && player.playingIndex === index ? `active-hover` :``}`} 
-            onDoubleClick={()=>handlePlay(index)}>
+            onDoubleClick={()=>handlePlayByTrack(track.id)}>
             <div className="songs-list-icon">
               <IconMusicalNotes className="songs-list-icon-notes" width="22px" height="22px" />
               <IconPlay className="songs-list-icon-play" width="22px" height="22px" />
@@ -281,7 +281,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
   setStatus: (dataStatus) => dispatch(actionsPlayer.status(dataStatus)),
-  setPlayIndex: (id, type, index) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type, index)),
+  setPlayByTrack: (id, type, index) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type, index)),
   setNewPlaylist: (id, type) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type)),
   setAlert: (dataAlert) => dispatch(actionsAlert.set(dataAlert))
 })

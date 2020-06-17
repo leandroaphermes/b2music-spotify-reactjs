@@ -12,7 +12,7 @@ export default function Results(props) {
         authorsResult = authors.map( (author, index) =>
             <span key={author.id}>
                 {index > 0 && ', '}
-                <a href={`/artist/${author.id}`}>{author.name}</a>
+                <a href={`/author/${author.id}`}>{author.name}</a>
             </span>
         )
         return authorsResult

@@ -24,7 +24,7 @@ import { ReactComponent as IconPlay } from '../../assets/img/icons/play-outline.
 
 import "./Album.css"
 
-const Album = function ({ status, setStatus, player, setPlayIndex, setNewPlaylist, setAlert }) {
+const Album = function ({ status, setStatus, player, setPlayByTrack, setNewPlaylist, setAlert }) {
 
   const [album, setAlbum] = useState({
     id: 0,
@@ -40,6 +40,15 @@ const Album = function ({ status, setStatus, player, setPlayIndex, setNewPlaylis
   const history = useHistory()
 
 
+  async function handleActionCopy(){
+    await navigator.clipboard.writeText(window.location.href)
+    setAlert({
+      status: true,
+      type: "success",
+      message: "Link copiado para sua area de transferencia"
+    })
+  }
+
 
   /* Player */
   function handlePlayAlbum(){
@@ -49,9 +58,9 @@ const Album = function ({ status, setStatus, player, setPlayIndex, setNewPlaylis
     setNewPlaylist(id, "album")
   }
   /* Ouvir uma musica especifica do album */
-  function handlePlay(index){
-    if(player.id === parseInt(id) && player.playingIndex === index) return 
-    setPlayIndex(id, "album", index )
+  function handlePlayByTrack(track_id){
+    if(player.id === parseInt(id) && player.playing.id === track_id) return 
+    setPlayByTrack(id, "album", track_id )
   }
 
   useEffect( () => {
@@ -109,13 +118,13 @@ const Album = function ({ status, setStatus, player, setPlayIndex, setNewPlaylis
                     button={<IconEllipsis height="32px" width="32px" />}
                   >
                     <ul>
-                      <li className="item-list" >Copiar link do album</li>
+                      <li className="item-list" onClick={handleActionCopy} >Copiar link do album</li>
                     </ul>
                   </ComponentUIDropdown>
                 </div>
                 <div className="favorite-info">
                   <a 
-                    href={`/user/${album.author.id}`} 
+                    href={`/author/${album.author.id}`} 
                     className="favorite-owner"
                   >{album.author.name}
                   </a>
@@ -139,7 +148,7 @@ const Album = function ({ status, setStatus, player, setPlayIndex, setNewPlaylis
           <div 
             key={track.id} 
             className={`songs-list ${player.id === parseInt(id) && player.playingIndex === index ? `active-hover` :``}`} 
-            onDoubleClick={()=>handlePlay(index)}>
+            onDoubleClick={()=>handlePlayByTrack(track.id)}>
             <div className="songs-list-icon">
               <IconMusicalNotes className="songs-list-icon-notes" width="22px" height="22px" />
               <IconPlay className="songs-list-icon-play" width="22px" height="22px" />
@@ -180,7 +189,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
   setStatus: (dataStatus) => dispatch(actionsPlayer.status(dataStatus)),
-  setPlayIndex: (id, type, index) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type, index)),
+  setPlayByTrack: (id, type, track_id) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type, track_id)),
   setNewPlaylist: (id, type) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type)),
   setAlert: (dataAlert) => dispatch(actionsAlert.set(dataAlert))
 })

@@ -10,20 +10,20 @@ import { secondsToMinutos } from '../../utils/utils'
 
 /* Components Funcional */
 import ComponentButtonsFavorite from '../../components/Buttons/Favorite/Favorite'
+import * as ComponentCardFullImagePlay from '../../components/Cards/FullImagePlay/FullImagePlay'
 
 /* Components Generico */
-import ComponentUILinkOfComma from '../../components/UI/LinkOfComma/LinkOfComma'
 import ComponentUIDropdown from '../../components/UI/Dropdown/Dropdown'
 
 import imageDefault from '../../assets/img/music/default.jpg'
 import { ReactComponent as IconEllipsis } from '../../assets/img/icons/ellipsis-vertical-outline.svg'
 import { ReactComponent as IconMusicalNotes } from '../../assets/img/icons/musical-notes-outline.svg'
-import { ReactComponent as IconPause } from '../../assets/img/icons/pause-outline.svg'
+/* import { ReactComponent as IconPause } from '../../assets/img/icons/pause-outline.svg' */
 import { ReactComponent as IconPlay } from '../../assets/img/icons/play-outline.svg'
 
 import "./Author.css"
 
-const Author = function ({ status, setStatus, player, setPlayIndex, setNewPlaylist, setAlert }) {
+const Author = function ({ status, setStatus, player, setPlayByTrack, setNewPlaylist, setAlert }) {
 
   const [author, setAuthor] = useState({
     id: 0,
@@ -35,8 +35,23 @@ const Author = function ({ status, setStatus, player, setPlayIndex, setNewPlayli
   const { id } = useParams()
   const history = useHistory()
 
-  function handlePlay (){
+  function handlePlayByTrack(track){
+    if(status && track.album.id === player.playing.id) return
+    setPlayByTrack(track.album.id, "album", track.id)
+  }
 
+  function handlePlayByAlbum(album_id){
+    if(status && album_id === player.id) return setStatus(false)
+    setNewPlaylist(album_id, "album")
+  }
+
+  async function handleActionCopy(){
+    await navigator.clipboard.writeText(window.location.href)
+    setAlert({
+      status: true,
+      type: "success",
+      message: "Link copiado para sua area de transferencia"
+    })
   }
 
   useEffect( () => {
@@ -79,7 +94,7 @@ const Author = function ({ status, setStatus, player, setPlayIndex, setNewPlayli
                     button={<IconEllipsis height="32px" width="32px" />}
                   >
                     <ul>
-                      <li className="item-list" >Copiar link do artista</li>
+                      <li className="item-list" onClick={handleActionCopy} >Copiar link do artista</li>
                     </ul>
                   </ComponentUIDropdown>
                 </div>
@@ -96,7 +111,7 @@ const Author = function ({ status, setStatus, player, setPlayIndex, setNewPlayli
         <div className="separator"></div>
         
 
-        <section className="container-popular-tracks mb-4">
+        <section className="container-popular-tracks mt-3">
           <h4 className="mb-1 popular-tracks-title ">Populares</h4>
 
           <div className="content-popular-tracks">
@@ -105,7 +120,7 @@ const Author = function ({ status, setStatus, player, setPlayIndex, setNewPlayli
               <div 
                 key={track.id} 
                 className={`songs-list ${player.id === parseInt(id) && player.playingIndex === index ? `active-hover` :``}`} 
-                onDoubleClick={()=>handlePlay(index)}>
+                onDoubleClick={() => handlePlayByTrack(track)}>
                 <div className="songs-list-icon">
                   <IconMusicalNotes className="songs-list-icon-notes" width="22px" height="22px" />
                   <IconPlay className="songs-list-icon-play" width="22px" height="22px" />
@@ -138,13 +153,40 @@ const Author = function ({ status, setStatus, player, setPlayIndex, setNewPlayli
         <section className="container-author-album">
           <h4 className="mb-1 popular-author-title ">Albums</h4>
 
-          <div className="content-author-album">
-            
-              <div className="container-card-image">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut facere dolorum, sapiente impedit dolore hic earum porro quis optio dolorem deserunt? At porro vero repellendus eligendi magnam illo alias unde.
-              </div>
+          <ComponentCardFullImagePlay.Container>
+            {author.albums.filter( album => album.categories === 'album')
+              .map(album => (
+                <ComponentCardFullImagePlay.ItemImagePlay
+                  key={album.id}
+                  prefixRoute="/album/"
+                  data={album}
+                  statusPlayer={status}
+                  player={player}
+                  play={() => handlePlayByAlbum(album.id)}
+                />
+              )
+            )}
+          </ComponentCardFullImagePlay.Container>
+        </section>
 
-          </div>
+
+        <section className="container-author-album">
+          <h4 className="mb-1 popular-author-title ">Singles & EPs</h4>
+
+          <ComponentCardFullImagePlay.Container>
+            {author.albums.filter( album => album.categories !== 'album')
+              .map(album => (
+                <ComponentCardFullImagePlay.ItemImagePlay
+                  key={album.id}
+                  prefixRoute="/album/"
+                  data={album}
+                  statusPlayer={status}
+                  player={player}
+                  play={() => handlePlayByAlbum(album.id)}
+                />
+              )
+            )}
+          </ComponentCardFullImagePlay.Container>
         </section>
 
       </div>
@@ -160,7 +202,7 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
   setStatus: (dataStatus) => dispatch(actionsPlayer.status(dataStatus)),
-  setPlayIndex: (id, type, index) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type, index)),
+  setPlayByTrack: (id, type, track_id) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type, track_id)),
   setNewPlaylist: (id, type) => dispatch(actionsThunkPlayer.setNewPlaylist(id, type)),
   setAlert: (dataAlert) => dispatch(actionsAlert.set(dataAlert))
 })

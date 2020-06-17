@@ -2,13 +2,14 @@ import api from '../../services/Api'
 
 import * as actionsPlayer from '../actions/player'
 
+
 /**
- * 
+ * Set new Playlist to Player
  * @param {int} id ID da playlist ou Album
  * @param {string} router playlist | album
- * @param {number} index Set track init playyer
+ * @param {int} [track_id] Set track init player
  */
-export function setNewPlaylist(id, router, index = null){
+export function setNewPlaylist(id, router, track_id = null){
   return dispatch => {
 
     let prefixrouter = ""
@@ -31,9 +32,10 @@ export function setNewPlaylist(id, router, index = null){
             playing: { },
             playlist: response.data.tracks
         }  
-        if(index !== null && data.playlist[index]){
-          data.playing = data.playlist[index];
-          data.playingIndex = index;
+        if(track_id !== null && data.playlist.findIndex( (item) => item.id === track_id ) !== -1 ){
+          let index_track = data.playlist.findIndex( (item) => item.id === track_id )
+          data.playing = data.playlist[index_track];
+          data.playingIndex = index_track;
         }else if(data.playlist[0] && Object.keys(data.playing).length === 0){
           data.playing = data.playlist[0];
         }

@@ -94,8 +94,6 @@
 .popular-author-title{
   font-size: 26px;
 }
-.content-author-album {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-row: auto;
+.container-author-album{
+  margin-top: 70px;
 }
