@@ -36,21 +36,36 @@ const Home = function () {
                             </div>
                             <small className="card-small">Playlists que você andou escutando recentimente</small>
                         </header>
-                        {data.playlist_histories.map( (playlist) => (
-                            <ComponentCardPlaylistImage
-                                key={playlist.id}
-                                prefixRoute="/playlist/"
-                                data={playlist.playlist}
-                            />
+                        {data.playlist_histories.map( (row) => (
+                            row.album_id > 0 ? (
+                                <ComponentCardPlaylistImage
+                                    key={row.id}
+                                    prefixRoute="/album/"
+                                    type="album"
+                                    data={row.album}
+                                />
+                            ) : (
+                                <ComponentCardPlaylistImage
+                                    key={row.id}
+                                    prefixRoute="/playlist/"
+                                    data={row.playlist}
+                                />
+                            )
                         ))}
                     </section>
+
+
                     {data.cards.map( (cardItem) => (
                         cardItem.playlists.length > 0 && (
                             <section key={cardItem.id} className="card gap-row-none">
                                 <header className="card-header mb-3">
                                     <div className="card-flex">
-                                        <Link to={cardItem.url} className="card-title">{cardItem.title}</Link>
-                                        { cardItem.url && (
+                                        { cardItem.url && cardItem.url !== "" ? (
+                                            <Link to={cardItem.url} className="card-title">{cardItem.title}</Link>
+                                        ) : (
+                                            <h3 className="card-title">{cardItem.title}</h3>
+                                        )}
+                                        { cardItem.url && cardItem.url && (
                                             <div className="card-options">
                                                 <Link to={cardItem.url}>{cardItem.textMore}</Link>
                                             </div>

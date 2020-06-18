@@ -13,14 +13,14 @@ import { ReactComponent as IconPlay } from "../../../assets/img/icons/play-outli
 
 import "./PlaylistImage.css"
 
-const PlaylistImage = function({ status, setStatus, player, setPlayer, ...props }) {
+const PlaylistImage = function({ status, setStatus, player, setPlayer, type = "playlist", ...props }) {
 
   function play(e, playlist_id){
     e.preventDefault();
 
     if(status && playlist_id === player.id) return setStatus(false)
 
-    setPlayer(playlist_id, "playlist")
+    setPlayer(playlist_id, type)
   }
 
 

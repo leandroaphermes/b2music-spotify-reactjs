@@ -9,16 +9,27 @@ export function set(data){
 }
 
 /** Set new value to State Player */
-export function newPlaylist(data, action){
+export function newPlaylist(data, action, type = "playlist"){
     
-    sendAction( 
-        "set-new-playlist", 
-        action, 
-        "user",
-        {
-            playlist_id: data.id
-        }
-    ).then().catch()
+    if(data.id > 0 && type === "playlist"){
+        sendAction( 
+            "set-new-playlist", 
+            action, 
+            "user",
+            {
+                playlist_id: data.id
+            }
+        ).then().catch()
+    }else if( data.id > 0 && type === "album"){
+        sendAction( 
+            "set-new-album", 
+            action, 
+            "user",
+            {
+                album_id: data.id
+            }
+        ).then().catch()
+    }
 
     return {
         type: 'SET_PLAYER_DATA',

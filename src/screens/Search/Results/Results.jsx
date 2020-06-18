@@ -77,14 +77,14 @@ export default function Results(props) {
                     <div className="card-content card-page p-0">
                         
                         { props.searchResults.playlists.data.length > 0
-                            ? props.searchResults.playlists.data.map( playlists => (
+                            ? props.searchResults.playlists.data.map( playlist => (
                                 <ComponentsUICardsResults
-                                    key={playlists.id}
-                                    href={`/playlist/${playlists.id}`}
-                                    id={playlists.id}
-                                    title={playlists.name}
-                                    img={playlists.photo_url}
-                                    description={(<Link to={playlists.owner.id}>{playlists.owner.truename}</Link>)}
+                                    key={playlist.id}
+                                    href={`/playlist/${playlist.id}`}
+                                    id={playlist.id}
+                                    title={playlist.name}
+                                    img={playlist.photo_url}
+                                    description={(<Link to={`/user/${playlist.owner.username}`}>{playlist.owner.truename}</Link>)}
                                 />
                             )) 
                             : (

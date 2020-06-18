@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 
+import { endpointTypeRouter } from '../../services/function/player'
 import api from '../../services/Api'
 import * as actionsPlayer from '../../store/actions/player'
 
@@ -88,7 +89,8 @@ import "./Player.css";
             const lastPlayerType = localStorage.getItem('last_player_type') || null
             
             if(lastPlayerID > 0 || lastPlayerType){
-                api.get(`/${lastPlayerType}/${lastPlayerID}`, {
+
+                api.get( endpointTypeRouter( lastPlayerID, lastPlayerType) , {
                     validateStatus: (s) => s === 200
                 })
                     .then( (response) => {

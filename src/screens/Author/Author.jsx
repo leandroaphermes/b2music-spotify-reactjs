@@ -119,7 +119,7 @@ const Author = function ({ status, setStatus, player, setPlayByTrack, setNewPlay
               author.tracks.map( (track, index) => (
               <div 
                 key={track.id} 
-                className={`songs-list ${player.id === parseInt(id) && player.playingIndex === index ? `active-hover` :``}`} 
+                className={`songs-list ${player.playing.id === track.id ? `active-hover` :``}`} 
                 onDoubleClick={() => handlePlayByTrack(track)}>
                 <div className="songs-list-icon">
                   <IconMusicalNotes className="songs-list-icon-notes" width="22px" height="22px" />
@@ -149,45 +149,52 @@ const Author = function ({ status, setStatus, player, setPlayByTrack, setNewPlay
             ) }
           </div>
         </section>
+        
+        { author.albums.filter( album => album.categories === 'album').length > 0 && (
+          <section className="container-author-album">
+            <h4 className="mb-1 popular-author-title ">Albums</h4>
 
-        <section className="container-author-album">
-          <h4 className="mb-1 popular-author-title ">Albums</h4>
+            <ComponentCardFullImagePlay.Container>
+              {author.albums.filter( album => album.categories === 'album')
+                .map(album => (
+                  <ComponentCardFullImagePlay.ItemImagePlay
+                    key={album.id}
+                    prefixRoute="/album/"
+                    data={album}
+                    statusPlayer={status}
+                    player={player}
+                    play={() => handlePlayByAlbum(album.id)}
+                  />
+                )
+              )}
+            </ComponentCardFullImagePlay.Container>
+          </section>
+        )}
 
-          <ComponentCardFullImagePlay.Container>
-            {author.albums.filter( album => album.categories === 'album')
-              .map(album => (
-                <ComponentCardFullImagePlay.ItemImagePlay
-                  key={album.id}
-                  prefixRoute="/album/"
-                  data={album}
-                  statusPlayer={status}
-                  player={player}
-                  play={() => handlePlayByAlbum(album.id)}
-                />
-              )
-            )}
-          </ComponentCardFullImagePlay.Container>
-        </section>
+        { author.albums.filter( album => album.categories !== 'album').length > 0 && (
+          <section className="container-author-album">
+            <h4 className="mb-1 popular-author-title ">Singles & EPs</h4>
+
+            <ComponentCardFullImagePlay.Container>
+              {author.albums.filter( album => album.categories !== 'album')
+                .map(album => (
+                  <ComponentCardFullImagePlay.ItemImagePlay
+                    key={album.id}
+                    prefixRoute="/album/"
+                    data={album}
+                    statusPlayer={status}
+                    player={player}
+                    play={() => handlePlayByAlbum(album.id)}
+                  />
+                )
+              )}
+            </ComponentCardFullImagePlay.Container>
+          </section>
+        )}
+        
 
 
-        <section className="container-author-album">
-          <h4 className="mb-1 popular-author-title ">Singles & EPs</h4>
 
-          <ComponentCardFullImagePlay.Container>
-            {author.albums.filter( album => album.categories !== 'album')
-              .map(album => (
-                <ComponentCardFullImagePlay.ItemImagePlay
-                  key={album.id}
-                  prefixRoute="/album/"
-                  data={album}
-                  statusPlayer={status}
-                  player={player}
-                  play={() => handlePlayByAlbum(album.id)}
-                />
-              )
-            )}
-          </ComponentCardFullImagePlay.Container>
-        </section>
 
       </div>
 

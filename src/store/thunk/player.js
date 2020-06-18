@@ -1,27 +1,21 @@
+import { endpointTypeRouter } from '../../services/function/player'
 import api from '../../services/Api'
 
+
 import * as actionsPlayer from '../actions/player'
+import * as actionsAlert from '../actions/alert'
 
 
 /**
  * Set new Playlist to Player
  * @param {int} id ID da playlist ou Album
- * @param {string} router playlist | album
+ * @param {string} router playlist | album | favorite
  * @param {int} [track_id] Set track init player
  */
 export function setNewPlaylist(id, router, track_id = null){
   return dispatch => {
 
-    let prefixrouter = ""
-    switch(router){
-      case "playlist" : prefixrouter = "playlists"
-        break
-      case "album" : prefixrouter = "albums"
-        break
-      default : prefixrouter = "playlists"
-    }
-
-    api.get(`/${prefixrouter}/${id}`, {
+    api.get( endpointTypeRouter(id, router), {
       validateStatus: (status) => status === 200
     })
     .then( response => {
@@ -41,14 +35,18 @@ export function setNewPlaylist(id, router, track_id = null){
         }
   
         localStorage.setItem('last_player_id', response.data.id)
-        localStorage.setItem('last_player_type', prefixrouter)
+        localStorage.setItem('last_player_type', router)
 
         dispatch( actionsPlayer.status(true));
-        dispatch( actionsPlayer.newPlaylist(data, "new-playlist-player"));
+        dispatch( actionsPlayer.newPlaylist(data, "new-playlist-player", router));
       }
     })
     .catch( dataError => {
-        console.error(`Erro de processo. Code: ${dataError.status}`)
+        dispatch( actionsAlert.set({
+          status: true,
+          type: "danger",
+          message: `Erro de processo. Code: ${dataError.status}`
+        }) )
     })
   }
 }
