@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 
@@ -27,17 +28,17 @@ const AlbumImage = function({ status, setStatus, player, setPlayer, ...props }) 
     <article className="card-container">
       <div className="d-block card-content">
         <div className="image-album">
-          <a href={`${props.prefixRoute}${props.data.id}`}>
+          <Link to={`${props.prefixRoute}${props.data.id}`}>
             <img 
               className="cover"
               src={props.data.photo_url ? props.data.photo_url : imageDefault } 
               alt={props.data.name} 
             />
-          </a>
+          </Link>
         </div>
         <div className="song-description mt-2">
           <div className="song-description-title">
-            <a href={`${props.prefixRoute}${props.data.id}`}>{props.data.name}</a>
+            <Link to={`${props.prefixRoute}${props.data.id}`}>{props.data.name}</Link>
           </div>
           <div className="song-description-body">
             <ComponentUILinkOfComma

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, memo } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import * as actionsAlert from '../../store/actions/alert'
@@ -228,7 +228,7 @@ function handleClickBtnRemoveTrack(track){
               <IconPlay className="songs-list-icon-play" width="22px" height="22px" />
             </div>
             <div className="songs-list-name">
-              <div><a href={`/album/${track.album.id}`}>{track.name}</a></div>
+              <div><Link to={`/album/${track.album.id}`}>{track.name}</Link></div>
               <div>
                 <ComponentUILinkOfComma 
                   prefixRoute="/author/"

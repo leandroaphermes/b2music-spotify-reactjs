@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import api from '../../../services/Api'
@@ -38,14 +39,14 @@ const Genres = function ({ setAlert }) {
             </header>
             {genres.map( genre => (
                 <div key={genre.id} className="card-content genre-container" style={{ backgroundColor: `#${genre.color}` }} >
-                    <a href={genre.url}>
+                    <Link to={genre.url}>
                         <div className="genre-songs">
                             <div className="genre-song-title">
                                 {genre.name}
                             </div>
                             <img className="genre-song-photo" src={photoMusic} alt="{genre.name}" />
                         </div>
-                    </a>
+                    </Link>
                 </div>
                 )
             )}

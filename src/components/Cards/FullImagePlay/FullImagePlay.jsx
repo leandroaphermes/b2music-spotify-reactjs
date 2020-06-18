@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { ReactComponent as IconPause } from '../../../assets/img/icons/pause-outline.svg'
@@ -31,7 +31,7 @@ const ItemImagePlay = function({ statusPlayer, player, ...props }) {
         className="content-card-image-play-image" 
         style={{ backgroundImage: `url(${ props.data.photo_url ? props.data.photo_url : imageDefault})` }}
       >
-        <NavLink className="content-card-image-play-image-link" to={`${props.prefixRoute}${props.data.id}`} >
+        <Link className="content-card-image-play-image-link" to={`${props.prefixRoute}${props.data.id}`} >
           <div className="content-card-image-play-image-action">
             <button 
               className="btn btn-circle btn-primary btn-shadow"
@@ -42,10 +42,10 @@ const ItemImagePlay = function({ statusPlayer, player, ...props }) {
               }
             </button>
           </div>
-        </NavLink>
+        </Link>
       </div>
       <div className="content-card-image-play-title">
-        <a href={`${props.prefixRoute}${props.data.id}`}>{props.data.name}</a>
+        <Link to={`${props.prefixRoute}${props.data.id}`}>{props.data.name}</Link>
       </div>
     </section>
   )

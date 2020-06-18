@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropType from 'prop-types'
 
 import { ReactComponent as IconUser } from '../../../../assets/img/icons/person-outline.svg'
@@ -8,7 +9,7 @@ import "./UserImage.css"
 const UserImage = function (props) {
   return (
     <article className="card-container">
-      <a href={`${props.prefixRoute}${props.data.id}`} className="d-block card-content">
+      <Link to={`${props.prefixRoute}${props.data.id}`} className="d-block card-content">
         <div className="image-album-circle">
         
           {props.data.photo_url ? (
@@ -26,7 +27,7 @@ const UserImage = function (props) {
           </div>
           <div className="song-description-body hide-text-two-lines">{props.data.description}</div>
         </div>
-      </a>
+      </Link>
     </article>
   )
 }

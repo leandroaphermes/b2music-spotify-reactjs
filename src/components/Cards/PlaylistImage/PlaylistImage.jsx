@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 
@@ -25,7 +26,7 @@ const PlaylistImage = function({ status, setStatus, player, setPlayer, ...props 
 
   return (
     <article className="card-container">
-      <a href={`${props.prefixRoute}${props.data.id}`} className="d-block card-content">
+      <Link to={`${props.prefixRoute}${props.data.id}`} className="d-block card-content">
         <div className="image-album">
           <img 
             className="cover"
@@ -44,7 +45,7 @@ const PlaylistImage = function({ status, setStatus, player, setPlayer, ...props 
             {(status && props.data.id === player.id) ? <IconPause /> : <IconPlay />}
           </button>
         </div>
-      </a>
+      </Link>
     </article>
   )
 }

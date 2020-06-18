@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import ComponentsUICardsResults from '../../../components/UI/Cards/Results/Results'
 
@@ -12,7 +13,7 @@ export default function Results(props) {
         authorsResult = authors.map( (author, index) =>
             <span key={author.id}>
                 {index > 0 && ', '}
-                <a href={`/author/${author.id}`}>{author.name}</a>
+                <Link to={`/author/${author.id}`}>{author.name}</Link>
             </span>
         )
         return authorsResult
@@ -27,11 +28,11 @@ export default function Results(props) {
                     <header className="card-header">
                         <div className="card-flex">
                             <div className="card-title">
-                                <a href={`/search/${props.search}/tracks`}>Musicas</a>
+                                <Link to={`/search/${props.search}/tracks`}>Musicas</Link>
                             </div>
                             <div className="card-options">
                                 { props.searchResults.tracks.total > 5 && (
-                                    <a href={`/search/${props.search}/tracks`}>Mostrar mais</a>
+                                    <Link to={`/search/${props.search}/tracks`}>Mostrar mais</Link>
                                 )}
                             </div>
                         </div>
@@ -64,11 +65,11 @@ export default function Results(props) {
                     <header className="card-header">
                         <div className="card-flex">
                             <div className="card-title">
-                                <a href={`/search/${props.search}/playlists`}>Playlists</a>
+                                <Link to={`/search/${props.search}/playlists`}>Playlists</Link>
                             </div>
                             <div className="card-options">
                                 { props.searchResults.playlists.total > 5 && (
-                                    <a href={`/search/${props.search}/playlists`}>Mostrar mais</a>
+                                    <Link to={`/search/${props.search}/playlists`}>Mostrar mais</Link>
                                 )}
                             </div>
                         </div>
@@ -83,7 +84,7 @@ export default function Results(props) {
                                     id={playlists.id}
                                     title={playlists.name}
                                     img={playlists.photo_url}
-                                    description={(<a href={playlists.owner.id}>{playlists.owner.truename}</a>)}
+                                    description={(<Link to={playlists.owner.id}>{playlists.owner.truename}</Link>)}
                                 />
                             )) 
                             : (
@@ -101,11 +102,11 @@ export default function Results(props) {
                     <header className="card-header">
                         <div className="card-flex">
                             <div className="card-title">
-                                <a href={`/search/${props.search}/authors`}>Autores</a>
+                                <Link to={`/search/${props.search}/authors`}>Autores</Link>
                             </div>
                             <div className="card-options">
                                 { props.searchResults.authors.total > 5 && (
-                                    <a href={`/search/${props.search}/authors`}>Mostrar mais</a>
+                                    <Link to={`/search/${props.search}/authors`}>Mostrar mais</Link>
                                 )}
                             </div>
                         </div>
@@ -138,11 +139,11 @@ export default function Results(props) {
                     <header className="card-header">
                         <div className="card-flex">
                             <div className="card-title">
-                                <a href={`/search/${props.search}/albums`}>Albums</a>
+                                <Link to={`/search/${props.search}/albums`}>Albums</Link>
                             </div>
                             <div className="card-options">
                                 { props.searchResults.albums.total > 5 && (
-                                    <a href={`/search/${props.search}/albums`}>Mostrar mais</a>
+                                    <Link to={`/search/${props.search}/albums`}>Mostrar mais</Link>
                                 )}
                             </div>
                         </div>
@@ -175,11 +176,11 @@ export default function Results(props) {
                     <header className="card-header">
                         <div className="card-flex">
                             <div className="card-title">
-                                <a href={`/search/${props.search}/users`}>Usuarios</a>
+                                <Link to={`/search/${props.search}/users`}>Usuarios</Link>
                             </div>
                             <div className="card-options">
                                 { props.searchResults.users.total > 5 && (
-                                    <a href={`/search/${props.search}/users`}>Mostrar mais</a>
+                                    <Link to={`/search/${props.search}/users`}>Mostrar mais</Link>
                                 )}
                             </div>
                         </div>

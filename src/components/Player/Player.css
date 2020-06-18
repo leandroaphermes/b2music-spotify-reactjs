@@ -5,6 +5,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 1fr;
+  box-shadow: 0px 7px 20px 0px #000;
 }
 
 .grid-text-center {

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+
 import api from '../../services/Api'
 
 import ComponentCardPlaylistImage from '../../components/Cards/PlaylistImage/PlaylistImage'
@@ -27,13 +29,13 @@ const Home = function () {
         <div>
             { isLoaded ? (
                 <div>
-                <section className="card gap-row-none">
-                    <header className="card-header mb-3">
-                        <div className="card-flex">
-                            <h3 className="card-title">Tocado recentemente</h3>
-                        </div>
-                        <small className="card-small">Playlists que você andou escutando recentimente</small>
-                    </header>
+                    <section className="card gap-row-none">
+                        <header className="card-header mb-3">
+                            <div className="card-flex">
+                                <h3 className="card-title">Tocado recentemente</h3>
+                            </div>
+                            <small className="card-small">Playlists que você andou escutando recentimente</small>
+                        </header>
                         {data.playlist_histories.map( (playlist) => (
                             <ComponentCardPlaylistImage
                                 key={playlist.id}
@@ -41,34 +43,34 @@ const Home = function () {
                                 data={playlist.playlist}
                             />
                         ))}
-                </section>
-                {data.cards.map( (cardItem) => (
-                    cardItem.playlists.length > 0 && (
-                        <section key={cardItem.id} className="card gap-row-none">
-                            <header className="card-header mb-3">
-                                <div className="card-flex">
-                                    <a href={cardItem.url} className="card-title">{cardItem.title}</a>
-                                    { cardItem.url && (
-                                        <div className="card-options">
-                                            <a href={cardItem.url}>{cardItem.textMore}</a>
-                                        </div>
-                                    )}
-                                    
-                                </div>
-                                <small className="card-small">{cardItem.description}</small>
-                            </header>
-                                {cardItem.playlists.map( (playlist) => (
+                    </section>
+                    {data.cards.map( (cardItem) => (
+                        cardItem.playlists.length > 0 && (
+                            <section key={cardItem.id} className="card gap-row-none">
+                                <header className="card-header mb-3">
+                                    <div className="card-flex">
+                                        <Link to={cardItem.url} className="card-title">{cardItem.title}</Link>
+                                        { cardItem.url && (
+                                            <div className="card-options">
+                                                <Link to={cardItem.url}>{cardItem.textMore}</Link>
+                                            </div>
+                                        )}
+                                        
+                                    </div>
+                                    <small className="card-small">{cardItem.description}</small>
+                                </header>
+                                    {cardItem.playlists.map( (playlist) => (
 
-                                    <ComponentCardPlaylistImage
-                                        key={playlist.id}
-                                        prefixRoute="/playlist/"
-                                        data={playlist}
-                                    />
-                                )
-                                )}
-                        </section>
-                    )
-                ))}
+                                        <ComponentCardPlaylistImage
+                                            key={playlist.id}
+                                            prefixRoute="/playlist/"
+                                            data={playlist}
+                                        />
+                                    )
+                                    )}
+                            </section>
+                        )
+                    ))}
                 </div>
             ): (
                 <ComponentUILoading />

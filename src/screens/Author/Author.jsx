@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import * as actionsAlert from '../../store/actions/alert'
@@ -130,7 +130,7 @@ const Author = function ({ status, setStatus, player, setPlayByTrack, setNewPlay
                     <img className="cover" src={track.album.photo_url} alt={`Imagem da musica ${track.title}`} />
                   </div>
                   <div className="ml-2 author-track-popular-title">
-                    <a href={`/album/${track.album.id}`}>{track.name}</a>
+                    <Link to={`/album/${track.album.id}`}>{track.name}</Link>
                   </div>
                 </div>
                 <div className="songs-list-time py-3 pt-1">

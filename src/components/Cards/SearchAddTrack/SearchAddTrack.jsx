@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import PropsTypes from 'prop-types'
 
 import api from '../../../services/Api'
@@ -71,7 +72,7 @@ const SearchAddTrack = function (props) {
                 <IconPlay className="songs-list-icon-play" width="22px" height="22px" />
               </div>
               <div className="songs-list-name">
-              <div><a href={`/album/${track.id}`}>{track.name}</a></div>
+              <div><Link to={`/album/${track.id}`}>{track.name}</Link></div>
                 <div>
                   <ComponentUILinkOfComma 
                     prefixRoute="/author/"

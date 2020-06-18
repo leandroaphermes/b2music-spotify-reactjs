@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import "./Results.css"
@@ -12,7 +13,7 @@ const Results =  function(props) {
       </div>
       <div className="card-results-details">
         {props.href ? (
-          <a href={props.href}><h3>{props.title}</h3></a>
+          <Link to={props.href}><h3>{props.title}</h3></Link>
         ) : (
           <h3>{props.title}</h3>
         )}

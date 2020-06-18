@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import moment from 'moment'
 
@@ -123,11 +123,11 @@ const Album = function ({ status, setStatus, player, setPlayByTrack, setNewPlayl
                   </ComponentUIDropdown>
                 </div>
                 <div className="favorite-info">
-                  <a 
-                    href={`/author/${album.author.id}`} 
+                  <Link 
+                    to={`/author/${album.author.id}`} 
                     className="favorite-owner"
                   >{album.author.name}
-                  </a>
+                  </Link>
                   <span className="ml-2">{album.tracks.length} músicas</span>
                   <span className="ml-2">Lançamento: {moment(album.releasedt).format('DD MMM YYYY') }</span>
                 </div>
@@ -154,7 +154,7 @@ const Album = function ({ status, setStatus, player, setPlayByTrack, setNewPlayl
               <IconPlay className="songs-list-icon-play" width="22px" height="22px" />
             </div>
             <div className="songs-list-name">
-              <div><a href={`/album/${track.album.id}`}>{track.name}</a></div>
+              <div><Link to={`/album/${track.album.id}`}>{track.name}</Link></div>
               <div>
                 <ComponentUILinkOfComma 
                   prefixRoute="/author/"

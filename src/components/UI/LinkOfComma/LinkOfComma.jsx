@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import PropsTypes from 'prop-types'
 
 const LinkOfComma = function({ data, prefixRoute }) {
@@ -7,7 +8,7 @@ const LinkOfComma = function({ data, prefixRoute }) {
       { data.map( (item, index) => (
           <Fragment key={item.id}>
               {index > 0 && ', '}
-              <a href={`${prefixRoute}${item.id}`}>{item.name}</a>
+              <Link to={`${prefixRoute}${item.id}`}>{item.name}</Link>
           </Fragment>
         )
       )}
