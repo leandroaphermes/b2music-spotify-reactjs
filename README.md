@@ -2,7 +2,7 @@
 Projeto para estudar o ReactJS com HTML e CSS projeto feito do zero sem frameworks
 
 ## Requerimentos
-Essse projeto tem [back-end](https://github.com/leandroaphermes/b2music-spotify-reactjs-backend) que faz a parte.
+Esse projeto tem [back-end](https://github.com/leandroaphermes/b2music-spotify-reactjs-backend) que faz a parte.
 
 
 ## Install
@@ -21,4 +21,4 @@ yarn start
 ### Start
 Projeto iniciado em 19/03/2020
 
-Produzido em Live Stream Twitch.tv/hamaro
+Produzido em Live Stream [twitch.tv/hamaro](https://twitch.tv/hamaro)
