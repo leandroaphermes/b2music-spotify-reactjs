@@ -2,7 +2,7 @@
 Projeto para estudar o ReactJS com HTML e CSS projeto feito do zero sem frameworks
 
 ## Requerimentos
-Essse projeto tem duas partes [back-end](https://github.com/leandroaphermes/b2music-spotify-reactjs-backend)
+Essse projeto tem [back-end](https://github.com/leandroaphermes/b2music-spotify-reactjs-backend) que faz a parte.
 
 
 ## Install
