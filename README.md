@@ -1,6 +1,8 @@
 # Spotify Clone em ReactJS
 Projeto para estudar o ReactJS com HTML e CSS projeto feito do zero sem frameworks
 
+[![Vídeo demostração Spotify Clone](http://img.youtube.com/vi/LnjUTe6SzVM/0.jpg)](http://www.youtube.com/watch?v=LnjUTe6SzVM "Vídeo demostração Spotify Clone")
+
 ## Requerimentos
 Esse projeto tem [back-end](https://github.com/leandroaphermes/b2music-spotify-reactjs-backend) que faz a parte.
 
