@@ -22,6 +22,7 @@ export function setNewPlaylist(id, router, track_id = null){
       if(response.data.tracks.length > 0){
         const data = {
             id: response.data.id,
+            type_list: router,
             playingIndex: 0,
             playing: { },
             playlist: response.data.tracks

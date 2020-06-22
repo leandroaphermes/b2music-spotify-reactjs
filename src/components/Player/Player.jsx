@@ -18,7 +18,7 @@ import "./Player.css";
     const [isLoaded, setIsLoaded] = useState(0);
     const [audio] = useState(new Audio())
 
-    const [random, setRandom] = useState(false);
+    const [shuffle, setShuffle] = useState(false);
     const [repeat, setRepeat] = useState(false);
 
     const [mouseUpProgress, setMouseUpProgress] = useState(false);
@@ -49,7 +49,7 @@ import "./Player.css";
             playingIndex: 0,
             playing: player.playlist[0],
         }
-        if(random){
+        if(shuffle){
             let rand = parseInt(Math.random() * ((Object.keys(player.playlist).length - 1) - 0) + 0);
 
             if(rand === player.playingIndex) rand++;
@@ -97,6 +97,7 @@ import "./Player.css";
                         
                         const data = {
                             id: response.data.id,
+                            type_list: lastPlayerType,
                             playingIndex: 0,
                             playing: { },
                             playlist: response.data.tracks
@@ -203,10 +204,12 @@ import "./Player.css";
                         onMouseUp={ e => onMouseProgress(e, false)}
 
                         nextSong={() => next()}
+                        nextSongButton={ !player.playlist.length }
                         backSong={() => back()}
+                        backSongButton={ player.playingIndex === 0 }
 
-                        random={random}
-                        randomOnClick={() => setRandom(!random)}
+                        shuffle={shuffle}
+                        onClickShuffle={() => setShuffle(!shuffle)}
                         repeat={repeat}
                         repeatOnClick={() => setRepeat(!repeat)}
 

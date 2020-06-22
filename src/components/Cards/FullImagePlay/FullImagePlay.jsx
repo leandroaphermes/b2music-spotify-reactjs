@@ -36,7 +36,7 @@ const ItemImagePlay = function({ statusPlayer, player, ...props }) {
             <button 
               className="btn btn-circle btn-primary btn-shadow"
               onClick={handleClickPlay}
-            > { player.id === props.data.id && statusPlayer ? 
+            > { player.id === props.data.id && statusPlayer && player.type_list === 'album' ? 
                 <IconPause width="46px" height="46px" /> 
                 : <IconPlay width="46px" height="46px" />
               }

@@ -18,7 +18,7 @@ const PlaylistImage = function({ status, setStatus, player, setPlayer, type = "p
   function play(e, playlist_id){
     e.preventDefault();
 
-    if(status && playlist_id === player.id) return setStatus(false)
+    if(status && playlist_id === player.id && player.type_list === type) return setStatus(false)
 
     setPlayer(playlist_id, type)
   }
@@ -42,7 +42,7 @@ const PlaylistImage = function({ status, setStatus, player, setPlayer, type = "p
         </div>
         <div className="song-player">
           <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, props.data.id)}>
-            {(status && props.data.id === player.id) ? <IconPause /> : <IconPlay />}
+            {(status && props.data.id === player.id && player.type_list === type) ? <IconPause /> : <IconPlay />}
           </button>
         </div>
       </Link>
@@ -53,6 +53,7 @@ const PlaylistImage = function({ status, setStatus, player, setPlayer, type = "p
 PlaylistImage.propTypes = {
   prefixRoute: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
+  type: PropTypes.oneOf([ "playlist", "album" ])
 }
 
 const mapStateToProps = state => ({

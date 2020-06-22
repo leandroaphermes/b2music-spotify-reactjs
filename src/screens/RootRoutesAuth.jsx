@@ -21,6 +21,7 @@ import ScreenFavorite from './Favorite/Favorite'
 import ScreenPlaylist from './Playlist/Playlist'
 import ScreenAlbum from './Album/Album'
 import ScreenAuthor from './Author/Author'
+import ScreenGenreShow from './GenreShow/GenreShow'
 
 /* Errors Pages */
 import ScreenInternalError from './Errors/Internal/Internal'
@@ -45,6 +46,9 @@ const RootRoutesAuth = function ({ session, setSession }) {
                     {/* Search */}
                     <Route exact path="/search" component={ScreenSearch} />
                     <Route exact path="/search/:searchUrl" component={ScreenSearch} />
+
+                    {/* Genres Show */}
+                    <Route exact path="/genre/:genre_url" component={ScreenGenreShow} />
 
                     {/* MyLibrary */}
                     <Route exact path="/my-library/playlists" component={ScreenMyLibraryPlaylists} />

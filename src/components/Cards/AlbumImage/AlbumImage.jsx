@@ -19,7 +19,7 @@ const AlbumImage = function({ status, setStatus, player, setPlayer, ...props }) 
   function play(e, album_id){
     e.preventDefault();
 
-    if(status && album_id === player.id) return setStatus(false)
+    if(status && album_id === player.id && player.type_list === 'album') return setStatus(false)
     
     setPlayer(album_id, "album")
   }
@@ -49,7 +49,7 @@ const AlbumImage = function({ status, setStatus, player, setPlayer, ...props }) 
         </div>
         <div className="song-player">
           <button className="btn btn-primary btn-circle btn-shadow" onClick={(e) => play(e, props.data.id)}>
-            {(status && props.data.id === player.id) ? <IconPause /> : <IconPlay />}
+            {(status && props.data.id === player.id && player.type_list === 'album') ? <IconPause /> : <IconPlay />}
           </button>
         </div>
       </div>

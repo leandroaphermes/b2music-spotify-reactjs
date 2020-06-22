@@ -39,7 +39,7 @@ const Genres = function ({ setAlert }) {
             </header>
             {genres.map( genre => (
                 <div key={genre.id} className="card-content genre-container" style={{ backgroundColor: `#${genre.color}` }} >
-                    <Link to={genre.url}>
+                    <Link to={`/genre/${genre.url}`}>
                         <div className="genre-songs">
                             <div className="genre-song-title">
                                 {genre.name}

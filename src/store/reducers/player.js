@@ -2,6 +2,7 @@ const INITIAL_STATE = {
     status: false,
     player: {
         id: 0,
+        type_list: null,
         playingIndex: 0,
         playing: {},
         playlist: [ ]

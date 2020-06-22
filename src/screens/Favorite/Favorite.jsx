@@ -30,7 +30,7 @@ const Favorite = function ({ status, setStatus, player, setPlayByTrack, setNewPl
   /* Player */
   function handlePlayAlbum(){
         
-    if(player.id === 0) return setStatus(!status)
+    if(player.type_list === 'favorite') return setStatus(!status)
 
     setNewPlaylist( 0, "favorite")
   }

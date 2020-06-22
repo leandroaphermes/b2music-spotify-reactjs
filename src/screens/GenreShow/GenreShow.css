@@ -1,0 +1,8 @@
+.content-genre-show-header {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+}
+.content-genre-show-header h2 {
+  font-size: 72px;
+}
