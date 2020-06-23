@@ -5,7 +5,6 @@ div.dropdown {
 }
 div.dropdown div.dropdown-menu {
   position: absolute;
-  display: none;
   background-color: var(--box-primary-dark);
   border-radius: 5px;
   min-width: 230px;
@@ -29,7 +28,7 @@ div.dropdown div.dropdown-menu.drop-left {
   right: 0;
 }
 
-div.dropdown:hover div.dropdown-menu {
+div.dropdown-menu {
   display: block;
   padding: 15px;
   font-size: 16px;

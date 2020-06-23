@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import api from '../../services/Api'
 
 import ComponentCardPlaylistImage from '../../components/Cards/PlaylistImage/PlaylistImage'
+import ComponentCardsAlbumImage from '../../components/Cards/AlbumImage/AlbumImage'
 import ComponentUILoading from '../../components/UI/Loading/Loading';
 
 import "./Home.css";
@@ -37,10 +38,9 @@ const Home = function () {
                     </header>
                     {data.playlist_histories.map( (row) => (
                         row.album_id > 0 ? (
-                            <ComponentCardPlaylistImage
+                            <ComponentCardsAlbumImage
                                 key={row.id}
                                 prefixRoute="/album/"
-                                type="album"
                                 data={row.album}
                             />
                         ) : (

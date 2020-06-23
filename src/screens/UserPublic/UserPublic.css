@@ -1,0 +1,43 @@
+.content-user-header{
+  display: flex;
+  margin-bottom: 25px;
+}
+.content-user-header-title {
+  flex: 1;
+  padding-left: 15px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding-bottom: 5px;
+}
+.content-user-header-photo{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.content-user-header-photo-svg {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  padding-left: 15px;
+  padding-right: 15px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+.content-user-header-title > h2 {
+  font-size: 62px;
+  color: var(--text-primary-white);
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+.content-user-header-title > span {
+  text-transform: uppercase;
+}
+
+.content-user-header-title-info {
+  font-size: 16px;
+}
+.content-user-header-title-info > small {
+  margin-right: 20px;
+}

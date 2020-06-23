@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom'
 
 import api from '../../services/Api'
 
-import ComponentCardsPlaylistImage from '../../components/Cards/PlaylistImage/PlaylistImage'
+import ComponentCardsAlbumImage from '../../components/Cards/AlbumImage/AlbumImage'
 
 import "./GenreShow.css"
 
@@ -20,7 +20,7 @@ export default function GenreShow() {
   
 
   useEffect(() => {
-   if(genre_url && genre_url.length > 3){
+   if(genre_url && genre_url.length > 2){
      
     api.get(`/genres/${genre_url}`, {
       validateStatus: s => s === 200
@@ -50,7 +50,7 @@ export default function GenreShow() {
           </header> 
             
             {data.albums.map( albums => (
-              <ComponentCardsPlaylistImage
+              <ComponentCardsAlbumImage
                 key={albums.id}
                 prefixRoute="/album/"
                 data={albums}

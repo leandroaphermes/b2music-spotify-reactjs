@@ -1,0 +1,36 @@
+.container-profile {
+  display: flex;
+  margin-bottom: 40px;
+}
+.container-profile-photo {
+  width: 200px;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 0.103);
+  border-radius: 50%;
+}
+
+.container-profile-photo-upload-hover {
+  width: 200px;
+  height: 200px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.616);
+  color: var(--text-primary-white);
+}
+
+.container-profile-photo:hover .container-profile-photo-upload-hover{
+  display: flex;
+}
+.container-profile-title {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 15px;
+}
+.container-profile-title h2 {
+  font-size: 32px;
+  color: var(--text-primary-white);
+}

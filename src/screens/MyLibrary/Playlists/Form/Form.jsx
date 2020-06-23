@@ -167,7 +167,7 @@ const Form = function ({ setAlert }) {
             } : { }}
             onClick={() => refInputFile.current.click()}
           >
-            { !urlImagem &&  (
+            { !urlImagem && (
               <div className="playlist-form-add-picture-label">
                 <IconMusicTon width="60" height="60" />
                 <span>Escolher Imagem</span>

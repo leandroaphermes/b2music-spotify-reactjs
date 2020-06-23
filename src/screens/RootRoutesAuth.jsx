@@ -22,6 +22,7 @@ import ScreenPlaylist from './Playlist/Playlist'
 import ScreenAlbum from './Album/Album'
 import ScreenAuthor from './Author/Author'
 import ScreenGenreShow from './GenreShow/GenreShow'
+import ScreenUserPublic from './UserPublic/UserPublic'
 
 /* Errors Pages */
 import ScreenInternalError from './Errors/Internal/Internal'
@@ -66,6 +67,10 @@ const RootRoutesAuth = function ({ session, setSession }) {
 
                     <Route exact path="/favorite" component={ScreenFavorite} />
                     <Route exact path="/profile" component={ScreenProfile} />
+                    {/* Profile Show */}
+                    <Route exact path="/user/:username" component={ScreenUserPublic} />
+                    
+                    {/* Errors Pages */}
                     <Route exact path="/internal-error" component={ScreenInternalError} />
                     <Route exact path="/notfound-error" component={ScreenNotFoundError} />
                 </main>
