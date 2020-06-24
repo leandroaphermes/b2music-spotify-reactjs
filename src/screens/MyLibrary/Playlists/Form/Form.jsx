@@ -146,8 +146,7 @@ const Form = function ({ setAlert }) {
       <input 
         type="file" 
         className="hide"
-        name="file-image" 
-        id="file-image" 
+        name="file-image"
         accept={UPLOAD_IMG_MINETYPES.join(", ")}
         ref={refInputFile}
         onChange={e => handleFileImage(e.target.files)}

@@ -37,8 +37,8 @@ export default function UserPublic() {
   return (
     <div className="container-user-public">
       <div className="content-user-header">
-        { data.photo_img ? (
-          <img className="content-user-header-photo shadow" src={data.photo_img} alt=""/>
+        { data.photo_url ? (
+          <img className="content-user-header-photo shadow" src={data.photo_url} alt=""/>
         ) : (
           <IconUserDefault className="content-user-header-photo-svg" />
         )}

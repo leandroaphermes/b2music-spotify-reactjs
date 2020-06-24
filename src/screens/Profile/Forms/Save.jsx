@@ -161,7 +161,9 @@ const Save = function ({ setAlert, session, setSession }) {
 
         async function setDataForm(){
                 
-            const response = await api.get("/utils/global/countrys")
+            const response = await api.get("/utils/global/countrys", {
+                validateStatus: s => s === 200
+            })
             setContentCountrys(response.data)
 
             const responseUser = await api.get("/me")
@@ -209,7 +211,8 @@ const Save = function ({ setAlert, session, setSession }) {
                     placeholder="Nome de usuario"
                     minLength="4"
                     maxLength="32"
-                    disabled="true"
+                    disabled
+                    readOnly
                 />
             </div>
 
@@ -224,7 +227,8 @@ const Save = function ({ setAlert, session, setSession }) {
                     placeholder="Email"
                     minLength="6"
                     maxLength="64"
-                    disabled="true"
+                    disabled
+                    readOnly
                 />
             </div>
 

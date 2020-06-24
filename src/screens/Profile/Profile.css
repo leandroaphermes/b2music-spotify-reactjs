@@ -3,6 +3,7 @@
   margin-bottom: 40px;
 }
 .container-profile-photo {
+  position: relative;
   width: 200px;
   height: 200px;
   background-color: rgba(255, 255, 255, 0.103);
@@ -18,6 +19,8 @@
   align-items: center;
   background-color: rgba(0, 0, 0, 0.616);
   color: var(--text-primary-white);
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .container-profile-photo:hover .container-profile-photo-upload-hover{
@@ -33,4 +36,24 @@
 .container-profile-title h2 {
   font-size: 32px;
   color: var(--text-primary-white);
+}
+
+.btn-upload-save {
+  position: absolute;
+  bottom: -20px;
+  transform: translateX(25%);
+}
+
+.container-profile-photo > .progress-fill {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  max-width: 200px;
+}
+
+@media screen and (max-width: 800px) {
+  .container-profile {
+    flex-direction: column;
+    align-items: center;
+  }
 }
