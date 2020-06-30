@@ -188,12 +188,12 @@ export default function Results(props) {
                     <div className="card-content card-page p-0">
                         
                         { props.searchResults.users.data.length > 0
-                            ? props.searchResults.users.data.map( users => (
+                            ? props.searchResults.users.data.map( user => (
                                 <ComponentsUICardsResults
-                                    key={users.id}
-                                    href={`/users/${users.id}`}
-                                    id={users.id}
-                                    title={users.truename}
+                                    key={user.id}
+                                    href={`/user/${user.username}`}
+                                    id={user.id}
+                                    title={user.truename}
                                     svg={<IconUserDefault width="40" height="40" />}
                                     description="Usuario"
                                 />

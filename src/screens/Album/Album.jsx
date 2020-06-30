@@ -7,18 +7,16 @@ import * as actionsAlert from '../../store/actions/alert'
 import * as actionsPlayer from '../../store/actions/player'
 import * as actionsThunkPlayer from '../../store/thunk/player'
 import api from '../../services/Api'
-import { secondsToMinutos } from '../../utils/utils'
 
 /* Components Funcional */
 import ComponentButtonsFavorite from '../../components/Buttons/Favorite/Favorite'
 
 /* Components Generico */
-import ComponentUILinkOfComma from '../../components/UI/LinkOfComma/LinkOfComma'
+import ComponentUISongListMinute from '../../components/UI/SongListMinute/SongListMinute'
 import ComponentUIDropdown from '../../components/UI/Dropdown/Dropdown'
 
 import imageDefault from '../../assets/img/music/default.jpg'
 import { ReactComponent as IconEllipsis } from '../../assets/img/icons/ellipsis-vertical-outline.svg'
-import { ReactComponent as IconMusicalNotes } from '../../assets/img/icons/musical-notes-outline.svg'
 import { ReactComponent as IconPause } from '../../assets/img/icons/pause-outline.svg'
 import { ReactComponent as IconPlay } from '../../assets/img/icons/play-outline.svg'
 
@@ -145,31 +143,15 @@ const Album = function ({ status, setStatus, player, setPlayByTrack, setNewPlayl
         
         { album.tracks.length ? (
           album.tracks.map( (track, index) => (
-          <div 
-            key={track.id} 
-            className={`songs-list ${player.id === parseInt(id) && player.playingIndex === index ? `active-hover` :``}`} 
-            onDoubleClick={()=>handlePlayByTrack(track.id)}>
-            <div className="songs-list-icon">
-              <IconMusicalNotes className="songs-list-icon-notes" width="22px" height="22px" />
-              <IconPlay className="songs-list-icon-play" width="22px" height="22px" />
-            </div>
-            <div className="songs-list-name">
-              <div><Link to={`/album/${track.album.id}`}>{track.name}</Link></div>
-              <div>
-                <ComponentUILinkOfComma 
-                  prefixRoute="/author/"
-                  data={track.authors}
-                />
-              </div>
-            </div>
-            <div className="songs-list-time py-3 pt-1">
-              <ComponentButtonsFavorite
-                type="track"
-                dataID={track.id}
-              />
-              <span className="ml-2">{secondsToMinutos(track.duration)}</span>
-            </div>
-          </div>
+            <ComponentUISongListMinute
+              key={track.id}
+              idplayer={id}
+              type_list="album"
+              track={track}
+              index={index}
+              player={player}
+              handleDoubleClick={handlePlayByTrack}
+           />
         ))
         ) : (
           <div className="text-center">

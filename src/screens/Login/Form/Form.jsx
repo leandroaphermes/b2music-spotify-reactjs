@@ -29,13 +29,20 @@ const Form = function ({ setAlert, setSession }) {
             email,
             password
         },{
-            validateStatus: (status) => status === 200
+            validateStatus: (s) => s === 200
         })
         .then( response => {
 
             setSessionToken(response.data.token)
             setSession(response.data)
             
+            setAlert({
+                status: false,
+                type: "success",
+                message: "",
+                float: true
+            })
+
             history.push('/')
         })
         .catch( dataError => {

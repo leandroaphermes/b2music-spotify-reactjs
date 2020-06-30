@@ -16,11 +16,11 @@ const Playlists = function () {
 	const [data, setData] = useState([])
 
 	useEffect(() => {
-			api.get("/me/playlists")
+			api.get("/me/playlists", {
+				validateStatus: s => s === 200
+			})
 			.then( response => {
-					if(response.status === 200){
-							setData(response.data);
-					}
+				setData(response.data);
 			})
 			.catch();
 	}, [])

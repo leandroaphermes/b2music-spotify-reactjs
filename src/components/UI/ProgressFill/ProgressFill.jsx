@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import "./ProgressFill.css"
@@ -14,7 +14,8 @@ function ProgressFill({ complete, value }) {
 }
 
 ProgressFill.propTypes = {
-
+  value: PropTypes.number.isRequired,
+  complete: PropTypes.string
 }
 
 export default ProgressFill

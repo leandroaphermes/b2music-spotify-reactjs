@@ -62,7 +62,7 @@ export default function UserPublic() {
           {data.playlists.map( playlist => (
             <ComponentCardsPlaylistsImage
               key={playlist.id}
-              prefixRoute="/playlists/"
+              prefixRoute="/playlist/"
               data={playlist}
             />
             )

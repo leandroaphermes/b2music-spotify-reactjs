@@ -7,7 +7,7 @@ import store from '../store/store'
 /* Pages */
 import RootRoutesAuth from './RootRoutesAuth'
 import ScreenLogin from "./Login/Login";
-import ScreenLogout from "./Logout/Logout.jsx";
+import ScreenLogout from "./Logout/Logout";
 
 
 const Routes = function() {

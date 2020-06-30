@@ -41,3 +41,10 @@
 .content-user-header-title-info > small {
   margin-right: 20px;
 }
+
+@media screen and (max-width: 800px) {
+  .content-user-header {
+    flex-direction: column;
+    align-items: center;
+  }
+}

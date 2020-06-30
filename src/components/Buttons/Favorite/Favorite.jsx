@@ -82,10 +82,10 @@ function Favorite({ setAlert, ...props }) {
             </>
           )
         : (
-          <>
-            <IconHeartLike className="svg-fill-current favorite-disable" width="32px" height="32px" />
-            <IconHeartLikeOutline className="svg-fill-current favorite-active " width="32px" height="32px" />
-          </>
+            <>
+              <IconHeartLike className="svg-fill-current favorite-disable" width="32px" height="32px" />
+              <IconHeartLikeOutline className="svg-fill-current favorite-active " width="32px" height="32px" />
+            </>
         )
       }
     </button>

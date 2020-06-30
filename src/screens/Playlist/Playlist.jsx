@@ -1,5 +1,5 @@
 import React, { useState, useEffect, memo } from 'react'
-import { useParams, useHistory, Link } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import * as actionsAlert from '../../store/actions/alert'
@@ -7,7 +7,6 @@ import * as actionsPlayer from '../../store/actions/player'
 import * as actionsThunkPlayer from '../../store/thunk/player'
 import { removeTrackInPlaylist } from '../../services/function/playlist'
 import api from '../../services/Api'
-import { secondsToMinutos } from '../../utils/utils'
 
 /* Components Funcional */
 import ComponentButtonsFavorite from '../../components/Buttons/Favorite/Favorite'
@@ -15,13 +14,12 @@ import ComponentCardsSearchAddTrack from '../../components/Cards/SearchAddTrack/
 import Form from './Form/Form'
 
 /* Components Generico */
-import ComponentUILinkOfComma from '../../components/UI/LinkOfComma/LinkOfComma'
+import ComponentUISongListMinute from '../../components/UI/SongListMinute/SongListMinute'
 import ComponentUIDropdown from '../../components/UI/Dropdown/Dropdown'
 import ComponentUIModal from '../../components/UI/Modal/Modal'
 
 import imageDefault from '../../assets/img/music/default.jpg'
 import { ReactComponent as IconEllipsis } from '../../assets/img/icons/ellipsis-vertical-outline.svg'
-import { ReactComponent as IconMusicalNotes } from '../../assets/img/icons/musical-notes-outline.svg'
 import { ReactComponent as IconPause } from '../../assets/img/icons/pause-outline.svg'
 import { ReactComponent as IconPlay } from '../../assets/img/icons/play-outline.svg'
 
@@ -219,41 +217,25 @@ function handleClickBtnRemoveTrack(track){
         
         { playlist.tracks.length ? (
           playlist.tracks.map( (track, index) => (
-          <div 
-            key={track.id} 
-            className={`songs-list ${player.id === parseInt(id) && player.playingIndex === index ? `active-hover` :``}`} 
-            onDoubleClick={()=>handlePlayByTrack(track.id)}>
-            <div className="songs-list-icon">
-              <IconMusicalNotes className="songs-list-icon-notes" width="22px" height="22px" />
-              <IconPlay className="songs-list-icon-play" width="22px" height="22px" />
-            </div>
-            <div className="songs-list-name">
-              <div><Link to={`/album/${track.album.id}`}>{track.name}</Link></div>
-              <div>
-                <ComponentUILinkOfComma 
-                  prefixRoute="/author/"
-                  data={track.authors}
-                />
-              </div>
-            </div>
-            <div className="songs-list-time py-3 pt-1">
-              <ComponentButtonsFavorite 
-                type="track"
-                dataID={track.id}
-              />
-              <ComponentUIDropdown
-                button={<IconEllipsis width="22px" height="22px" />}
-                buttonSize="sm"
-                dropDirection="left"
-              >
-                <ul>
-                  <li className="item-list" onClick={() => handleClickBtnRemoveTrack(track)}>Remover da playlist</li>
-                </ul>
-              </ComponentUIDropdown>
-
-              {secondsToMinutos(track.duration)}
-            </div>
-          </div>
+          <ComponentUISongListMinute
+           key={track.id}
+           idplayer={id}
+           type_list="playlist"
+           track={track}
+           index={index}
+           player={player}
+           handleDoubleClick={handlePlayByTrack}
+          >
+            <ComponentUIDropdown
+              button={<IconEllipsis width="22px" height="22px" />}
+              buttonSize="sm"
+              dropDirection="left"
+            >
+              <ul>
+                <li className="item-list" onClick={() => handleClickBtnRemoveTrack(track)}>Remover da playlist</li>
+              </ul>
+            </ComponentUIDropdown>
+          </ComponentUISongListMinute>
         ))
         ) : (
           <div className="text-center">

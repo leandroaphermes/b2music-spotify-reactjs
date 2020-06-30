@@ -18,7 +18,6 @@ import ComponentUIDropdown from '../../components/UI/Dropdown/Dropdown'
 import imageDefault from '../../assets/img/music/default.jpg'
 import { ReactComponent as IconEllipsis } from '../../assets/img/icons/ellipsis-vertical-outline.svg'
 import { ReactComponent as IconMusicalNotes } from '../../assets/img/icons/musical-notes-outline.svg'
-/* import { ReactComponent as IconPause } from '../../assets/img/icons/pause-outline.svg' */
 import { ReactComponent as IconPlay } from '../../assets/img/icons/play-outline.svg'
 
 import "./Author.css"

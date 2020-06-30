@@ -6,23 +6,18 @@ import * as actionsAlert from '../../store/actions/alert'
 import * as actionsPlayer from '../../store/actions/player'
 import * as actionsThunkPlayer from '../../store/thunk/player'
 import api from '../../services/Api'
-import { secondsToMinutos } from '../../utils/utils'
-
-/* Components Funcional */
-import ComponentButtonsFavorite from '../../components/Buttons/Favorite/Favorite'
 
 /* Components Generico */
-import ComponentUILinkOfComma from '../../components/UI/LinkOfComma/LinkOfComma'
+import ComponentUISongListMinute from '../../components/UI/SongListMinute/SongListMinute'
 
 import imageDefault from '../../assets/img/music/default.jpg'
 
-import { ReactComponent as IconMusicalNotes } from '../../assets/img/icons/musical-notes-outline.svg'
 import { ReactComponent as IconPause } from '../../assets/img/icons/pause-outline.svg'
 import { ReactComponent as IconPlay } from '../../assets/img/icons/play-outline.svg'
 
 import "./Favorite.css"
 
-const Favorite = function ({ status, setStatus, player, setPlayByTrack, setNewPlaylist, setAlert, session }) {
+const Favorite = function ({ status, setStatus, player, setPlayByTrack, setNewPlaylist, session }) {
 
   const [favorites, setFavorites] = useState([])
   const history = useHistory()
@@ -107,35 +102,15 @@ const Favorite = function ({ status, setStatus, player, setPlayByTrack, setNewPl
         
         { favorites.length ? (
           favorites.map( ( row, index) => (
-          <div 
-            key={row.id} 
-            className={`songs-list ${player.playing.id === parseInt(row.track.id) ? `active-hover` :``}`} 
-            onDoubleClick={()=>handlePlayByTrack(row.track.id)}>
-            <div className="songs-list-icon">
-              <IconMusicalNotes className="songs-list-icon-notes" width="22px" height="22px" />
-              <IconPlay className="songs-list-icon-play" width="22px" height="22px" />
-            </div>
-            <div className="songs-list-name">
-              <div>
-                <Link to={`/album/${row.track.id}`}>
-                  {row.track.name}
-                </Link>
-              </div>
-              <div>
-                <ComponentUILinkOfComma 
-                  prefixRoute="/author/"
-                  data={row.track.authors}
-                />
-              </div>
-            </div>
-            <div className="songs-list-time py-3 pt-1">
-              <ComponentButtonsFavorite
-                type="track"
-                dataID={row.track.id}
-              />
-              <span className="ml-2">{secondsToMinutos(row.track.duration)}</span>
-            </div>
-          </div>
+          <ComponentUISongListMinute
+            key={row.track.id}
+            idplayer={0}
+            type_list="favorite"
+            track={row.track}
+            index={index}
+            player={player}
+            handleDoubleClick={handlePlayByTrack}
+          />
         ))
         ) : (
           <div className="text-center">

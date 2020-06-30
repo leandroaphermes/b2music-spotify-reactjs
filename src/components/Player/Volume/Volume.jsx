@@ -30,7 +30,6 @@ const Volume = function(props) {
         }
     }
     function handleClickQueue(){
-        alert("Você clicou no Queue")
         history.push('/queue')
     }
 

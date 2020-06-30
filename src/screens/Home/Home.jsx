@@ -16,7 +16,7 @@ const Home = function () {
 
     useEffect(() => {
         api.get("/me/home-page", {
-            validateStatus: (status) => status === 200
+            validateStatus: (s) => s === 200
         })
         .then( response => {
             setData(response.data);

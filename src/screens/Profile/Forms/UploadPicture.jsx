@@ -162,7 +162,7 @@ export default function UploadPicture({ session, setAlert, setSession }) {
           </button>
         ) : btnDisable && !uploadLoading.completed ? (
           <ComponentUIProgressFill
-            value={uploadLoading.value}
+            value={uploadLoading.value ? uploadLoading.value : 0}
           />
         ) : null }
       </div>
