@@ -264,7 +264,9 @@ const Save = function ({ setAlert, session, setSession }) {
                             name="birth" 
                             value={birth}
                             onChange={(e) => handleBirth(e.target.value)}
-                            placeholder="Data de nascimento" 
+                            placeholder="Data de nascimento"
+                            minLength="10"
+                            maxLength="10" 
                         />
                         {errors.birth && (
                             <div className="input-error" id="input-error-birth">
@@ -332,7 +334,6 @@ const Save = function ({ setAlert, session, setSession }) {
                             name="country" 
                             value={country}
                             onChange={ e => handleCountry(e.target.value)}
-                            placeholder="País que vive"
                         > 
                             { contentCountrys.map( country => (
                                 <option key={country.iso2} value={country.iso2}>{country.name}</option>
@@ -356,7 +357,6 @@ const Save = function ({ setAlert, session, setSession }) {
                             name="province" 
                             value={province}
                             onChange={(e) => handleProvince(e.target.value)}
-                            placeholder="Estado que vive"
                         >
                             { contentProvinces.map( provinceItem => (
                                 <option key={provinceItem.id} value={provinceItem.state_code}>{provinceItem.name}</option>

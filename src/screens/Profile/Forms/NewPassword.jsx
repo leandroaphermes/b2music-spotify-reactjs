@@ -147,6 +147,8 @@ const NewPassword = function({ session, setAlert }) {
                     name="password-old" 
                     autoComplete="current-password" 
                     placeholder="Senha atual de uso"
+                    minLength="6"
+                    maxLength="32"
                     value={passwordOld}
                     onChange={(e) => handlePasswordOld(e.target.value)}
                 />
