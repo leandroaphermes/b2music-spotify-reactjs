@@ -69,6 +69,22 @@ const Home = function () {
                     ))}
                 </section>
 
+                <section className="card gap-row-none">
+                    <header className="card-header mb-3">
+                        <div className="card-flex">
+                            <h3 className="card-title">Albums em modo geral</h3>
+                        </div>
+                        <small className="card-small">Albums recem lançados</small>
+                    </header>
+                    {data.album_all.map( (album) => (
+                        <ComponentCardsAlbumImage
+                            key={album.id}
+                            prefixRoute="/album/"
+                            data={album}
+                        />
+                    ))}
+                </section>
+
 
                 {data.cards.map( (cardItem) => (
                     cardItem.playlists.length > 0 && (

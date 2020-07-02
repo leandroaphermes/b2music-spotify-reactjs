@@ -1,20 +1,38 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 
+import * as actionsAlert from '../../../store/actions/alert'
+
 import api from '../../../services/Api'
 import {
   USERNAME_VALIDATION,
+  EMAIL_VALIDATION,
+  PASSWORD_VALIDATION,
   ALFA_NUMBER_SPACE_CS, 
   DATE_VALIDATION, 
   MASK_PHONE, 
   PHONE_VALIDATION
 } from '../../../utils/const-regex'
 
-export const Form = () => {
+import ComponentAlert from '../../../components/UI/Alert/Alert'
+
+export const Form = function({ setAlert }){
 
   const [btnDisable, setBtnDisable] = useState(true)
-  const [errors, setErrors] = useState({})
-  const [step, setStep] = useState(0)
+  const [btnDisableStageOne, setBtnDisableStageOne] = useState(true)
+  const [errors, setErrors] = useState({
+    username: "",
+    truename: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
+    birth: "",
+    gender: "",
+    phone: "",
+    country: "",
+    province: ""
+  })
+  const [stage, setStage] = useState(0)
 
   const [username, setUsername] = useState("")
   const [truename, setTruename] = useState("")
@@ -35,15 +53,60 @@ export const Form = () => {
   function handleOnSubmit(e){
     e.preventDefault()
 
-    setStep(2)
+    setBtnDisable(true)
 
-    alert("Submeteu o form")
+    api.post(`/register`, {
+        username,
+        truename,
+        email,
+        password,
+        password_confirmation: passwordConfirm,
+        birth,
+        gender,
+        phone,
+        country,
+        province
+      }, {
+        validateStatus: s => s === 201
+      })
+      .then( response => {
+        setStage(2)
+      })
+      .catch( dataError => {
+        if(dataError.response.data[0]){
+          let errorsApi = {};
+          dataError.response.data.forEach( field => {
+            if(field.field === "password_confirmation") field.field = "passwordConfirm"
+            errorsApi[field.field] = field.message
+          })
+
+          if(
+            typeof errorsApi.username !== "undefined" ||
+            typeof errorsApi.truename !== "undefined" ||
+            typeof errorsApi.email !== "undefined" ||
+            typeof errorsApi.password !== "undefined" ||
+            typeof errorsApi.passwordConfirm !== "undefined"
+          ){
+            setStage(0)
+          }
+          setErrors(errorsApi)
+      
+        }else{
+          setAlert({
+            status: true,
+            type: "danger",
+            message: dataError.response.data.message,
+            float: false
+          })
+        }
+        setBtnDisable(false)
+      })
 
   }
 
-  function handleNextStep(e, step){
+  function handleNextStage(e, stage){
     e.preventDefault()
-    setStep(step)
+    setStage(stage)
   }
 
   function addError( field, message){
@@ -60,22 +123,12 @@ export const Form = () => {
     if(username.length < 4 || username.length > 32){
       addError( "username", "Usuario deve conter 4 a 32 caracteres")
     }else if(! USERNAME_VALIDATION.test(username)){
-      addError( "username", "Usuario aceita apenas letras e numero e não pode conter numero no primeiro caracter")
+      addError( "username", "Usuario aceita apenas letras minúsculas e numero e não pode conter numero no primeiro caracter")
     }else{
       delError( "username" )
     }
     setUsername(username)
   }
-  function handleEmail(email){
-
-  }
-  function handlePassword(password){
-
-  }
-  function handlePasswordConfirm(passwordConfirm){
-
-  }
-
   function handleTruename(truename){
     if(truename.length < 4 || truename.length > 100){
       addError( "truename", "Nome Completo deve conter 4 a 100 caracteres")
@@ -86,6 +139,37 @@ export const Form = () => {
     }
     setTruename(truename)
   }
+  function handleEmail(email){
+    if(email.length < 6 || email.length > 64){
+      addError( "email", "Email deve conter 6 a 64 caracteres")
+    }else if(! EMAIL_VALIDATION.test(email)){
+      addError( "email", "Este email não é valido. Considere usar um email mais comum")
+    }else{
+      delError( "email" )
+    }
+    setEmail(email)
+  }
+  function handlePassword(password){
+    if(password.length < 4 || password.length > 32){
+      addError( "password", "Senha deve conter 6 a 32 caracteres")
+    }else if(! PASSWORD_VALIDATION.test(password)){
+      addError( "password", "Senha deve conter pelo menos 1 caracter especial !@#$%&-_. letras e numeros")
+    }else{
+      delError( "password" )
+    }
+    setPassword(password)
+  }
+  function handlePasswordConfirm(passwordConfirm){
+    if(passwordConfirm.length < 4 || passwordConfirm.length > 32){
+      addError( "passwordConfirm", "Confirmar Senha deve conter 6 a 32 caracteres")
+    }else if(passwordConfirm !== password){
+      addError( "passwordConfirm", "Confirmação Senha deve ser igual a Senha")
+    }else{
+      delError( "passwordConfirm" )
+    }
+    setPasswordConfirm(passwordConfirm)
+  }
+
   function handleBirth(birth) {
     if(birth.length !== 10){
       addError( "birth", "Data de Nascimento Invalida")
@@ -133,13 +217,33 @@ export const Form = () => {
   }
   /* Fim de validações de inputs */
 
-async function getPronvice(countryData){
-    const response = await api.get(`/utils/global/countrys/${countryData}`)
-    setContentProvinces(response.data)
-}
+  async function getPronvice(countryData){
+      const response = await api.get(`/utils/global/countrys/${countryData}`)
+      setContentProvinces(response.data)
+  }
+
+  useEffect(() => {
+    async function setDataForm(){
+      const response = await api.get("/utils/global/countrys", {
+        validateStatus: s => s === 200
+      })
+      setContentCountrys(response.data)
+    }
+    setDataForm()
+  }, [])
 
   useEffect(() => {
     setBtnDisable(true)
+    setBtnDisableStageOne(true)  
+    if(
+      typeof errors.username === "undefined" &&
+      typeof errors.truename === "undefined" &&
+      typeof errors.email === "undefined" &&
+      typeof errors.password === "undefined" &&
+      typeof errors.passwordConfirm === "undefined"
+    ){
+      setBtnDisableStageOne(false)
+    }
     if( Object.keys(errors).length === 0 ){
       setBtnDisable(false)
     }
@@ -161,7 +265,7 @@ async function getPronvice(countryData){
       
       <h4 className="form-register-title">Registro</h4>
 
-      { step === 0 ? (
+      { stage === 0 ? (
         <>
           <div className="form-group">
             <label htmlFor="username">Usuario: </label>
@@ -262,9 +366,16 @@ async function getPronvice(countryData){
             )}
           </div>
           
-          <button type="button" className="btn btn-primary btn-block" onClick={(e)=> handleNextStep(e, 1)} disabled={btnDisable}>Proxima Etapa</button>
+          <button 
+            type="button" 
+            className="btn btn-primary btn-block" 
+            onClick={(e)=> handleNextStage(e, 1)} 
+            disabled={btnDisableStageOne}
+          >
+            Proxima Etapa
+          </button>
         </>
-      ) : step === 1 ? (
+      ) : stage === 1 ? (
         <>
           
           <div className="form-group">
@@ -294,6 +405,7 @@ async function getPronvice(countryData){
               value={gender}
               onChange={(e) => handleGender(e.target.value)}
             >
+              <option value="" disabled >Selecione o Genero</option>
               <option value="F">Feminino</option>
               <option value="M">Masculino</option>
               <option value="O">Outros</option>
@@ -339,6 +451,7 @@ async function getPronvice(countryData){
               value={country}
               onChange={(e) => handleCountry(e.target.value)}
             >
+              <option value="" disabled >Selecione o País</option>
               { contentCountrys.map( country => (
                   <option key={country.iso2} value={country.iso2}>{country.name}</option>
                   ) 
@@ -360,6 +473,7 @@ async function getPronvice(countryData){
               value={province}
               onChange={(e) => handleProvince(e.target.value)}
             >
+              <option value="" disabled >Selecione o Estado</option>
               { contentProvinces.map( provinceItem => (
                     <option key={provinceItem.id} value={provinceItem.state_code}>{provinceItem.name}</option>
                   ) 
@@ -376,13 +490,15 @@ async function getPronvice(countryData){
           <button type="submit" className="btn btn-primary btn-block" disabled={btnDisable}>Concluir Registro</button>
         </>
       ) : (
-        <>
-          <p>Completou</p>
-        </>
+        <div className="form-register-message-success">
+          <p>Conta criada com sucesso. Aproveite todo nosso conteudo e tenha uma boa VIBE</p>
+        </div>
       )}
       
       
-
+      <div className="mt-4">
+        <ComponentAlert />
+      </div>
 
     </form>
   )
@@ -393,7 +509,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  
+  setAlert: (dataAlert) => dispatch(actionsAlert.set(dataAlert))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form)
