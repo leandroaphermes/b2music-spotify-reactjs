@@ -7,8 +7,6 @@ import ComponentCardPlaylistImage from '../../components/Cards/PlaylistImage/Pla
 import ComponentCardsAlbumImage from '../../components/Cards/AlbumImage/AlbumImage'
 import ComponentUILoading from '../../components/UI/Loading/Loading';
 
-import "./Home.css";
-
 const Home = function () {
 
     const [isLoaded, setIsLoaded] = useState(false);

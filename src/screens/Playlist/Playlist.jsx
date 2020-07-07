@@ -25,7 +25,7 @@ import { ReactComponent as IconPlay } from '../../assets/img/icons/play-outline.
 
 import "./Playlist.css"
 
-const Playlist = function ({ status, setStatus, player, setPlayByTrack, setNewPlaylist, setAlert }) {
+const Playlist = function ({ session, status, setStatus, player, setPlayByTrack, setNewPlaylist, setAlert }) {
 
   const [playlist, setPlaylist] = useState({
     id: 0,
@@ -44,53 +44,53 @@ const Playlist = function ({ status, setStatus, player, setPlayByTrack, setNewPl
   const history = useHistory()
 
 
-/* Options Playlist */
-function handleActionEdit() { 
-  setModalEdit(true)
-}
-async function handleActionCopy(){
-  await navigator.clipboard.writeText(window.location.href)
-  setAlert({
-    status: true,
-    type: "success",
-    message: "Link copiado para sua area de transferencia"
-  })
-}
-function handleActionDelete(){
-  
-  api.delete(`/playlists/${id}`, {
-    validateStatus: (s) => s === 204
-  })
-  .then( response => {
-    history.push(`/my-library/playlists`)
-  })
-  .catch( dataError => {
+  /* Options Playlist */
+  function handleActionEdit() { 
+    setModalEdit(true)
+  }
+  async function handleActionCopy(){
+    await navigator.clipboard.writeText(window.location.href)
     setAlert({
       status: true,
-      type: "danger",
-      message: dataError.response.data.message
+      type: "success",
+      message: "Link copiado para sua area de transferencia"
     })
-  })
-
-}
-
-
-/* Btn Add Track */
-function handleClickBtnAddTrack(){
-  setModalAddTrack(!modalAddTrack)
-}
-function handleClickBtnRemoveTrack(track){
-
-  removeTrackInPlaylist(playlist.tracks, playlist.id, track)
-  .then(() => {
-  
-    setPlaylist({...playlist, tracks: playlist.tracks.filter( track_item => track_item.id !== track.id )})
+  }
+  function handleActionDelete(){
     
-  })
-  .catch()
+    api.delete(`/playlists/${id}`, {
+      validateStatus: (s) => s === 204
+    })
+    .then( response => {
+      history.push(`/my-library/playlists`)
+    })
+    .catch( dataError => {
+      setAlert({
+        status: true,
+        type: "danger",
+        message: dataError.response.data.message
+      })
+    })
+
+  }
 
 
-}
+  /* Btn Add Track */
+  function handleClickBtnAddTrack(){
+    setModalAddTrack(!modalAddTrack)
+  }
+  function handleClickBtnRemoveTrack(track){
+
+    removeTrackInPlaylist(playlist.tracks, playlist.id, track)
+    .then(() => {
+    
+      setPlaylist({...playlist, tracks: playlist.tracks.filter( track_item => track_item.id !== track.id )})
+      
+    })
+    .catch()
+
+
+  }
 
   /* Player */
   function handlePlayPlaylist(){
@@ -187,9 +187,14 @@ function handleClickBtnRemoveTrack(track){
                     button={<IconEllipsis height="32px" width="32px" />}
                   >
                     <ul>
-                      <li className="item-list" onClick={handleActionEdit} >Editar playlist</li>
-                      <li className="item-list" onClick={handleActionCopy} >Copiar link da playlist</li>
-                      <li className="item-list" onClick={handleActionDelete} >Apagar</li>
+                      
+                    <li className="item-list" onClick={handleActionCopy} >Copiar link da playlist</li>
+                      {session.id === playlist.owner.id && (
+                        <>
+                          <li className="item-list" onClick={handleActionEdit} >Editar playlist</li>
+                          <li className="item-list" onClick={handleActionDelete} >Apagar</li>
+                        </>
+                      )}
                     </ul>
                   </ComponentUIDropdown>
                 </div>
@@ -226,15 +231,17 @@ function handleClickBtnRemoveTrack(track){
            player={player}
            handleDoubleClick={handlePlayByTrack}
           >
-            <ComponentUIDropdown
-              button={<IconEllipsis width="22px" height="22px" />}
-              buttonSize="sm"
-              dropDirection="left"
-            >
-              <ul>
-                <li className="item-list" onClick={() => handleClickBtnRemoveTrack(track)}>Remover da playlist</li>
-              </ul>
-            </ComponentUIDropdown>
+            {session.id === playlist.owner.id && (
+              <ComponentUIDropdown
+                button={<IconEllipsis width="22px" height="22px" />}
+                buttonSize="sm"
+                dropDirection="left"
+                >
+                <ul>
+                  <li className="item-list" onClick={() => handleClickBtnRemoveTrack(track)}>Remover da playlist</li>
+                </ul>
+              </ComponentUIDropdown>
+            )}
           </ComponentUISongListMinute>
         ))
         ) : (
@@ -243,12 +250,13 @@ function handleClickBtnRemoveTrack(track){
           </div>
         ) }
 
-        
-        <div className="text-center">
-          <button type="button" className="btn btn-primary mt-5" onClick={handleClickBtnAddTrack} >
-            Adicionar musicas a playlist
-          </button>
-        </div>
+        {session.id === playlist.owner.id && (
+          <div className="text-center">
+            <button type="button" className="btn btn-primary mt-5" onClick={handleClickBtnAddTrack} >
+              Adicionar musicas a playlist
+            </button>
+          </div>
+        )}
 
       </div>
 
@@ -258,6 +266,7 @@ function handleClickBtnRemoveTrack(track){
 }
 
 const mapStateToProps = state => ({
+  session: state.session.user,
   status: state.player.status,
   player: state.player.player
 })
